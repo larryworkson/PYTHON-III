@@ -1,11 +1,11 @@
 from time import sleep
-from funcNBA.cores import *
+from cores import *
 from random import randint
 import sqlite3
 
 def game2(t1, t2):
     #puxando dados jogadores
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     conexao.row_factory = sqlite3.Row
     cursor = conexao.cursor()
     cursor.execute('SELECT nome, media FROM jogadores WHERE idtime = ?', (t1["id"],))
@@ -89,7 +89,7 @@ def game(t1, t2):
             break
 
 def updateTime(dado, v=0,):
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     id = dado
     cursor.execute('SELECT nome, vit FROM times WHERE id = ?', (id,))
@@ -100,7 +100,7 @@ def updateTime(dado, v=0,):
     conexao.close()
 
 def updateJog(dado, nome=''):
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     id = dado
     cursor.execute('SELECT nome FROM jogadores WHERE id = ?', (id,))
@@ -111,7 +111,7 @@ def updateJog(dado, nome=''):
     conexao.close()
 
 def zeroVit():
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     cursor.execute('UPDATE times SET vit = 0')
     conexao.commit()
@@ -120,7 +120,7 @@ def zeroVit():
 def editForca(dado, forca):
     id = dado
     f = forca
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     cursor.execute('UPDATE times SET forca = ? WHERE id = ?', (f, id))
     cor('Time atualizado', 2)
@@ -128,14 +128,14 @@ def editForca(dado, forca):
     conexao.close()
 
 def zeroTime():
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     cursor.execute('DELETE FROM times')
     conexao.commit()
     conexao.close()
 
 def addTime(n='sem nome', v=0, f=0):
-        conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+        conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
         cursor = conexao.cursor()
         cursor.execute('''CREATE TABLE IF NOT EXISTS times (id INTEGER PRIMARY KEY, nome TEXT, vit INTEGER, forca INTEGER)''')
         listaDados = []
@@ -151,7 +151,7 @@ def addTime(n='sem nome', v=0, f=0):
         conexao.close()
 
 def addJogador(n, m, t):
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS jogadores (id INTEGER PRIMARY KEY, nome TEXT, media FLOAT, status INTEGER, forca INTEGER, idtime INTEGER)')
     listaDados = []
@@ -169,7 +169,7 @@ def addJogador(n, m, t):
     conexao.close()
 
 def listaJogadores():
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
     conexao.row_factory = sqlite3.Row
     cursor = conexao.cursor()
     cursor.execute('SELECT * FROM jogadores ORDER BY idtime')
@@ -181,7 +181,7 @@ def listaJogadores():
     conexao.close()
 
 def delTime(id):
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     cursor.execute('DELETE FROM times WHERE id = ?', (id,))
     cor('Time deletado!', 2)
@@ -189,7 +189,7 @@ def delTime(id):
     conexao.close()
 
 def delJog(id):
-    conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db')
+    conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db')
     cursor = conexao.cursor()
     cursor.execute('DELETE FROM jogadores WHERE id = ?', (id,))
     cor('Jogador deletado!', 2)
