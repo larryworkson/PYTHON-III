@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net" modified="2023-07-29T14:27:41.999Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" etag="6-1imyUQKjftl5s-Kz9u" version="21.6.6" type="google">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Hiq8lSHW-5D7x--9rLLg-0" target="Hiq8lSHW-5D7x--9rLLg-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-0" value="Print Times&lt;br&gt;lakers (88), warriors (84), spurs (77), bulls(73)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="70" y="100" width="430" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Hiq8lSHW-5D7x--9rLLg-1" target="Hiq8lSHW-5D7x--9rLLg-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-1" value="usuário escolhe o time com base na sua força() e PCs escolhem os times que restarem (sem repetir)" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="120" y="220" width="330" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Hiq8lSHW-5D7x--9rLLg-5" target="Hiq8lSHW-5D7x--9rLLg-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-5" value="programa define os adversários&lt;br&gt;jogo 1: usuário vs pc1&lt;br&gt;jogo 2: pc2 vs pc3" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="130" y="330" width="310" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Hiq8lSHW-5D7x--9rLLg-7" target="Hiq8lSHW-5D7x--9rLLg-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-7" value="Programa gera nº aleatórios (60, 120) para os placares a acrescentando 15% de pontos ao time que tiver maior força()" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="110" y="430" width="350" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Hiq8lSHW-5D7x--9rLLg-9" value="Apresentar ao lado de cada placar o resultado" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="130" y="530" width="310" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

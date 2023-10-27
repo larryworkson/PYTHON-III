@@ -1,0 +1,7 @@
+print('As compras no débito ganham 15% de desconto')
+print('As compras parceladas tem juros de 10%')
+valor = float(input('Valor do produto: R$ '))
+vista = valor - (valor * 15 / 100)
+prazo = valor + (valor * 10 / 100)
+print('RS {} a vista ficará R$ {}'.format(valor, vista))
+print('R$ {} a prazo ficará R$ {}'.format(valor, prazo))
