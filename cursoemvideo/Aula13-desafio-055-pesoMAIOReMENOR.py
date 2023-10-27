@@ -1,6 +1,6 @@
 ma = 0
 me = 0
-for p in range(1,6):
+for p in range(1,4):
     peso = float(input('Peso da {}º pessoa: '.format(p)))
     if p == 1:
         ma = peso
