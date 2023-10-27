@@ -23,7 +23,7 @@ while True:
         break
    
     if resp == '1':
-        conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         conexao.row_factory = sqlite3.Row
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM times')
@@ -41,7 +41,7 @@ while True:
         conexao.close()
         
     if resp == '2':
-        conexao = sqlite3.connect('E:/Workspace/_CODE/PYTHON/NBA/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        conexao = sqlite3.connect('C:/Users/studi/Documents/code/PYTHON-III/nba/gameDataBase.db', detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         conexao.row_factory = sqlite3.Row
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM times ORDER BY vit DESC')
