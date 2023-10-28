@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <form action="/submit" method="POST" autocomplete="off">
+        <input type="number" name="nsc" placeholder="Ano de nascimento">
+        <button onclick="mostrarResp()">ENVIAR</button>
+    </form>
+    <span class="resp">Sua idade é: </span>
+    <span class="resp">{{ resp }}</span>
+</body>
+</html>
