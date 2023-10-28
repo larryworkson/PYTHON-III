@@ -17,7 +17,7 @@ for c, v in enumerate(valores):
     print(f'na poição {c} encontrei o valor {v}!')
 print('=-='*20)
 a = [2, 3, 4, 6]
-b = a[:] #cria uma cópia original da variável
+b = a[:] #cria uma cópia da variável (útil para alterar os elementos sem mexer na lista original)
 b[2] = 8
 print(f'Lista A: {a}')
 print(f'Lista B: {b}')

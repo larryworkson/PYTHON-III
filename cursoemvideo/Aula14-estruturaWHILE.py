@@ -1,4 +1,4 @@
-# WHILE = estrutura de repetição com teste lógici
+# WHILE = estrutura de repetição com teste lógico
 # FOR = estrutura de repetição com variável de controle
 
 '''n = 1 #início da contagem

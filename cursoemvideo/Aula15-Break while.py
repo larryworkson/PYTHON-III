@@ -1,2 +1,2 @@
 # while n != 0: ESTA É UMA ESTRUTURA DE REPETIÇÃO COM FLAG. O '0' É A FLAG
-# while Ture É UM LOOP INFINITO
+# while True É UM LOOP INFINITO
