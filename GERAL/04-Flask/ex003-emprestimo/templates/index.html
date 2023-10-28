@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financiamento de imóvel</title>
+    <style>
+        input {
+            display: block;
+        }
+        form {
+            display: block;
+            width: 500px;
+            margin: auto;
+        }
+        div.resp {
+            width: 500px;
+            margin: auto;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="resp">
+        <h1>Financiamento de imóveis</h1>
+        <p>A parcela do financiamento não pode ultrapassar 30% do salário</p>
+    </div>
+    <form action="/submit" method="POST" autocomplete="on">
+        <input type="number" name="valorcasa" placeholder="Valor do imóvel">
+        <input type="number" name="salario" placeholder="Remuneração">
+        <input type="number" name="anos" placeholder="Anos para pagar">
+        <button >ENVIAR</button>
+        <a href="/">RETORNAR</a>
+    </form>
+    <div class="resp">
+        <p>
+            <span>O valor da casa: </span><span>{{vc}}</span>
+        </p>
+        <p>
+            <span>Salário: </span><span>{{sl}}</span>
+        </p>
+        <p>
+            <span>Anos para pagar: </span><span>{{anos}}</span>
+        </p>
+        <h1>{{resp}}</h1>
+    
+    </div>
+</body>
+</html>

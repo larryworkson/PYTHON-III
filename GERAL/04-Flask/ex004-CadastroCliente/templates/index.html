@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main>
+        <h1>Cadastro de clientes</h1>
+        <form action="/submit" method="post">
+            <input type="text" name="nome" placeholder="Nome">
+            <input type="number" name="idade" placeholder="Idade">
+            <button>ENVIAR</button>
+            <a href="listaClientes.html">Lista de clientes</a>
+        </form>
+        <p id="status">{{status}}</p>
+    </main>
+    
+</body>
+</html>
