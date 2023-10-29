@@ -22,6 +22,15 @@ def enviarBanco(n='sem nome', i=''):
     conexao.commit()
     conexao.close()
 
+@aplicativo.route('/delCadastro/<buscaID>')
+def delCadastro(buscaID):
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex004-CadastroCliente/database/base.db')
+    cursor = conexao.cursor()
+    cursor.execute('DELETE FROM clientes WHERE id = ?', (buscaID,))
+    conexao.commit()
+    conexao.close()
+    return render_template('listaClientes.html')
+
 @aplicativo.route('/listaClientes.html')
 def listar_clientes():
     conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex004-CadastroCliente/database/base.db')
