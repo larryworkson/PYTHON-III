@@ -4,25 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 <body>
     <main>
         <h1>Lista de clientes</h1>
-        <table>
+        <table id="lista">
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Idade</th>
-                <th>Ações</th>
+                <th id="id">ID</th>
+                <th id="nome">Nome</th>
+                <th id="idade">Idade</th>
+                <th id="acoes" colspan="2">Ações</th>
             </tr>
             {% for p in clientes %}
                 <tr>
                     <td>{{p[0]}}</td>
                     <td>{{p[1]}}</td>
                     <td>{{p[2]}}</td>
-                    <td><a href="{{ url_for('delCadastro', buscaID=p[0]) }}">DELETAR</a></td>
+                    <td>
+                        <a href="" id="btnedit"><span class="material-symbols-outlined">edit</span></a>
+                    </td>
+                    <td>
+                        <a id="btndel" href="{{ url_for('delCadastro', buscaID=p[0]) }}" id="btndel"><span class="material-symbols-outlined">delete</span></a>
+                    </td>        
                 </tr>
             {% endfor %}
         </table>

@@ -29,7 +29,7 @@ def delCadastro(buscaID):
     cursor.execute('DELETE FROM clientes WHERE id = ?', (buscaID,))
     conexao.commit()
     conexao.close()
-    return render_template('listaClientes.html')
+    return listar_clientes()
 
 @aplicativo.route('/listaClientes.html')
 def listar_clientes():
@@ -51,6 +51,6 @@ aplicativo.run()
 
 
 """
-ver como deletar um cadastro
 ver como atualizar um cadastro
+add relatórios
 """
