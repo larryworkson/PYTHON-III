@@ -10,10 +10,10 @@
     <main>
         <h1>Cadastro de clientes</h1>
         <form action="/submit" method="post" autocomplete="on">
-            <input type="text" name="nome" placeholder="Nome">
+            <input type="text" name="nome" placeholder="Nome" required>
             <input type="number" name="idade" placeholder="Idade">
             <button>ENVIAR</button>
-            <a href="listaClientes.html">Lista de clientes</a>
+            <a class="btngeral" href="listaClientes.html">Lista de clientes</a>
         </form>
         <p id="status">{{status}}</p>
     </main>

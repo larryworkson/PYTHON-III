@@ -10,8 +10,8 @@ Q5...
 '''
 import sqlite3
 from time import sleep
-from funcNBA.cores import *
-from funcNBA.funcoes import *
+from cores import *
+from funcoes import *
 from random import choice
 
 while True:

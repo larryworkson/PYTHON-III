@@ -14,8 +14,8 @@
         <table id="lista">
             <tr>
                 <th id="id">ID</th>
-                <th id="nome">Nome</th>
-                <th id="idade">Idade</th>
+                <th id="nome"><a href="{{ url_for('ordemNome')}}">Nome</a></th>
+                <th id="idade"><a href="{{ url_for('ordemIdade')}}">Idade</a></th>
                 <th id="acoes" colspan="2">Ações</th>
             </tr>
             {% for p in clientes %}
@@ -24,7 +24,7 @@
                     <td>{{p[1]}}</td>
                     <td>{{p[2]}}</td>
                     <td>
-                        <a href="" id="btnedit"><span class="material-symbols-outlined">edit</span></a>
+                        <a href="{{ url_for('abrirEdicao', id=p[0]) }}" id="btnedit"><span class="material-symbols-outlined">edit</span></a>
                     </td>
                     <td>
                         <a id="btndel" href="{{ url_for('delCadastro', buscaID=p[0]) }}" id="btndel"><span class="material-symbols-outlined">delete</span></a>
@@ -32,7 +32,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <a href="/">Cadastrar cliente</a>
+        <a class="btngeral" href="/">Cadastrar cliente</a>
     </main>
     
 </body>

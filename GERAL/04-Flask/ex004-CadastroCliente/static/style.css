@@ -34,7 +34,7 @@ button {
     margin: 10px auto;
 }
 
-a {
+.btngeral {
     display: block;
     width: 300px;
     text-align: center;
@@ -63,12 +63,25 @@ th#nome {
 th#acoes, th#id, th#idade {
     width: 10%;
 }
+
+
 td, th {
     border-bottom: 1px solid rgb(63, 63, 63);
     height: 40px;
+
 }
 th {
     text-align: left;
+}
+
+th > a {
+    text-decoration: none;
+    background-color: none;
+    color: rgb(224, 137, 24);
+}
+
+td > a {
+    margin-right: 20px;
 }
 
 a#btndel {

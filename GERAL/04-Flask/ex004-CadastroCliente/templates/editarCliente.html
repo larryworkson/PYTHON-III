@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar cliente</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main>
+        <h1>Editar cadastro</h1>
+        <h3>{{nm}}</h3>
+        <form action="../editarCliente.html/submit" method="post" autocomplete="on">
+            <input type="number" id="identificador" value="{{id}}" max="{{id}}" min="{{id}}" name="id">
+            <input type="text" name="nome" placeholder="Novo nome">
+            <input type="number" name="idade" placeholder="Nova idade">
+            <button>SALVAR</button>
+            <a class="btngeral" href="../listaClientes.html">Lista de clientes</a>
+        </form>
+    </main>
+    
+</body>
+</html>
