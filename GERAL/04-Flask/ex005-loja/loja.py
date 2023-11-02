@@ -32,11 +32,7 @@ q5:
         1.1 página geral de produtos
         1.2 página das categorias
         1.3 página do carrinho
-        1.4 página de agradecimento
-
-
-
-        
+        1.4 página de agradecimento        
  """
 
 
@@ -46,12 +42,39 @@ loja = Flask(__name__)
 def index():
     return render_template('index.html')
 
+""" teste """
 @loja.route('/teste')
 def teste():
     produto = Produto('Celular', 5, 0, 'img', 'disponível')
     return render_template('/index.html', resp = produto.descricao_produto())
 
+@loja.route('/estoque.html')
+def pag_estoque():
+    estoque = Produto.listar_produtos()
+    return render_template('/estoque.html', produtos = estoque)
+
+"""renderizar página de produtos"""
+@loja.route('/cadastro.html')
+def pag_cadastro():
+    return render_template('/cadastro.html')
+
+""" cadastrar produto na loja """
+@loja.route('/cadastro.html/submit', methods=['POST'])
+def enviar_form():
+    nome = request.form['nome']
+    preco = request.form['preco']
+    estoque = request.form['estoque']
+    img = request.form['img']
+    status = request.form['status']
+    Produto.cadastrar(nome, preco, estoque, img, status)
+    return render_template('/cadastro.html', resp = 'Produto cadastrado!')
+
+@loja.route('/del_produto/<id>')
+def del_produto(id):
+    Produto.deletar_produto(id)
+    return pag_estoque()
+
+
 loja.run(debug=False)
 
 
-""" teste funcionou """
