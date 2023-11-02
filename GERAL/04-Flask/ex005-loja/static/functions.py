@@ -1,32 +1,32 @@
 import sqlite3
 class Produto():
-    def __init__(self, nome, preco, estoque, img, status):
+    def __init__(self, nome, preco, estoque, img, categoria):
        """inicializa os atributos dos produtos"""
        self.nome = nome
        self.preco = preco
-       self.estoque = 0
-       self.img = ''
-       self.status = 0 #0 == indisponível. 1 == disponível
+       self.estoque = estoque
+       self.img = img
+       self.categoria = categoria #0 == indisponível. 1 == disponível
 
     def descricao_produto(self):
-        nome = f'{self.nome}\n{self.preco}\n{self.estoque}\n{self.img}\n{self.status}'
+        nome = f'{self.nome}\n{self.preco}\n{self.estoque}\n{self.img}\n{self.categoria}'
         return nome
     
-    def cadastrar(nome, preco, estoque, img, status):
+    def cadastrar(self):
         """método que cadastra um produto no BD"""
         conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS produtos (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, estoque INTEGER NOT NULL, img TEXT NOT NULL, status INTEGER NOT NULL)''')
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS produtos (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, estoque INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL)''')
         lista = []
         cadastro = {}
-        cadastro['nome'] = nome.title()
-        cadastro['preco'] = preco
-        cadastro['estoque'] = estoque
-        cadastro['img'] = img
-        cadastro['status'] = status
+        cadastro['nome'] = self.nome.title()
+        cadastro['preco'] = self.preco
+        cadastro['estoque'] = self.estoque
+        cadastro['img'] = self.img
+        cadastro['categoria'] = self.categoria
         lista.append(cadastro)
         for cadastro in lista:
-            cursor.execute(' INSERT INTO produtos (nome, preco, estoque, img, status) VALUES (:nome, :preco, :estoque, :img, :status)', cadastro)
+            cursor.execute(' INSERT INTO produtos (nome, preco, estoque, img, categoria) VALUES (:nome, :preco, :estoque, :img, :categoria)', cadastro)
         conexao.commit()
         conexao.close()
     

@@ -31,11 +31,11 @@ class Carro():
         resp = f'Nível do combustível {self.combustivel}%'
         return resp
 
-print('CARRO 1')
+""" print('CARRO 1')
 carro1 = Carro("Honda", 'Civic', 2015)
 print(carro1.descricao_nome())
 print(carro1.tanque_gasolina())
-print('-' * 30)
+print('-' * 30) """
 
 """ entrando no conceito de HERANÇA """
 #é comum chamarem a classe-pai de SUPERclasse e a filho de SUBclasse
@@ -44,12 +44,26 @@ class CarroEletrico(Carro): #ao definir como parametro da class a classe Carro()
     def __init__(self, fabricante, modelo, ano):
         """Inicializa os atributos da classe-pai"""
         super().__init__(fabricante, modelo, ano) #aqui nós chamamos os atributos da classe-pai.
+        self.bateria = Bateria() #é possível adicionar uma classe como atributo
     
     def tanque_gasolina(self): #ao escreve um método com mesmo nome que existe na classe-pai, o método é subscrito.
         """Método para subscrever a contagem de gasolina em carros elétricos"""
         return 'Carros elétricos não usam gasolina'
 
-print('CARRO COM HERANÇA')
-carro_eletro = CarroEletrico('Tesla', 'Modelo S', 2016)
-print(carro_eletro.descricao_nome())
-print(carro_eletro.tanque_gasolina())
+class Bateria():
+    """criando uma bateria"""
+    def __init__(self, bateria=100):
+        self.bateria = bateria
+
+    def altera_bateria(self, novo_valor):
+        """altera o valor da bateria"""
+        self.bateria = novo_valor
+    def mostra_bateria(self):
+        print(self.bateria)
+
+        
+meu_carro = CarroEletrico('Honda', 'Civic', 2015)
+print(meu_carro.descricao_nome())
+
+meu_carro.bateria.altera_bateria(56)
+meu_carro.bateria.mostra_bateria()

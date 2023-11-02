@@ -65,8 +65,9 @@ def enviar_form():
     preco = request.form['preco']
     estoque = request.form['estoque']
     img = request.form['img']
-    status = request.form['status']
-    Produto.cadastrar(nome, preco, estoque, img, status)
+    categoria = request.form['categoria']
+    cadastro = Produto(nome, preco, estoque, img, categoria)
+    cadastro.cadastrar()
     return render_template('/cadastro.html', resp = 'Produto cadastrado!')
 
 @loja.route('/del_produto/<id>')
@@ -75,6 +76,12 @@ def del_produto(id):
     return pag_estoque()
 
 
-loja.run(debug=False)
+loja.run(debug=True)
 
 
+"""
+adicionar total de itens no estoque, por categoria, total do patrimônio (soma dos valores de todos os produtos).
+criar script que gera produtos recomendados, baseados nas preferências do usuário
+na loja, integrar com API dos correios para calcular o frete
+
+"""

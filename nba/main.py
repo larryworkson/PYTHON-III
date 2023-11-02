@@ -1,16 +1,21 @@
-# This is a sample Python script.
+from googleapiclient.discovery import build
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+API_KEY = 'AIzaSyAFsCvURly1-lq-vBndGWyMrRP_PCdy4II'
+CX = '726702180fa3749a9'
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+service = build('customsearch', 'v1', developerKey=API_KEY)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+def fazer_pesquisa(query):
+    result = service.cse().list(
+        q = query,
+        cx = CX
+    ).execute()
+    return result['items']
+
+pesquisa = input(str('Pesquise por: ').lower())
+resultados = fazer_pesquisa(pesquisa)
+for item in resultados:
+    print(f'Título: {item["title"]}')
+    print(f'Link: {item["link"]}')
+    print()
