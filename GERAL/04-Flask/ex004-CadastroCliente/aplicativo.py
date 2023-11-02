@@ -98,7 +98,3 @@ def enviar_form():
 
 aplicativo.run(debug=False)
 
-
-"""
-add relatórios por idade (menores de idade e maiores) e 
-"""

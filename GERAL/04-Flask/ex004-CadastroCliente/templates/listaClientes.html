@@ -27,7 +27,7 @@
                         <a href="{{ url_for('abrirEdicao', id=p[0]) }}" id="btnedit"><span class="material-symbols-outlined">edit</span></a>
                     </td>
                     <td>
-                        <a id="btndel" href="{{ url_for('delCadastro', buscaID=p[0]) }}" id="btndel"><span class="material-symbols-outlined">delete</span></a>
+                        <a id="btndel" href="{{ url_for('delCadastro', buscaID=p[0]) }}"><span class="material-symbols-outlined">delete</span></a>
                     </td>        
                 </tr>
             {% endfor %}
