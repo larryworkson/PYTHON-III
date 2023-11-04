@@ -50,6 +50,7 @@ button {
 
 p#resp {
     color: greenyellow;
+    text-align: center;
 }
 
 table#lista {
@@ -60,10 +61,12 @@ table#lista {
 th#nome {
     width: 60%;
 }
-th#acoes, th#id, th#idade {
+th.outros {
     width: 10%;
 }
-
+th#id {
+    width: 2%;
+}
 
 td, th {
     border-bottom: 1px solid rgb(63, 63, 63);
@@ -98,3 +101,8 @@ a#btnedit {
     color: rgb(23, 135, 196);
 }
 
+#imgprod {
+    display: block;
+    margin: 20px auto;
+    width: 300px;
+}

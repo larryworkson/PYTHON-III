@@ -15,22 +15,23 @@
             <tr>
                 <th id="id">ID</th>
                 <th id="nome">Nome</th>
-                <th id="idade">Preço</th>
-                <th id="">Estoque</th>
-                <th id="">Foto</th>
-                <th id="">Categoria</th>
+                <th class="outros">Preço</th>
+                <th class="outros">Estoque</th>
+                <th class="outros">Foto</th>
+                <th class="outros">Categoria</th>
+                <th colspan="2" class="outros">Ações</th>
             </tr>
             {% for produto in produtos %}
                 <tr>
                     <td>{{produto[0]}}</td>
                     <td>{{produto[1]}}</td>
-                    <td>{{produto[2]}}</td>
+                    <td>R$ {{produto[2]}}</td>
                     <td>{{produto[3]}}</td>
                     <td><img src="{{produto[4]}}"></td>
                     <td>{{produto[5]}}</td>
-                    <!-- <td>
-                        <a href="" id="btnedit"><span class="material-symbols-outlined">edit</span></a>
-                    </td> -->
+                    <td>
+                        <a href="{{ url_for('btn_editar_produto', id=produto[0]) }}" id="btnedit"><span class="material-symbols-outlined">edit</span></a>
+                    </td>
                     <td>
                         <a id="btndel" href="{{ url_for('del_produto', id=produto[0])}}"><span class="material-symbols-outlined">delete</span></a>
                     </td>        
@@ -38,6 +39,7 @@
             {% endfor %}
         </table>
         <a class="btngeral" href="/cadastro.html">Cadastrar produto</a>
+        <a class="btngeral" href="/">Index</a>
     </main>
     
 </body>

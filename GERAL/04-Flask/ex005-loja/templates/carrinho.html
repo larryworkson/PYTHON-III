@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <main>
+        <h1>Carrinho de compras</h1>
+        <table id="lista">
+            <tr>                
+                <th id="nome">Nome</th>
+                <th class="outros">Preço</th>
+                <th class="outros">Quantidade</th>
+                <th class="outros">Foto</th>
+                <th class="outros">Categoria</th>
+                <th class="outros">Ações</th>
+            </tr>
+            {% for p in itens %}
+                <tr>
+                    <td>{{p[1]}}</td>
+                    <td>R$ {{p[2]}}</td>
+                    <td>{{p[3]}}</td>
+                    <td><img src="{{produto[4]}}"></td>
+                    <td>{{p[5]}}</td>
+                    <td>
+                        <a id="btndel" href=""><span class="material-symbols-outlined">delete</span></a>
+                    </td>        
+                </tr>
+            {% endfor %}
+        </table>
+        
+        <a class="btngeral" href="/site.html">SITE</a>
+    </main>
+    
+</body>
+</html>

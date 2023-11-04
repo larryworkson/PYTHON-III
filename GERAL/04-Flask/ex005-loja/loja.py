@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+from babel.numbers import format_currency
 from static.functions import *
 """ 
 
@@ -42,11 +43,6 @@ loja = Flask(__name__)
 def index():
     return render_template('index.html')
 
-""" teste """
-@loja.route('/teste')
-def teste():
-    produto = Produto('Celular', 5, 0, 'img', 'disponível')
-    return render_template('/index.html', resp = produto.descricao_produto())
 
 @loja.route('/estoque.html')
 def pag_estoque():
@@ -75,11 +71,60 @@ def del_produto(id):
     Produto.deletar_produto(id)
     return pag_estoque()
 
+@loja.route('/editarproduto.html')
+def pag_editar_produto(id):
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    cursor = conexao.cursor()
+    cursor.execute('SELECT * FROM produtos WHERE id = ?', (id,))
+    estoque = cursor.fetchone()
+    conexao.close()
+    return render_template('/editarproduto.html', id = id, nome = estoque[1], preco = estoque[2], estoque = estoque[3], img = estoque[4], categoria = estoque[5])
 
-loja.run(debug=True)
+@loja.route('/editar_produto/<id>')
+def btn_editar_produto(id):
+    return pag_editar_produto(id)
+
+@loja.route('/editarproduto.html/submit', methods=['POST'])
+def editar_produto():
+    """editar os dados do produto"""
+    id = request.form['id']
+    novo_nome = request.form['nome']
+    novo_preco = request.form['preco']
+    novo_estoque = request.form['estoque']
+    novo_img = request.form['img']
+    novo_categoria = request.form['categoria']
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    cursor = conexao.cursor()
+    cursor.execute('UPDATE produtos SET nome = ?, preco = ?, estoque = ?, img = ?, categoria = ? WHERE id = ?', (novo_nome, novo_preco, novo_estoque, novo_img, novo_categoria, id))
+    conexao.commit()
+    conexao.close()
+    return render_template('/editarproduto.html', resp = 'Produto editado!')
+
+@loja.route('/site.html')
+def pag_site():
+    estoque = Produto.listar_produtos()
+    return render_template('/site.html', produtos = estoque)
+
+@loja.route('/btn_comprar/<id>')
+def btn_comprar(id):
+    Produto.add_carrinho(id)
+    return render_template('/site.html', resp = 'Adicionado ao carrinho')
+
+@loja.route('/carrinho.html')
+def pag_carrinho():
+    produtos = Produto.lista_carrinho()
+    return render_template('/carrinho.html', itens = produtos)
+
+
+
+loja.run(debug=False)
 
 
 """
+
+Os produtos não estão indo para o carrinho. A tabela carrinho está vazia.
+
+criar página de notificações
 adicionar total de itens no estoque, por categoria, total do patrimônio (soma dos valores de todos os produtos).
 criar script que gera produtos recomendados, baseados nas preferências do usuário
 na loja, integrar com API dos correios para calcular o frete

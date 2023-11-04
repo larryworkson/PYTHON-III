@@ -44,3 +44,39 @@ class Produto():
         cursor.execute('DELETE FROM produtos WHERE id = ?', (id,))
         conexao.commit()
         conexao.close()
+    
+    def add_carrinho(id):
+        """esta função vai até o banco de dados produtos e copia as informações do produto para adicionar ao banco carrinho"""
+
+        """BUSCANDO INFOS DO PRODUTO"""
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM produtos WHERE id = ?', (id,))
+        produto = cursor.fetchone()
+        conexao.close()
+        
+        """ENVIANDO PARA O CARRINHO"""
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL)''')
+        lista = []
+        cadastro = {}
+        cadastro['nome'] = produto[1]
+        cadastro['preco'] = produto[2]
+        cadastro['quantidade'] = 1
+        cadastro['img'] = produto[4]
+        cadastro['categoria'] = produto[5]
+        lista.append(cadastro)
+        for cadastro in lista:
+            cursor.execute(' INSERT INTO carrinho (nome, preco, quantidade, img, categoria) VALUES (:nome, :preco, :quantidade, :img, :categoria)', cadastro)
+        conexao.commit()
+        conexao.close()
+    
+    def lista_carrinho():
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM carrinho ORDER BY nome')
+        carrinho = cursor.fetchall()
+        conexao.close()
+        return carrinho
+
