@@ -24,11 +24,15 @@
                 <tr>
                     <td>{{p[1]}}</td>
                     <td>R$ {{p[2]}}</td>
-                    <td>{{p[3]}}</td>
-                    <td><img src="{{produto[4]}}"></td>
+                    <td><a class="flecha" href="{{ url_for('diminui_item', id=p[0])}}"><span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                        </span></a>
+                        {{p[3]}}
+                        <a href="{{ url_for('aumenta_item', id=p[0])}}" class="flecha"><span class="material-symbols-outlined">chevron_right</span></a></td>
+                    <td><img src="{{p[4]}}"></td>
                     <td>{{p[5]}}</td>
                     <td>
-                        <a id="btndel" href=""><span class="material-symbols-outlined">delete</span></a>
+                        <a id="btndel" href="{{ url_for('del_produto_carrinho', id=p[0])}}"><span class="material-symbols-outlined">delete</span></a>
                     </td>        
                 </tr>
             {% endfor %}

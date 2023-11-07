@@ -38,6 +38,15 @@ class Produto():
         conexao.close()
         return estoque
     
+    def busca_produto(v):
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM produtos WHERE id = ?', (v,))
+        produto = cursor.fetchall()
+        conexao.commit()
+        conexao.close()
+        return produto
+    
     def deletar_produto(id):
         conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
@@ -45,6 +54,7 @@ class Produto():
         conexao.commit()
         conexao.close()
     
+    """botão comprar não está funcionando"""
     def add_carrinho(id):
         """esta função vai até o banco de dados produtos e copia as informações do produto para adicionar ao banco carrinho"""
 
@@ -79,4 +89,43 @@ class Produto():
         carrinho = cursor.fetchall()
         conexao.close()
         return carrinho
+    
+    def deletar_produto_carrinho(id):
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('DELETE FROM carrinho WHERE id = ?', (id,))
+        conexao.commit()
+        conexao.close()
+    
+    def incrementar_item(id):
+        """buscando quantidade atual"""
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM carrinho WHERE id = ?', (id,))
+        produto = cursor.fetchall()       
+        nova_quantidade = produto[0][3] + 1 
+        conexao.commit()
+        conexao.close()
+        """atualizando a quantidade"""
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
+        conexao.commit()
+        conexao.close()
+    
+    def decrementar_item(id):
+        """buscando quantidade atual"""
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM carrinho WHERE id = ?', (id,))
+        produto = cursor.fetchall()       
+        nova_quantidade = produto[0][3] - 1 
+        conexao.commit()
+        conexao.close()
+        """atualizando a quantidade"""
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        cursor = conexao.cursor()
+        cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
+        conexao.commit()
+        conexao.close()
 

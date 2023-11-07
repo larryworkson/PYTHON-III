@@ -64,6 +64,7 @@ th#nome {
 th.outros {
     width: 10%;
 }
+
 th#id {
     width: 2%;
 }
@@ -105,4 +106,9 @@ a#btnedit {
     display: block;
     margin: 20px auto;
     width: 300px;
+}
+
+a.flecha {
+    text-decoration: none;
+    color: #ffffff;
 }

@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from babel.numbers import format_currency
+
 from static.functions import *
 """ 
 
@@ -33,7 +33,11 @@ q5:
         1.1 página geral de produtos
         1.2 página das categorias
         1.3 página do carrinho
-        1.4 página de agradecimento        
+        1.4 página de agradecimento
+    2.0 carrinho dinâmico
+        2.1 mostrar o valor total da compra e quantidade total de itens.
+        2.2 opção para aumentar a quantidade de itens
+        2.3 botão checkout para finalizar a compra e debitar os itens do estoque.      
  """
 
 
@@ -108,13 +112,32 @@ def pag_site():
 @loja.route('/btn_comprar/<id>')
 def btn_comprar(id):
     Produto.add_carrinho(id)
-    return render_template('/site.html', resp = 'Adicionado ao carrinho')
+    return pag_carrinho()
 
 @loja.route('/carrinho.html')
 def pag_carrinho():
     produtos = Produto.lista_carrinho()
     return render_template('/carrinho.html', itens = produtos)
 
+@loja.route('/produto.html/<int:produto_id>')
+def pag_produto(produto_id):
+    produto = Produto.busca_produto(produto_id)
+    return render_template('/produto.html', idprod = produto[0][0], nome = produto[0][1], cat = produto[0][5], preco = produto[0][2], img = produto[0][4])
+
+@loja.route('/del_produto_carrinho/<id>')
+def del_produto_carrinho(id):
+    Produto.deletar_produto_carrinho(id)
+    return pag_carrinho()
+
+@loja.route('/aumenta_item/<id>')
+def aumenta_item(id):
+    Produto.incrementar_item(id)
+    return pag_carrinho()
+    
+@loja.route('/diminui_item/<id>')
+def diminui_item(id):
+    Produto.decrementar_item(id)
+    return pag_carrinho()
 
 
 loja.run(debug=False)
@@ -122,7 +145,7 @@ loja.run(debug=False)
 
 """
 
-Os produtos não estão indo para o carrinho. A tabela carrinho está vazia.
+adicionar no carrinho o valor total da compra. e quantidade total de itens.
 
 criar página de notificações
 adicionar total de itens no estoque, por categoria, total do patrimônio (soma dos valores de todos os produtos).
