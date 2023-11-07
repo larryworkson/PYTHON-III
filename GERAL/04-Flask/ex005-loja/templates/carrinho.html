@@ -12,16 +12,19 @@
     <main>
         <h1>Carrinho de compras</h1>
         <table id="lista">
-            <tr>                
+            <tr>     
+                <th class="outros">ID</th>           
                 <th id="nome">Nome</th>
                 <th class="outros">Preço</th>
                 <th class="outros">Quantidade</th>
                 <th class="outros">Foto</th>
                 <th class="outros">Categoria</th>
+                <th class="outros">Código</th>
                 <th class="outros">Ações</th>
             </tr>
             {% for p in itens %}
-                <tr>
+                <tr>  
+                    <td>{{p[0]}}</td>
                     <td>{{p[1]}}</td>
                     <td>R$ {{p[2]}}</td>
                     <td><a class="flecha" href="{{ url_for('diminui_item', id=p[0])}}"><span class="material-symbols-outlined">
@@ -31,13 +34,14 @@
                         <a href="{{ url_for('aumenta_item', id=p[0])}}" class="flecha"><span class="material-symbols-outlined">chevron_right</span></a></td>
                     <td><img src="{{p[4]}}"></td>
                     <td>{{p[5]}}</td>
+                    <td>{{p[6]}}</td>
                     <td>
                         <a id="btndel" href="{{ url_for('del_produto_carrinho', id=p[0])}}"><span class="material-symbols-outlined">delete</span></a>
                     </td>        
                 </tr>
             {% endfor %}
         </table>
-        
+        <a href="{{ url_for('finalizar_compra')}}" class="btngeral">FINALIZAR COMPRA</a>
         <a class="btngeral" href="/site.html">SITE</a>
     </main>
     

@@ -139,6 +139,16 @@ def diminui_item(id):
     Produto.decrementar_item(id)
     return pag_carrinho()
 
+@loja.route('/finalizar_compra')
+def finalizar_compra():
+    Produto.atualizar_estoque()
+    carrinho = Produto.lista_carrinho()
+    for i in carrinho:
+        Produto.deletar_produto_carrinho(i[0])
+    return pag_site()
+
+    
+
 
 loja.run(debug=False)
 
@@ -147,7 +157,8 @@ loja.run(debug=False)
 
 adicionar no carrinho o valor total da compra. e quantidade total de itens.
 
-criar página de notificações
+
+criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)
 adicionar total de itens no estoque, por categoria, total do patrimônio (soma dos valores de todos os produtos).
 criar script que gera produtos recomendados, baseados nas preferências do usuário
 na loja, integrar com API dos correios para calcular o frete

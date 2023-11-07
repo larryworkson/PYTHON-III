@@ -68,7 +68,7 @@ class Produto():
         """ENVIANDO PARA O CARRINHO"""
         conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL)''')
+        cursor.execute(''' CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL, chave INTEGER NOT NULL)''')
         lista = []
         cadastro = {}
         cadastro['nome'] = produto[1]
@@ -76,9 +76,10 @@ class Produto():
         cadastro['quantidade'] = 1
         cadastro['img'] = produto[4]
         cadastro['categoria'] = produto[5]
+        cadastro['chave'] = produto[0]
         lista.append(cadastro)
         for cadastro in lista:
-            cursor.execute(' INSERT INTO carrinho (nome, preco, quantidade, img, categoria) VALUES (:nome, :preco, :quantidade, :img, :categoria)', cadastro)
+            cursor.execute(' INSERT INTO carrinho (nome, preco, quantidade, img, categoria, chave) VALUES (:nome, :preco, :quantidade, :img, :categoria, :chave)', cadastro)
         conexao.commit()
         conexao.close()
     
@@ -129,3 +130,15 @@ class Produto():
         conexao.commit()
         conexao.close()
 
+    def atualizar_estoque():
+        carrinho = Produto.lista_carrinho()
+        for item in carrinho:
+            key = item[6]
+            """buscando quantidade atual"""
+            estoque = Produto.busca_produto(key)
+            nova_qtd = estoque[0][3] - item[3] #nova quantidade é o estoque atuao - a quantidade comprada no carrinho.
+            conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+            cursor = conexao.cursor()
+            cursor.execute('UPDATE produtos SET estoque = ? WHERE id = ?', (nova_qtd, key))
+            conexao.commit()
+            conexao.close()
