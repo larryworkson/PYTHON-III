@@ -51,7 +51,9 @@ def index():
 @loja.route('/estoque.html')
 def pag_estoque():
     estoque = Produto.listar_produtos()
-    return render_template('/estoque.html', produtos = estoque)
+    totpatrimonio = Produto.soma_patrimonio()
+    totestoque = Produto.soma_estoque()
+    return render_template('/estoque.html', produtos = estoque, patrimonio = totpatrimonio, totalestoque = totestoque)
 
 """renderizar página de produtos"""
 @loja.route('/cadastro.html')
@@ -102,11 +104,11 @@ def editar_produto():
     cursor.execute('UPDATE produtos SET nome = ?, preco = ?, estoque = ?, img = ?, categoria = ? WHERE id = ?', (novo_nome, novo_preco, novo_estoque, novo_img, novo_categoria, id))
     conexao.commit()
     conexao.close()
-    return render_template('/editarproduto.html', resp = 'Produto editado!')
+    return pag_estoque()
 
 @loja.route('/site.html')
 def pag_site():
-    estoque = Produto.listar_produtos()
+    estoque = Produto.listar_produtos_site()
     return render_template('/site.html', produtos = estoque)
 
 @loja.route('/btn_comprar/<id>')
@@ -117,7 +119,8 @@ def btn_comprar(id):
 @loja.route('/carrinho.html')
 def pag_carrinho():
     produtos = Produto.lista_carrinho()
-    return render_template('/carrinho.html', itens = produtos)
+    soma = Produto.soma_carrinho()
+    return render_template('/carrinho.html', itens = produtos, total = soma)
 
 @loja.route('/produto.html/<int:produto_id>')
 def pag_produto(produto_id):
@@ -155,11 +158,17 @@ loja.run(debug=False)
 
 """
 
-adicionar no carrinho o valor total da compra. e quantidade total de itens.
 
+adicionar regra: o produto só aperece na lista se o estoque dele for > que 0.
 
 criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)
+Notifica quando houver uma nova venda.
+Mostrar relatório com dados da última venda, valor, dia e horário.
+
 adicionar total de itens no estoque, por categoria, total do patrimônio (soma dos valores de todos os produtos).
+
+Adicionar máscara para o valor monetário
+
 criar script que gera produtos recomendados, baseados nas preferências do usuário
 na loja, integrar com API dos correios para calcular o frete
 
