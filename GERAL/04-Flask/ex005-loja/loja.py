@@ -42,11 +42,16 @@ q5:
 
 
 loja = Flask(__name__)
+"""--------------------------------------------"""
+"""PÁGINAS"""
+"""--------------------------------------------"""
 
 @loja.route('/')
 def index():
     return render_template('index.html')
 
+
+#PÁGINAS GERENCIAMENTO DE ESTOQUE"
 
 @loja.route('/estoque.html')
 def pag_estoque():
@@ -55,14 +60,55 @@ def pag_estoque():
     totestoque = Produto.soma_estoque()
     return render_template('/estoque.html', produtos = estoque, patrimonio = totpatrimonio, totalestoque = totestoque)
 
-"""renderizar página de produtos"""
 @loja.route('/cadastro.html')
 def pag_cadastro():
     return render_template('/cadastro.html')
 
-""" cadastrar produto na loja """
+@loja.route('/editarproduto.html')
+def pag_editar_produto(id):
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    cursor = conexao.cursor()
+    cursor.execute('SELECT * FROM produtos WHERE id = ?', (id,))
+    estoque = cursor.fetchone()
+    conexao.close()
+    return render_template('/editarproduto.html', id = id, nome = estoque[1], preco = estoque[2], estoque = estoque[3], img = estoque[4], categoria = estoque[5])
+
+
+#PÁGINAS DA LOJA VIRTUAL"
+
+@loja.route('/site.html')
+def pag_site():
+    estoque = Produto.listar_produtos_site()
+    return render_template('/site.html', produtos = estoque)
+
+@loja.route('/agradecimento.html')
+def pag_agradecimento():
+    return render_template('/agradecimento.html')
+
+@loja.route('/carrinho.html')
+def pag_carrinho():
+    produtos = Produto.lista_carrinho()
+    soma = Produto.soma_carrinho()
+    return render_template('/carrinho.html', itens = produtos, total = soma)
+
+@loja.route('/produto.html/<int:produto_id>')
+def pag_produto(produto_id):
+    produto = Produto.busca_produto(produto_id)
+    return render_template('/produto.html', idprod = produto[0][0], nome = produto[0][1], cat = produto[0][5], preco = produto[0][2], img = produto[0][4])
+
+"""--------------------------------------------"""
+"""FIM PÁGINAS"""
+"""--------------------------------------------"""
+
+
+"""--------------------------------------------"""
+"""BOTÕES"""
+"""--------------------------------------------"""
+#BOTÕES DO GERENCIAMENTO DE ESTOQUE"
+
 @loja.route('/cadastro.html/submit', methods=['POST'])
 def enviar_form():
+    """cadastra um produto na loja"""
     nome = request.form['nome']
     preco = request.form['preco']
     estoque = request.form['estoque']
@@ -74,17 +120,9 @@ def enviar_form():
 
 @loja.route('/del_produto/<id>')
 def del_produto(id):
+    """deleta um produto do estoque"""
     Produto.deletar_produto(id)
     return pag_estoque()
-
-@loja.route('/editarproduto.html')
-def pag_editar_produto(id):
-    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
-    cursor = conexao.cursor()
-    cursor.execute('SELECT * FROM produtos WHERE id = ?', (id,))
-    estoque = cursor.fetchone()
-    conexao.close()
-    return render_template('/editarproduto.html', id = id, nome = estoque[1], preco = estoque[2], estoque = estoque[3], img = estoque[4], categoria = estoque[5])
 
 @loja.route('/editar_produto/<id>')
 def btn_editar_produto(id):
@@ -92,7 +130,7 @@ def btn_editar_produto(id):
 
 @loja.route('/editarproduto.html/submit', methods=['POST'])
 def editar_produto():
-    """editar os dados do produto"""
+    """editar os dados do produto no estoque"""
     id = request.form['id']
     novo_nome = request.form['nome']
     novo_preco = request.form['preco']
@@ -106,26 +144,12 @@ def editar_produto():
     conexao.close()
     return pag_estoque()
 
-@loja.route('/site.html')
-def pag_site():
-    estoque = Produto.listar_produtos_site()
-    return render_template('/site.html', produtos = estoque)
+#BOTÕES DA LOJA VIRUTAL
 
 @loja.route('/btn_comprar/<id>')
 def btn_comprar(id):
     Produto.add_carrinho(id)
     return pag_carrinho()
-
-@loja.route('/carrinho.html')
-def pag_carrinho():
-    produtos = Produto.lista_carrinho()
-    soma = Produto.soma_carrinho()
-    return render_template('/carrinho.html', itens = produtos, total = soma)
-
-@loja.route('/produto.html/<int:produto_id>')
-def pag_produto(produto_id):
-    produto = Produto.busca_produto(produto_id)
-    return render_template('/produto.html', idprod = produto[0][0], nome = produto[0][1], cat = produto[0][5], preco = produto[0][2], img = produto[0][4])
 
 @loja.route('/del_produto_carrinho/<id>')
 def del_produto_carrinho(id):
@@ -148,9 +172,11 @@ def finalizar_compra():
     carrinho = Produto.lista_carrinho()
     for i in carrinho:
         Produto.deletar_produto_carrinho(i[0])
-    return pag_site()
+    return pag_agradecimento()
 
-    
+"""--------------------------------------------"""
+"""FIM BOTÕES"""
+"""--------------------------------------------"""  
 
 
 loja.run(debug=False)
@@ -159,13 +185,14 @@ loja.run(debug=False)
 """
 
 
-adicionar regra: o produto só aperece na lista se o estoque dele for > que 0.
+adicionar regra: só é possível comprar a quantidade de itens disponível. Se comprar 2 e só tiver um, gerar erro.
 
 criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)
 Notifica quando houver uma nova venda.
+
 Mostrar relatório com dados da última venda, valor, dia e horário.
 
-adicionar total de itens no estoque, por categoria, total do patrimônio (soma dos valores de todos os produtos).
+criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
 
 Adicionar máscara para o valor monetário
 
