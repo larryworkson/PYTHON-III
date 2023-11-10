@@ -184,19 +184,19 @@ loja.run(debug=False)
 
 """
 
+AJUSTES CRÍTICOS:
+    [ERRO de lógica na condição para evitar repetição no carrinho] quando outro produto é adicionado ao carrinho, gera erro na condição adicionar somente se for diferente.
+    - Adicionar máscara para o valor monetário
 
-adicionar regra: só é possível comprar a quantidade de itens disponível. Se comprar 2 e só tiver um, gerar erro.
-
-criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)
-Notifica quando houver uma nova venda.
-
-Mostrar relatório com dados da última venda, valor, dia e horário.
-
-criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
-
-Adicionar máscara para o valor monetário
-
-criar script que gera produtos recomendados, baseados nas preferências do usuário
-na loja, integrar com API dos correios para calcular o frete
+AJUSTES DE MELHORIA:
+    - criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)
+    
+    - Notificar admin quando houver uma nova venda.
+    - Mostrar relatório com dados da última venda, valor, dia e horário.
+    - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
+    - criar script que gera produtos recomendados na página do carrinho, baseados nas preferências do usuário
+    - add número com quantidade de itens no carrinho enquanto cliente navega
+    - integrar com API dos correios para calcular o frete
+    - criar layout moderno de loja (ver refs de ecommerce, criar logo etc.)
 
 """
