@@ -15,3 +15,6 @@ conn.close()
 
 qtd_estoque = Produto.busca_produto(7)
 print(qtd_estoque[0][1])
+print('-'*30)
+carrinho = Produto.lista_carrinho()
+print(carrinho[0][0])

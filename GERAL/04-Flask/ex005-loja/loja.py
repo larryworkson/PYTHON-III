@@ -184,13 +184,13 @@ loja.run(debug=False)
 
 """
 
+
 AJUSTES CRÍTICOS:
-    [ERRO de lógica na condição para evitar repetição no carrinho] quando outro produto é adicionado ao carrinho, gera erro na condição adicionar somente se for diferente.
     - Adicionar máscara para o valor monetário
 
 AJUSTES DE MELHORIA:
     - criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)
-    
+    - Add botão para limpar carrinho
     - Notificar admin quando houver uma nova venda.
     - Mostrar relatório com dados da última venda, valor, dia e horário.
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque

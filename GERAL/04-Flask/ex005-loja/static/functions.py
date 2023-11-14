@@ -90,10 +90,7 @@ class Produto():
         produto = cursor.fetchone()
         conexao.close()
 
-        #verificando se já tem um produto igual no carrinho.
-        carrinho = Produto.lista_carrinho()
-        if not carrinho:            
-            #caso não haja nada no carrinho o item é adicionado.
+        def enviar_para_carrinho():
             """ENVIANDO PARA O CARRINHO"""
             conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
             cursor = conexao.cursor()
@@ -111,28 +108,18 @@ class Produto():
                 cursor.execute(' INSERT INTO carrinho (nome, preco, quantidade, img, categoria, chave) VALUES (:nome, :preco, :quantidade, :img, :categoria, :chave)', cadastro)
             conexao.commit()
             conexao.close()
-        
-        else: #caso já tenha algo no carrinho, verificar se é repetido.
-            if produto[0] == carrinho[0][6]:
-                Produto.incrementar_item(carrinho[0][0])
-            elif produto[0] != carrinho[0][6]: #se não for repetido, adicionar item.
-                """ENVIANDO PARA O CARRINHO"""
-                conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
-                cursor = conexao.cursor()
-                cursor.execute(''' CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL, chave INTEGER NOT NULL)''')
-                lista = []
-                cadastro = {}
-                cadastro['nome'] = produto[1]
-                cadastro['preco'] = produto[2]
-                cadastro['quantidade'] = 1
-                cadastro['img'] = produto[4]
-                cadastro['categoria'] = produto[5]
-                cadastro['chave'] = produto[0]
-                lista.append(cadastro)
-                for cadastro in lista:
-                    cursor.execute(' INSERT INTO carrinho (nome, preco, quantidade, img, categoria, chave) VALUES (:nome, :preco, :quantidade, :img, :categoria, :chave)', cadastro)
-                conexao.commit()
-                conexao.close()
+        #verificando se já tem um produto igual no carrinho.
+        carrinho = Produto.lista_carrinho() #puxa os itens do carrinho.
+        encontrado = False #boolean para condicionar o envio.
+        for i in carrinho: #percorre todos os itens do carrinho para verificar se há algum igual.
+            if produto[0] == i[6]:
+                Produto.incrementar_item(i[0])
+                encontrado = True #boolean ativado para não executar o if depois do break e evitar duplicidade.
+                break
+        if not encontrado:
+            enviar_para_carrinho()           
+            
+                
 
 
     
