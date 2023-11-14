@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 
+from flask_babel import format_currency, Babel
 from static.functions import *
 """ 
 
@@ -40,8 +41,13 @@ q5:
         2.3 botão checkout para finalizar a compra e debitar os itens do estoque.      
  """
 
-
+"""INICILIAZAÇÃO DO APP"""
 loja = Flask(__name__)
+babel = Babel(loja) #configuração da lib de conversão de valores em moeda.
+loja.config['BABEL_DEFAULT_LOCALE'] = 'pt_BR'
+
+
+
 """--------------------------------------------"""
 """PÁGINAS"""
 """--------------------------------------------"""
@@ -79,7 +85,13 @@ def pag_editar_produto(id):
 @loja.route('/site.html')
 def pag_site():
     estoque = Produto.listar_produtos_site()
-    return render_template('/site.html', produtos = estoque)
+    produtos_formatados = []
+    for item in estoque:
+        """criei uma cópia dos produtos que vem do estoque para poder converter o valor do produto em valor monetário"""
+        produto_formato = list(item)
+        produto_formato[2] = format_currency(item[2], 'BRL')
+        produtos_formatados.append(produto_formato)
+    return render_template('/site.html', produtos = produtos_formatados)
 
 @loja.route('/agradecimento.html')
 def pag_agradecimento():
@@ -94,7 +106,13 @@ def pag_carrinho():
 @loja.route('/produto.html/<int:produto_id>')
 def pag_produto(produto_id):
     produto = Produto.busca_produto(produto_id)
-    return render_template('/produto.html', idprod = produto[0][0], nome = produto[0][1], cat = produto[0][5], preco = produto[0][2], img = produto[0][4])
+    produtos_formatados = []
+    for item in produto:
+        """criei uma cópia das propriedades do produto converter o valor do produto em valor monetário"""
+        produto_formato = list(item)
+        produto_formato[2] = format_currency(item[2], 'BRL')
+        produtos_formatados.append(produto_formato)
+    return render_template('/produto.html', idprod = produto[0][0], nome = produto[0][1], cat = produto[0][5], preco = produto_formato[2], img = produto[0][4])
 
 """--------------------------------------------"""
 """FIM PÁGINAS"""
