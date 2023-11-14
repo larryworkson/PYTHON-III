@@ -204,7 +204,6 @@ loja.run(debug=False)
 
 
 AJUSTES CRÍTICOS:
-    - Adicionar máscara para o valor monetário
 
 AJUSTES DE MELHORIA:
     - criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)

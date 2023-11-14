@@ -1,10 +1,20 @@
+:root {
+    --fundodestaque: green;
+    --fundoescuro: black;
+    --infosecundaria: rgb(146, 146, 146);
+    --infoimportante: black;
+    --detalhe: rgb(0, 122, 0);
+    --corlight: rgb(255, 255, 255);
+
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(26, 26, 26);
-    color: rgb(202, 202, 202);
+    background-color: var(--fundoescuro);
+    color: var(--infosecundaria)
 }
 main {
-    background-color: rgb(12, 12, 12);
+    background-color: var(--fundoescuro);
     width: 80%;
     margin: auto;
     border-radius: 20px;
@@ -18,7 +28,7 @@ section {
     display: inline-block;
     margin: 30px;
     padding: 30px;
-    background-color: rgb(46, 46, 46);
+    background-color: var(--corlight);
 }
 
 div > img.imgprod {
@@ -29,13 +39,36 @@ div > img.imgprod {
 a.btncomprar {
     text-decoration: none;
     font-weight: bold;
-    margin: 20px 0px;
-    color: #ffffff;
-    background-color: blueviolet;
-    padding: 5px;
+    font-size: 1.5em;
+    margin: 10px 0px;
+    color: var(--corlight);
+    background-color: var(--fundodestaque);
+    padding: 10px;
+    border-radius: 5px;
+    border: var(--detalhe) 2px solid;
 }
 img.destaque {
     width: 500px;
     
 }
 
+div.info_prod {
+    margin: 15px 0px;
+}
+
+div.info_categoria {
+    color: var(--infosecundaria);
+    font-size: 0.8em;
+}
+
+div.info_nome_prod {
+    color: var(--infoimportante);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+div.info_preco_prod {
+    font-size: 1.7em;
+    color: var(--infoimportante);
+    font-weight: bold;
+}

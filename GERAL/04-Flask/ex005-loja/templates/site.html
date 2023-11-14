@@ -13,10 +13,10 @@
         <h1>Produtos</h1>
         {% for item in produtos %}
         <section>
-            <div><img class="imgprod" src="{{item[4]}}"></div>
-            <div>{{item[5]}}</div>
-            <div>{{item[1]}}</div>
-            <div>{{item[2]}}</div>
+            <div class="info_prod"><img class="imgprod" src="{{item[4]}}"></div>
+            <div class="info_prod info_categoria">{{item[5]}}</div>
+            <div class="info_prod info_nome_prod">{{item[1]}}</div>
+            <div class="info_prod info_preco_prod">{{item[2]}}</div>
             <a class="btncomprar" href="{{ url_for ('pag_produto', produto_id=item[0])}}">COMPRAR</a>
 
         </section>
