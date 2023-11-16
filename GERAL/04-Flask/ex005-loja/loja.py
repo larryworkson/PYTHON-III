@@ -174,6 +174,14 @@ def del_produto_carrinho(id):
     Produto.deletar_produto_carrinho(id)
     return pag_carrinho()
 
+@loja.route('/del_todo_carrinho')
+def del_todo_carrinho():
+    produtos = Produto.lista_carrinho()
+    for item in produtos:
+        Produto.deletar_produto_carrinho(item[0])
+    return pag_carrinho()
+
+
 @loja.route('/aumenta_item/<id>')
 def aumenta_item(id):
     Produto.incrementar_item(id)
@@ -206,9 +214,7 @@ loja.run(debug=False)
 AJUSTES CRÍTICOS:
 
 AJUSTES DE MELHORIA:
-    - criar página de notificações (quando produto tiver menos de 10 unidades gera notificação ao admin)
-    - Add botão para limpar carrinho
-    - Notificar admin quando houver uma nova venda.
+        - Notificar admin quando houver uma nova venda.
     - Mostrar relatório com dados da última venda, valor, dia e horário.
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
     - criar script que gera produtos recomendados na página do carrinho, baseados nas preferências do usuário

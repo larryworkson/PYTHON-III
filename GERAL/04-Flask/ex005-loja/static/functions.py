@@ -145,6 +145,8 @@ class Produto():
         conexao.commit()
         conexao.close()
     
+    
+    
     def incrementar_item(id):
         """buscando quantidade atual"""
         conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')

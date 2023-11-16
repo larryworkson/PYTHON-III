@@ -112,3 +112,9 @@ a.flecha {
     text-decoration: none;
     color: #ffffff;
 }
+
+a.limpa_carrinho {
+    text-decoration: none;
+    text-align: right;
+    color: red;
+}

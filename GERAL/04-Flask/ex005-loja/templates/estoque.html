@@ -28,12 +28,13 @@
                     <td>{{produto[1]}}</td>
                     <td>R$ {{produto[2]}}</td>
                     <td style="color: {{infocor}}">
+                        <!-- verificando de nível de estoque-->
                         {% if produto[3] <= 10 %}
                             <span style="color: red;">Crítico</span>
                         {% elif produto[3] <= 25 %}
                             <span style="color: yellow;">Baixo</span>
                         {% elif produto[3] > 25 %}
-                            <span style="color: green;">Normal</span>
+                            <span style="color: rgb(0, 115, 255);">Normal</span>
                         {% endif %}
                     </td>
                     <td>{{produto[3]}}</td>
