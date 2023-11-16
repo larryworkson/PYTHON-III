@@ -86,7 +86,7 @@ def pag_editar_produto(id):
 def pag_site():
     estoque = Produto.listar_produtos_site()
     produtos_formatados = []
-    for item in estoque:
+    for item in estoque:        
         """criei uma cópia dos produtos que vem do estoque para poder converter o valor do produto em valor monetário"""
         produto_formato = list(item)
         produto_formato[2] = format_currency(item[2], 'BRL')

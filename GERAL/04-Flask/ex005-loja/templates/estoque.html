@@ -17,6 +17,7 @@
                 <th id="nome">Nome</th>
                 <th class="outros">Preço</th>
                 <th class="outros">Estoque</th>
+                <th class="outros">Quantidade</th>
                 <th class="outros">Foto</th>
                 <th class="outros">Categoria</th>
                 <th colspan="2" class="outros">Ações</th>
@@ -26,6 +27,15 @@
                     <td>{{produto[0]}}</td>
                     <td>{{produto[1]}}</td>
                     <td>R$ {{produto[2]}}</td>
+                    <td style="color: {{infocor}}">
+                        {% if produto[3] <= 10 %}
+                            <span style="color: red;">Crítico</span>
+                        {% elif produto[3] <= 25 %}
+                            <span style="color: yellow;">Baixo</span>
+                        {% elif produto[3] > 25 %}
+                            <span style="color: green;">Normal</span>
+                        {% endif %}
+                    </td>
                     <td>{{produto[3]}}</td>
                     <td><img src="{{produto[4]}}"></td>
                     <td>{{produto[5]}}</td>
