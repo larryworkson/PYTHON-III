@@ -9,6 +9,12 @@
 
 </head>
 <body>
+    <header>
+        <nav class="menu">
+            <a href="/site.html">Home</a>
+            <a href="/carrinho.html">Carrinho</a>
+        </nav>
+    </header>
     <main>
         <img class="destaque" src="{{img}}">
         <h1>{{nome}}</h1>
@@ -17,7 +23,5 @@
         <a class="btncomprar" href="{{ url_for('btn_comprar', id=idprod)}}">COMPRAR</a>
 
     </main>
-    <a class="btngeral" href="/site.html">Site</a>
-    <a class="btngeral" href="/carrinho.html">Carrinho</a>
 </body>
 </html>

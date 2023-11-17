@@ -214,7 +214,7 @@ loja.run(debug=False)
 AJUSTES CRÍTICOS:
 
 AJUSTES DE MELHORIA:
-        - Notificar admin quando houver uma nova venda.
+    - Notificar admin quando houver uma nova venda.
     - Mostrar relatório com dados da última venda, valor, dia e horário.
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
     - criar script que gera produtos recomendados na página do carrinho, baseados nas preferências do usuário

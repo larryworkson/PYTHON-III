@@ -8,9 +8,21 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style-loja.css') }}">
 
 </head>
+
 <body>
+    <header>
+        <nav class="menu">
+            <a href="/">Painel Admin</a>
+
+        </nav>
+    </header>
+    
     <main>
-        <h1>Produtos</h1>
+        <div class="topo">
+            <p>Produtos</p>
+            <a href="/carrinho.html"><span class="material-symbols-outlined">shopping_cart</span>Carrinho</a>
+        </div>
+        
         {% for item in produtos %}
         <section>
             <div class="info_prod"><img class="imgprod" src="{{item[4]}}"></div>
@@ -23,7 +35,6 @@
         {% endfor %}
         
     </main>
-    <a class="btngeral" href="/">Index</a>
-    <a class="btngeral" href="/carrinho.html">Carrinho</a>
+    
 </body>
 </html>

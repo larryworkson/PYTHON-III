@@ -1,3 +1,8 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
 :root {
     --fundodestaque: green;
     --fundoescuro: black;
@@ -5,24 +10,44 @@
     --infoimportante: black;
     --detalhe: rgb(0, 122, 0);
     --corlight: rgb(255, 255, 255);
+    --corbtnmenu: rgb(0, 145, 255);
 
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--fundoescuro);
-    color: var(--infosecundaria)
+    background-color: var(--corlight);
+    color: var(--infosecundaria);
 }
 main {
-    background-color: var(--fundoescuro);
+    background-color: var(--corlight);
     width: 80%;
     margin: auto;
     border-radius: 20px;
     padding: 20px;
 }
-h1 {
-    text-align: center;
+
+nav {
+    background-color: #333333;
+    padding: 10px;
 }
+
+nav.menu > a {
+    text-decoration: none;
+    color: white;
+    background-color: var(--corbtnmenu);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+div.topo {
+    background-color: aliceblue;
+    color: black;
+    text-align: right;
+}
+
+
+
 section {
     width: 300px;
     display: inline-block;
@@ -71,4 +96,68 @@ div.info_preco_prod {
     font-size: 1.7em;
     color: var(--infoimportante);
     font-weight: bold;
+}
+
+
+/* CARRINHO DE COMPRAS */
+table#lista {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+th#nome {
+    width: 60%;
+}
+th.outros {
+    width: 10%;
+}
+
+th#id {
+    width: 2%;
+}
+
+td, th {
+    border-bottom: 1px solid rgb(63, 63, 63);
+    height: 40px;
+
+}
+th {
+    text-align: left;
+}
+
+th > a {
+    text-decoration: none;
+    background-color: none;
+    color: rgb(224, 137, 24);
+}
+
+td > a {
+    margin-right: 20px;
+}
+td > img {
+    width: 30px;
+}
+
+a.limpa_carrinho {
+    text-decoration: none;
+    text-align: right;
+    color: red;
+}
+a.flecha {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.btngeral {
+    display: block;
+    width: 300px;
+    text-align: center;
+    background-color: rgb(0, 157, 168);
+    margin: 10px 0px;
+    color: rgb(230, 230, 255);
+    text-decoration: none;
+    border: none;
+    padding: 10px 0px;
+    border-radius: 5px;
+
 }
