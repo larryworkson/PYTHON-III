@@ -56,6 +56,32 @@
         </table>
         <a class="btngeral" href="/cadastro.html">Cadastrar produto</a>
         <a class="btngeral" href="/">Index</a>
+        <h1>Relatório de Vendas</h1>
+        <table>
+            <tr>
+                <th id="id">ID</th>
+                <th id="nome">Itens</th>
+                <th class="outros">Valor</th>
+                <th class="outros">Data</th>
+                <th colspan="1" class="outros">Ações</th>
+            </tr>
+            {% for item in vendidos %}
+                <tr>
+                    <td>{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                    <td>R$ {{item[2]}}</td>
+                    <td>{{item[3]}}</td>
+                    <td>
+                        <a href="{{ url_for('del_item_venda', id=item[0]) }}"><span class="material-symbols-outlined">delete</span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="2">Total de vendas</td>
+                <td colspan="3">R$ {{somavendas}}</td>
+            </tr> 
+            
+        </table>
     </main>
     
 </body>

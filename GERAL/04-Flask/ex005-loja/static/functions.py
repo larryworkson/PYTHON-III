@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 class Produto():
     def __init__(self, nome, preco, estoque, img, categoria):
        """inicializa os atributos dos produtos"""
@@ -196,3 +197,48 @@ class Produto():
             cursor.execute('UPDATE produtos SET estoque = ? WHERE id = ?', (nova_qtd, key))
             conexao.commit()
             conexao.close()
+
+#FUNÇÕES GERAIS
+
+def registrar_venda():
+    """esta função copia os nomes dos itens comprados no carrinho e adiciona a um tabela com data, hora e valor total da compra."""
+    #listando itens do carrinho
+    carrinho = Produto.lista_carrinho()
+    itens = ''
+    for item in carrinho: #estou adicionar o nome de todos os itens do carrinho em uma única célula para saber o que vendeu.
+        itens += f'[{item[3]}] {item[1]} + '
+
+    #capturando data e hora da compra
+    data_hora = datetime.now()
+    formato = '%d/%m/%Y %H:%M'
+    data_hora_formatada = data_hora.strftime(formato)
+
+    #conectando ao BD
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    cursor = conexao.cursor()
+    cursor.execute(''' CREATE TABLE IF NOT EXISTS vendas (id INTEGER PRIMARY KEY, nomeitens TEXT NOT NULL, precotot FLOAT NOT NULL, data TEXT NOT NULL)''')
+    lista = []
+    cadastro = {}
+    cadastro['nomeitens'] = itens #a soma de todos os nomes dos itens do carrinho
+    cadastro['precotot'] = Produto.soma_carrinho()
+    cadastro['data'] = data_hora_formatada
+    lista.append(cadastro)
+    for cadastro in lista:
+        cursor.execute(' INSERT INTO vendas (nomeitens, precotot, data) VALUES (:nomeitens, :precotot, :data)', cadastro)
+    conexao.commit()
+    conexao.close()
+    
+def listar_vendas():
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    cursor = conexao.cursor()
+    cursor.execute('SELECT * FROM vendas ORDER BY data')
+    vendas = cursor.fetchall()
+    conexao.close()
+    return vendas
+
+def del_venda(id):
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    cursor = conexao.cursor()
+    cursor.execute('DELETE FROM vendas WHERE id = ?', (id,))
+    conexao.commit()
+    conexao.close()

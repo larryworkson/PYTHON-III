@@ -62,9 +62,13 @@ def index():
 @loja.route('/estoque.html')
 def pag_estoque():
     estoque = Produto.listar_produtos()
+    vendas = listar_vendas()
+    totvendas = 0
+    for i in vendas:
+        totvendas += i[2]
     totpatrimonio = Produto.soma_patrimonio()
     totestoque = Produto.soma_estoque()
-    return render_template('/estoque.html', produtos = estoque, patrimonio = totpatrimonio, totalestoque = totestoque)
+    return render_template('/estoque.html', produtos = estoque, patrimonio = totpatrimonio, totalestoque = totestoque, vendidos = vendas, somavendas = totvendas)
 
 @loja.route('/cadastro.html')
 def pag_cadastro():
@@ -79,6 +83,11 @@ def pag_editar_produto(id):
     conexao.close()
     return render_template('/editarproduto.html', id = id, nome = estoque[1], preco = estoque[2], estoque = estoque[3], img = estoque[4], categoria = estoque[5])
 
+@loja.route('/del_item_venda/<id>')
+def del_item_venda(id):
+    """botão que remove um registro de venda"""
+    del_venda(id)
+    return pag_estoque()
 
 #PÁGINAS DA LOJA VIRTUAL"
 
@@ -194,6 +203,7 @@ def diminui_item(id):
 
 @loja.route('/finalizar_compra')
 def finalizar_compra():
+    registrar_venda()
     Produto.atualizar_estoque()
     carrinho = Produto.lista_carrinho()
     for i in carrinho:
@@ -212,13 +222,13 @@ loja.run(debug=False)
 
 
 AJUSTES CRÍTICOS:
+    - criar função para abrir e fechar o BD. Para diminuir o número de linhas nas funções que acessam o BD.
 
 AJUSTES DE MELHORIA:
-    - Notificar admin quando houver uma nova venda.
-    - Mostrar relatório com dados da última venda, valor, dia e horário.
+    - add número com quantidade de itens no carrinho enquanto cliente navega
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
     - criar script que gera produtos recomendados na página do carrinho, baseados nas preferências do usuário
-    - add número com quantidade de itens no carrinho enquanto cliente navega
+    
     - integrar com API dos correios para calcular o frete
     - criar layout moderno de loja (ver refs de ecommerce, criar logo etc.)
 
