@@ -95,12 +95,13 @@ def del_item_venda(id):
 def pag_site():
     estoque = Produto.listar_produtos_site()
     produtos_formatados = []
+    itens_carrinho = Produto.lista_carrinho()
     for item in estoque:        
         """criei uma cópia dos produtos que vem do estoque para poder converter o valor do produto em valor monetário"""
         produto_formato = list(item)
         produto_formato[2] = format_currency(item[2], 'BRL')
         produtos_formatados.append(produto_formato)
-    return render_template('/site.html', produtos = produtos_formatados)
+    return render_template('/site.html', produtos = produtos_formatados, qtd_itenscarrinho = len(itens_carrinho))
 
 @loja.route('/agradecimento.html')
 def pag_agradecimento():
@@ -223,6 +224,7 @@ loja.run(debug=False)
 
 AJUSTES CRÍTICOS:
     - criar função para abrir e fechar o BD. Para diminuir o número de linhas nas funções que acessam o BD.
+    - organizar o código, tem vários itens na mesma classe.
 
 AJUSTES DE MELHORIA:
     - add número com quantidade de itens no carrinho enquanto cliente navega

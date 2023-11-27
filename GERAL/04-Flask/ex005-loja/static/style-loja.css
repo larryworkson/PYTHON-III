@@ -40,6 +40,14 @@ nav.menu > a {
     border-radius: 5px;
 }
 
+span#qtd_itenscarrinho {
+    background-color: rgb(255, 84, 84);
+    padding: 5px;
+    color: #ffffff;
+    border-radius: 5px;
+
+}
+
 div.topo {
     background-color: aliceblue;
     color: black;
