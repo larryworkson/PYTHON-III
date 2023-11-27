@@ -223,11 +223,12 @@ loja.run(debug=False)
 
 
 AJUSTES CRÍTICOS:
+    - o botão para incrementar itens no carrinho está invisível
     - criar função para abrir e fechar o BD. Para diminuir o número de linhas nas funções que acessam o BD.
+    - criar função para add ou editar itens no db
     - organizar o código, tem vários itens na mesma classe.
 
 AJUSTES DE MELHORIA:
-    - add número com quantidade de itens no carrinho enquanto cliente navega
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
     - criar script que gera produtos recomendados na página do carrinho, baseados nas preferências do usuário
     

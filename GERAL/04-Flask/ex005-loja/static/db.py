@@ -13,8 +13,11 @@ conn.commit()
 conn.close()
  """
 
-qtd_estoque = Produto.busca_produto(7)
-print(qtd_estoque[0][1])
-print('-'*30)
-carrinho = Produto.lista_carrinho()
-print(len(carrinho))
+estoque = Produto.listar_produtos()
+for i in estoque:
+    print(i)
+
+Produto.deletar_produto(11)
+
+for p in estoque:
+    print(p)

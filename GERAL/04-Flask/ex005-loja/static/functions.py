@@ -12,6 +12,10 @@ class Produto():
     def descricao_produto(self):
         nome = f'{self.nome}\n{self.preco}\n{self.estoque}\n{self.img}\n{self.categoria}'
         return nome
+    
+    
+
+
     # GERENCIAMENTO DO ESTOQUE
     def cadastrar(self):
         """método que cadastra um produto no BD"""
@@ -33,12 +37,16 @@ class Produto():
     
     def listar_produtos():
         """Esta listagem busca todos os produtos cadastrados"""
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        #nova conexao DB
+        estoque = ativar_db('SELECT * FROM produtos ORDER BY nome')
+        
+        #conexao  antiga DB
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM produtos ORDER BY nome')
         estoque = cursor.fetchall()
-        conexao.close()
-        return estoque        
+        conexao.close() """
+        return estoque  
     
     def soma_patrimonio():
         itens = Produto.listar_produtos()
@@ -64,32 +72,40 @@ class Produto():
         return produto
     
     def deletar_produto(id):
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        ativar_db('DELETE FROM produtos WHERE id = ?', id, True)
+        
+        #conexao antiga DB
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('DELETE FROM produtos WHERE id = ?', (id,))
         conexao.commit()
-        conexao.close()
+        conexao.close() """
 
     # GERENCIAMENTO DA LOJA VIRTUAL
 
     def listar_produtos_site():
         """Esta listagem busca apenas os produtos cadastrados com pelo menos 1 item no estoque"""
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        estoque = ativar_db('SELECT * FROM produtos WHERE estoque > 0 ORDER BY nome')
+
+        #conexao antiga DB
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM produtos WHERE estoque > 0 ORDER BY nome')
         estoque = cursor.fetchall()
-        conexao.close()
+        conexao.close() """
         return estoque
     
     def add_carrinho(id):
         """esta função vai até o banco de dados produtos e copia as informações do produto para adicionar ao (BD) carrinho"""
+        produto = ativar_db('SELECT * FROM produtos WHERE id = ?', id, False, 'one')
 
+        #conexao antiga DB
         """BUSCANDO INFOS DO PRODUTO"""
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM produtos WHERE id = ?', (id,))
         produto = cursor.fetchone()
-        conexao.close()
+        conexao.close() """
 
         def enviar_para_carrinho():
             """ENVIANDO PARA O CARRINHO"""
@@ -125,11 +141,14 @@ class Produto():
 
     
     def lista_carrinho():
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        carrinho = ativar_db('SELECT * FROM carrinho ORDER BY nome')
+
+        #conexao antiga DB
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM carrinho ORDER BY nome')
         carrinho = cursor.fetchall()
-        conexao.close()
+        conexao.close() """
         return carrinho
     
     def soma_carrinho():
@@ -140,28 +159,35 @@ class Produto():
         return f'{soma:.2f}'
     
     def deletar_produto_carrinho(id):
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        ativar_db('DELETE FROM carrinho WHERE id = ?', id, True)
+
+        #conexao antiga DB
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('DELETE FROM carrinho WHERE id = ?', (id,))
         conexao.commit()
-        conexao.close()
+        conexao.close() """
     
     
     
     def incrementar_item(id):
         """buscando quantidade atual"""
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        produto = ativar_db('SELECT * FROM carrinho WHERE id = ?', id)
+
+        #conexao antiga DB
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM carrinho WHERE id = ?', (id,))
-        produto = cursor.fetchall()
+        produto = cursor.fetchall() """
 
         #verificando disponibilidade de estoque. 
         qtd_estoque = Produto.busca_produto(produto[0][6]) #buscando o produto no estoque com o o identificador do produto que está no carrinho
         if qtd_estoque[0][3] > produto[0][3]:
             nova_quantidade = produto[0][3] + 1 
-            conexao.commit()
-            conexao.close()
+            #conexao.commit()
+            #conexao.close()
             """atualizando a quantidade"""
+
             conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
             cursor = conexao.cursor()
             cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
@@ -170,14 +196,17 @@ class Produto():
     
     def decrementar_item(id):
         """buscando quantidade atual"""
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+        produto = ativar_db('SELECT * FROM carrinho WHERE id = ?', id)
+        
+        #conexao antiga DB
+        """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
         cursor = conexao.cursor()
         cursor.execute('SELECT * FROM carrinho WHERE id = ?', (id,))
-        produto = cursor.fetchall()
+        produto = cursor.fetchall() """
         if produto[0][3] > 0:
             nova_quantidade = produto[0][3] - 1 
-            conexao.commit()
-            conexao.close()
+            #conexao.commit()
+            #conexao.close()
             """atualizando a quantidade"""
             conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
             cursor = conexao.cursor()
@@ -199,6 +228,36 @@ class Produto():
             conexao.close()
 
 #FUNÇÕES GERAIS
+
+def ativar_db(exec='', id='', commit=False, conteudo = 'all'):
+        """esta função abre e fecha o db e retorna valores        
+        :exec = é comando que deve ser executado no DB
+        :id = caso a execução seja em uma linha específica
+        :commit = True para alteração no BD. False para consulta
+        :conteudo = 'all' para fetchall ou 'one' para fetchone
+        """
+
+        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')                
+        cursor = conexao.cursor()
+        
+        #verificando se executa em um id ou geral
+        if id != '':
+            cursor.execute(f'{exec}', (int(id),))
+        else:
+            cursor.execute(f'{exec}')
+
+        #verificando se pega um item ou todos
+        if conteudo == 'one':
+            valores = cursor.fetchone()
+        else:
+            valores = cursor.fetchall()
+        
+        #verificando se fará alteração no banco
+        if commit == True:
+            conexao.commit()
+        
+        conexao.close()
+        return valores
 
 def registrar_venda():
     """esta função copia os nomes dos itens comprados no carrinho e adiciona a um tabela com data, hora e valor total da compra."""
@@ -229,16 +288,22 @@ def registrar_venda():
     conexao.close()
     
 def listar_vendas():
-    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    vendas = ativar_db('SELECT * FROM vendas ORDER BY data')
+    
+    #conexao antiga DB
+    """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
     cursor = conexao.cursor()
     cursor.execute('SELECT * FROM vendas ORDER BY data')
     vendas = cursor.fetchall()
-    conexao.close()
+    conexao.close() """
     return vendas
 
 def del_venda(id):
-    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    ativar_db('DELETE FROM vendas WHERE id = ?', id, True)
+    
+    #conexao antiga DB
+    """  conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
     cursor = conexao.cursor()
     cursor.execute('DELETE FROM vendas WHERE id = ?', (id,))
     conexao.commit()
-    conexao.close()
+    conexao.close() """
