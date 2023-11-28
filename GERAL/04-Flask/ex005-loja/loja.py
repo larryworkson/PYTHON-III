@@ -222,15 +222,14 @@ loja.run(debug=False)
 """
 
 
-AJUSTES CRÍTICOS:
-    - o botão para incrementar itens no carrinho está invisível
-    - criar função para abrir e fechar o BD. Para diminuir o número de linhas nas funções que acessam o BD.
-    - criar função para add ou editar itens no db
+AJUSTES CRÍTICOS:    
+    - criar função para editar itens no db
     - organizar o código, tem vários itens na mesma classe.
 
 AJUSTES DE MELHORIA:
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
     - criar script que gera produtos recomendados na página do carrinho, baseados nas preferências do usuário
+    - criar função para gerar uma sessão de usuário com senha para salvar itens no carrinho etc.
     
     - integrar com API dos correios para calcular o frete
     - criar layout moderno de loja (ver refs de ecommerce, criar logo etc.)

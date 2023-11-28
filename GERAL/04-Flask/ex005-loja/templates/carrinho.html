@@ -11,10 +11,17 @@
 <body>
     <header>
         <nav class="menu">
-            <a href="/site.html">Home</a>
+            <a href="/">Painel Admin</a>
         </nav>
     </header>
+    
     <main>
+        <div class="topo">
+            <ul>
+                <li><a href="/site.html">Home</a></li>  
+            </ul>
+    
+        </div>
         <h1>Carrinho de compras</h1>
         <a class="limpa_carrinho" href="{{ url_for('del_todo_carrinho')}}"><p> <span class="material-symbols-outlined">delete_forever</span>Limpar carrinho</p></a>
         <table id="lista">

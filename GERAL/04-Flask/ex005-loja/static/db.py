@@ -13,11 +13,11 @@ conn.commit()
 conn.close()
  """
 
-estoque = Produto.listar_produtos()
-for i in estoque:
-    print(i)
+def alterar_db(**kwargs):
+    lista = []
+    for i in kwargs:
+        lista.append(i)
+    return lista
 
-Produto.deletar_produto(11)
 
-for p in estoque:
-    print(p)
+print(alterar_db(nome='joao', idade=3, cidade = 'KP'))

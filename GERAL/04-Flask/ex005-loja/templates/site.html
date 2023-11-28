@@ -19,11 +19,15 @@
     
     <main>
         <div class="topo">
-            <p>Produtos</p>
-            <a href="/carrinho.html"><span class="material-symbols-outlined">shopping_cart</span>Carrinho</a><span id="qtd_itenscarrinho">{{qtd_itenscarrinho}}</span>
+            <ul>
+                <li><a href="/site.html">Home</a></li>
+                <li><a href="/carrinho.html"><!--<span class="material-symbols-outlined">shopping_cart</span>-->Carrinho</a><span id="qtd_itenscarrinho">{{qtd_itenscarrinho}}</span></li>
+                    
+
+            </ul>
 
         </div>
-        
+        <h1>Produtos</h1>
         {% for item in produtos %}
         <section>
             <div class="info_prod"><img class="imgprod" src="{{item[4]}}"></div>

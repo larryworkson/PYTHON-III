@@ -17,25 +17,11 @@ class Produto():
     # GERENCIAMENTO DO ESTOQUE
     def cadastrar(self):
         """método que cadastra um produto no BD"""
-        conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
-        cursor = conexao.cursor()
-        cursor.execute(''' CREATE TABLE IF NOT EXISTS produtos (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, estoque INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL)''')
-        lista = []
-        cadastro = {}
-        cadastro['nome'] = self.nome.title()
-        cadastro['preco'] = self.preco
-        cadastro['estoque'] = self.estoque
-        cadastro['img'] = self.img
-        cadastro['categoria'] = self.categoria
-        lista.append(cadastro)
-        for cadastro in lista:
-            cursor.execute(' INSERT INTO produtos (nome, preco, estoque, img, categoria) VALUES (:nome, :preco, :estoque, :img, :categoria)', cadastro)
-        conexao.commit()
-        conexao.close()
+        enviar_db(exec='CREATE TABLE IF NOT EXISTS produtos (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, estoque INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL)', action='INSERT INTO produtos (nome, preco, estoque, img, categoria) VALUES (:nome, :preco, :estoque, :img, :categoria)', nome=self.nome.title(), preco=self.preco, estoque=self.estoque, img=self.img, categoria=self.categoria)
     
     def listar_produtos():
         """Esta listagem busca todos os produtos cadastrados"""
-        estoque = ativar_db('SELECT * FROM produtos ORDER BY nome')
+        estoque = ativar_db(exec='SELECT * FROM produtos ORDER BY nome')
         return estoque  
     
     def soma_patrimonio():
@@ -53,41 +39,26 @@ class Produto():
         return totestoque
     
     def busca_produto(v):
-        produto = ativar_db('SELECT * FROM produtos WHERE id = ?', v)               
+        produto = ativar_db(exec='SELECT * FROM produtos WHERE id = ?', id=v)               
         return produto
     
     def deletar_produto(id):
-        ativar_db('DELETE FROM produtos WHERE id = ?', id, True)
+        ativar_db(exec='DELETE FROM produtos WHERE id = ?', id=id, commit=True)
 
     # GERENCIAMENTO DA LOJA VIRTUAL
 
     def listar_produtos_site():
         """Esta listagem busca apenas os produtos cadastrados com pelo menos 1 item no estoque"""
-        estoque = ativar_db('SELECT * FROM produtos WHERE estoque > 0 ORDER BY nome')
+        estoque = ativar_db(exec='SELECT * FROM produtos WHERE estoque > 0 ORDER BY nome')
         return estoque
     
     def add_carrinho(id):
         """esta função vai até o banco de dados produtos e copia as informações do produto para adicionar ao (BD) carrinho"""
-        produto = ativar_db('SELECT * FROM produtos WHERE id = ?', id, False, 'one')
+        produto = ativar_db(exec='SELECT * FROM produtos WHERE id = ?', id=id, commit=False, conteudo='one')
 
         def enviar_para_carrinho():
-            """ENVIANDO PARA O CARRINHO"""
-            conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
-            cursor = conexao.cursor()
-            cursor.execute(''' CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL, chave INTEGER NOT NULL)''')
-            lista = []
-            cadastro = {}
-            cadastro['nome'] = produto[1]
-            cadastro['preco'] = produto[2]
-            cadastro['quantidade'] = 1
-            cadastro['img'] = produto[4]
-            cadastro['categoria'] = produto[5]
-            cadastro['chave'] = produto[0]
-            lista.append(cadastro)
-            for cadastro in lista:
-                cursor.execute(' INSERT INTO carrinho (nome, preco, quantidade, img, categoria, chave) VALUES (:nome, :preco, :quantidade, :img, :categoria, :chave)', cadastro)
-            conexao.commit()
-            conexao.close()
+            enviar_db(exec='CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL, chave INTEGER NOT NULL)', action='INSERT INTO carrinho (nome, preco, quantidade, img, categoria, chave) VALUES (:nome, :preco, :quantidade, :img, :categoria, :chave)', nome=produto[1], preco=produto[2], quantidade=1, img=produto[4], categoria=produto[5], chave=produto[0])
+
         #verificando se já tem um produto igual no carrinho.
         carrinho = Produto.lista_carrinho() #puxa os itens do carrinho.
         encontrado = False #boolean para condicionar o envio.
@@ -101,7 +72,7 @@ class Produto():
                          
     
     def lista_carrinho():
-        carrinho = ativar_db('SELECT * FROM carrinho ORDER BY nome')        
+        carrinho = ativar_db(exec='SELECT * FROM carrinho ORDER BY nome')        
         return carrinho
     
     def soma_carrinho():
@@ -112,11 +83,11 @@ class Produto():
         return f'{soma:.2f}'
     
     def deletar_produto_carrinho(id):
-        ativar_db('DELETE FROM carrinho WHERE id = ?', id, True)       
+        ativar_db(exec='DELETE FROM carrinho WHERE id = ?', id=id, commit=True)       
     
     def incrementar_item(id):
         """buscando quantidade atual"""
-        produto = ativar_db('SELECT * FROM carrinho WHERE id = ?', id)        
+        produto = ativar_db(exec='SELECT * FROM carrinho WHERE id = ?', id=id)        
 
         #verificando disponibilidade de estoque. 
         qtd_estoque = Produto.busca_produto(produto[0][6]) #buscando o produto no estoque com o o identificador do produto que está no carrinho
@@ -124,7 +95,6 @@ class Produto():
             nova_quantidade = produto[0][3] + 1 
 
             """atualizando a quantidade"""
-
             conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
             cursor = conexao.cursor()
             cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
@@ -133,7 +103,7 @@ class Produto():
     
     def decrementar_item(id):
         """buscando quantidade atual"""
-        produto = ativar_db('SELECT * FROM carrinho WHERE id = ?', id)
+        produto = ativar_db(exec='SELECT * FROM carrinho WHERE id = ?', id=id)
                 
         if produto[0][3] > 0:
             nova_quantidade = produto[0][3] - 1 
@@ -189,6 +159,23 @@ def ativar_db(exec='', id='', commit=False, conteudo = 'all'):
         
         conexao.close()
         return valores
+
+def enviar_db(exec='', action='', **kwargs):
+    """adiciona e edita itens no DB
+    :exec = é comando que deve ser executado no DB
+    :id = KEY
+    :commit = True para alteração no BD. False para consulta"""
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+
+    cursor = conexao.cursor()
+    cursor.execute(exec)
+    lista = []
+    lista.append(kwargs)
+    for kwargs in lista:        
+            cursor.execute(action, kwargs)
+    conexao.commit()
+    conexao.close()
+
 
 def registrar_venda():
     """esta função copia os nomes dos itens comprados no carrinho e adiciona a um tabela com data, hora e valor total da compra."""
