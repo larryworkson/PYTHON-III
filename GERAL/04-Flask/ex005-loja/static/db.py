@@ -13,11 +13,22 @@ conn.commit()
 conn.close()
  """
 
-def alterar_db(**kwargs):
-    lista = []
-    for i in kwargs:
-        lista.append(i)
-    return lista
+def funcao(**kwargs):
+    return kwargs
 
 
-print(alterar_db(nome='joao', idade=3, cidade = 'KP'))
+
+
+lista = funcao(nome='joao', cidade='olaria', key=0, irao='funcionou')
+itens = ''
+for k, i in lista.items():
+    itens += f'{i}, '
+
+print(itens[0:-2])
+
+
+""" conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+cursor = conexao.cursor()
+cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
+conexao.commit()
+conexao.close() """

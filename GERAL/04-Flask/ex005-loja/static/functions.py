@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+
 class Produto():
     def __init__(self, nome, preco, estoque, img, categoria):
        """inicializa os atributos dos produtos"""
@@ -28,7 +29,8 @@ class Produto():
         itens = Produto.listar_produtos()
         totpatrimonio = 0
         for c in itens:
-            totpatrimonio += c[2] * c[3]
+            multi = c[2] * c[3]
+            totpatrimonio += multi
         return f'{totpatrimonio:.2f}'
     
     def soma_estoque():
@@ -45,91 +47,10 @@ class Produto():
     def deletar_produto(id):
         ativar_db(exec='DELETE FROM produtos WHERE id = ?', id=id, commit=True)
 
-    # GERENCIAMENTO DA LOJA VIRTUAL
 
-    def listar_produtos_site():
-        """Esta listagem busca apenas os produtos cadastrados com pelo menos 1 item no estoque"""
-        estoque = ativar_db(exec='SELECT * FROM produtos WHERE estoque > 0 ORDER BY nome')
-        return estoque
-    
-    def add_carrinho(id):
-        """esta função vai até o banco de dados produtos e copia as informações do produto para adicionar ao (BD) carrinho"""
-        produto = ativar_db(exec='SELECT * FROM produtos WHERE id = ?', id=id, commit=False, conteudo='one')
-
-        def enviar_para_carrinho():
-            enviar_db(exec='CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL, chave INTEGER NOT NULL)', action='INSERT INTO carrinho (nome, preco, quantidade, img, categoria, chave) VALUES (:nome, :preco, :quantidade, :img, :categoria, :chave)', nome=produto[1], preco=produto[2], quantidade=1, img=produto[4], categoria=produto[5], chave=produto[0])
-
-        #verificando se já tem um produto igual no carrinho.
-        carrinho = Produto.lista_carrinho() #puxa os itens do carrinho.
-        encontrado = False #boolean para condicionar o envio.
-        for i in carrinho: #percorre todos os itens do carrinho para verificar se há algum igual.
-            if produto[0] == i[6]:
-                Produto.incrementar_item(i[0])
-                encontrado = True #boolean ativado para não executar o if depois do break e evitar duplicidade.
-                break
-        if not encontrado:
-            enviar_para_carrinho()           
-                         
-    
-    def lista_carrinho():
-        carrinho = ativar_db(exec='SELECT * FROM carrinho ORDER BY nome')        
-        return carrinho
-    
-    def soma_carrinho():
-        itens = Produto.lista_carrinho()
-        soma = 0
-        for item in itens:
-            soma += item[2] * item[3]
-        return f'{soma:.2f}'
-    
-    def deletar_produto_carrinho(id):
-        ativar_db(exec='DELETE FROM carrinho WHERE id = ?', id=id, commit=True)       
-    
-    def incrementar_item(id):
-        """buscando quantidade atual"""
-        produto = ativar_db(exec='SELECT * FROM carrinho WHERE id = ?', id=id)        
-
-        #verificando disponibilidade de estoque. 
-        qtd_estoque = Produto.busca_produto(produto[0][6]) #buscando o produto no estoque com o o identificador do produto que está no carrinho
-        if qtd_estoque[0][3] > produto[0][3]:
-            nova_quantidade = produto[0][3] + 1 
-
-            """atualizando a quantidade"""
-            conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
-            cursor = conexao.cursor()
-            cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
-            conexao.commit()
-            conexao.close()
-    
-    def decrementar_item(id):
-        """buscando quantidade atual"""
-        produto = ativar_db(exec='SELECT * FROM carrinho WHERE id = ?', id=id)
-                
-        if produto[0][3] > 0:
-            nova_quantidade = produto[0][3] - 1 
-            
-            """atualizando a quantidade"""
-            conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
-            cursor = conexao.cursor()
-            cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
-            conexao.commit()
-            conexao.close()
-
-    def atualizar_estoque():
-        carrinho = Produto.lista_carrinho()
-        for item in carrinho:
-            key = item[6]
-            """buscando quantidade atual"""
-            estoque = Produto.busca_produto(key)
-            nova_qtd = estoque[0][3] - item[3] #nova quantidade é o estoque atuao - a quantidade comprada no carrinho.
-            conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
-            cursor = conexao.cursor()
-            cursor.execute('UPDATE produtos SET estoque = ? WHERE id = ?', (nova_qtd, key))
-            conexao.commit()
-            conexao.close()
-
-#FUNÇÕES GERAIS
-
+#----------------------
+#BANCO DE DADOS
+#----------------------
 def ativar_db(exec='', id='', commit=False, conteudo = 'all'):
         """esta função abre e fecha o db e retorna valores        
         :exec = é comando que deve ser executado no DB
@@ -141,7 +62,7 @@ def ativar_db(exec='', id='', commit=False, conteudo = 'all'):
         conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')                
         cursor = conexao.cursor()
         
-        #verificando se executa em um id ou geral
+        #verificando se executa em uma linha ou geral
         if id != '':
             cursor.execute(f'{exec}', (int(id),))
         else:
@@ -176,11 +97,127 @@ def enviar_db(exec='', action='', **kwargs):
     conexao.commit()
     conexao.close()
 
+def editar_db(exec='', id='', **kwargs):
+    """faz updates no BD."""
+    conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+    cursor = conexao.cursor()
+    itens = '' #variável armazena os itens passados na kwargs
+    for k, i in kwargs.items():
+        itens += f'{i}, ' #junta todos os kwargs em uma string separado por ','
+    cursor.execute(exec, (itens[0:-2], id)) #envia os itens para serem executados, removendo a última ',' e o último espaço.
+    conexao.commit()
+    conexao.close()
+#----------------------
+#FIM BANCO DE DADOS
+#----------------------
+   
+
+#-------------------
+#CARRINHO DE COMPRAS
+#-------------------
+def add_carrinho(id):
+        """esta função vai até o banco de dados produtos e copia as informações do produto para adicionar ao (BD) carrinho"""
+        produto = ativar_db(exec='SELECT * FROM produtos WHERE id = ?', id=id, commit=False, conteudo='one')
+
+        def enviar_para_carrinho():
+            """envia o produto para a tabela carrinho, verificando se o produto já consta"""
+            enviar_db(exec='CREATE TABLE IF NOT EXISTS carrinho (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, preco FLOAT NOT NULL, quantidade INTEGER NOT NULL, img TEXT NOT NULL, categoria TEXT NOT NULL, chave INTEGER NOT NULL)', action='INSERT INTO carrinho (nome, preco, quantidade, img, categoria, chave) VALUES (:nome, :preco, :quantidade, :img, :categoria, :chave)', nome=produto[1], preco=produto[2], quantidade=1, img=produto[4], categoria=produto[5], chave=produto[0])
+
+        #verificando se já tem um produto igual no carrinho.
+        carrinho = lista_carrinho() #puxa os itens do carrinho.
+        encontrado = False #boolean para condicionar o envio.
+        for i in carrinho: #percorre todos os itens do carrinho para verificar se há algum igual.
+            if produto[0] == i[6]:
+                incrementar_item(i[0])
+                encontrado = True #boolean ativado para não executar o if depois do break e evitar duplicidade.
+                break
+        if not encontrado:
+            enviar_para_carrinho()  
+
+def lista_carrinho():
+        cart = ativar_db(exec='SELECT * FROM carrinho ORDER BY nome')        
+        return cart
+
+def soma_carrinho():
+        itens = lista_carrinho()
+        soma = 0
+        for item in itens:
+            soma += item[2] * item[3]
+        return f'{soma:.2f}'
+
+def deletar_produto_carrinho(id):
+        ativar_db(exec='DELETE FROM carrinho WHERE id = ?', id=id, commit=True)
+
+def incrementar_item(id):
+        """buscando quantidade atual"""
+        produto = ativar_db(exec='SELECT * FROM carrinho WHERE id = ?', id=id)        
+
+        #verificando disponibilidade de estoque. 
+        qtd_estoque = Produto.busca_produto(produto[0][6]) #buscando o produto no estoque com o o identificador do produto que está no carrinho
+        if qtd_estoque[0][3] > produto[0][3]:
+            nova_quantidade = produto[0][3] + 1 
+            editar_db(exec='UPDATE carrinho SET quantidade = ? WHERE id = ?', id=id, quantidade=nova_quantidade)
+
+            #conexao antiga
+            """atualizando a quantidade"""
+            """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+            cursor = conexao.cursor()
+            cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
+            conexao.commit()
+            conexao.close() """
+
+def decrementar_item(id):
+        """buscando quantidade atual"""
+        produto = ativar_db(exec='SELECT * FROM carrinho WHERE id = ?', id=id)
+                
+        if produto[0][3] > 0:
+            nova_quantidade = produto[0][3] - 1 
+            
+            """atualizando a quantidade"""
+            editar_db(exec='UPDATE carrinho SET quantidade = ? WHERE id = ?', id=id, quantidade=nova_quantidade)
+
+            #conexao antiga
+            """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+            cursor = conexao.cursor()
+            cursor.execute('UPDATE carrinho SET quantidade = ? WHERE id = ?', (nova_quantidade, id,))
+            conexao.commit()
+            conexao.close() """
+#-----------------------
+#FIM CARRINHO DE COMPRAS
+#-----------------------
+
+
+#------------------------------
+# GERENCIAMENTO DA LOJA VIRTUAL
+#------------------------------
+def listar_produtos_site():
+        """Esta listagem busca apenas os produtos cadastrados com pelo menos 1 item no estoque"""
+        estoque = ativar_db(exec='SELECT * FROM produtos WHERE estoque > 0 ORDER BY nome')
+        return estoque
+
+def atualizar_estoque():
+        carrinho = lista_carrinho()
+        for item in carrinho:
+            key = item[6]
+            """buscando quantidade atual"""
+            estoque = Produto.busca_produto(key)
+            nova_qtd = estoque[0][3] - item[3] #nova quantidade é o estoque atuao - a quantidade comprada no carrinho.
+            editar_db(exec='UPDATE produtos SET estoque = ? WHERE id = ?', id=key, estoque=nova_qtd)
+
+            #conexao antiga
+            """ conexao = sqlite3.connect('C:/Users//studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex005-loja/database/base.db')
+            cursor = conexao.cursor()
+            cursor.execute('UPDATE produtos SET estoque = ? WHERE id = ?', (nova_qtd, key))
+            conexao.commit()
+            conexao.close() """
+#----------------------------------
+# FIM GERENCIAMENTO DA LOJA VIRTUAL
+#----------------------------------
 
 def registrar_venda():
     """esta função copia os nomes dos itens comprados no carrinho e adiciona a um tabela com data, hora e valor total da compra."""
     #listando itens do carrinho
-    carrinho = Produto.lista_carrinho()
+    carrinho = lista_carrinho()
     itens = ''
     for item in carrinho: #estou adicionar o nome de todos os itens do carrinho em uma única célula para saber o que vendeu.
         itens += f'[{item[3]}] {item[1]} + '
@@ -197,7 +234,7 @@ def registrar_venda():
     lista = []
     cadastro = {}
     cadastro['nomeitens'] = itens #a soma de todos os nomes dos itens do carrinho
-    cadastro['precotot'] = Produto.soma_carrinho()
+    cadastro['precotot'] = soma_carrinho()
     cadastro['data'] = data_hora_formatada
     lista.append(cadastro)
     for cadastro in lista:
@@ -211,4 +248,3 @@ def listar_vendas():
 
 def del_venda(id):
     ativar_db('DELETE FROM vendas WHERE id = ?', id, True)
-    

@@ -93,9 +93,9 @@ def del_item_venda(id):
 
 @loja.route('/site.html')
 def pag_site():
-    estoque = Produto.listar_produtos_site()
+    estoque = listar_produtos_site()
     produtos_formatados = []
-    itens_carrinho = Produto.lista_carrinho()
+    itens_carrinho = lista_carrinho()
     for item in estoque:        
         """criei uma cópia dos produtos que vem do estoque para poder converter o valor do produto em valor monetário"""
         produto_formato = list(item)
@@ -109,8 +109,8 @@ def pag_agradecimento():
 
 @loja.route('/carrinho.html')
 def pag_carrinho():
-    produtos = Produto.lista_carrinho()
-    soma = Produto.soma_carrinho()
+    produtos = lista_carrinho()
+    soma = soma_carrinho()
     return render_template('/carrinho.html', itens = produtos, total = soma)
 
 @loja.route('/produto.html/<int:produto_id>')
@@ -176,39 +176,39 @@ def editar_produto():
 
 @loja.route('/btn_comprar/<id>')
 def btn_comprar(id):
-    Produto.add_carrinho(id)
+    add_carrinho(id)
     return pag_carrinho()
 
 @loja.route('/del_produto_carrinho/<id>')
 def del_produto_carrinho(id):
-    Produto.deletar_produto_carrinho(id)
+    deletar_produto_carrinho(id)
     return pag_carrinho()
 
 @loja.route('/del_todo_carrinho')
 def del_todo_carrinho():
-    produtos = Produto.lista_carrinho()
+    produtos = lista_carrinho()
     for item in produtos:
-        Produto.deletar_produto_carrinho(item[0])
+        deletar_produto_carrinho(item[0])
     return pag_carrinho()
 
 
 @loja.route('/aumenta_item/<id>')
 def aumenta_item(id):
-    Produto.incrementar_item(id)
+    incrementar_item(id)
     return pag_carrinho()
     
 @loja.route('/diminui_item/<id>')
 def diminui_item(id):
-    Produto.decrementar_item(id)
+    decrementar_item(id)
     return pag_carrinho()
 
 @loja.route('/finalizar_compra')
 def finalizar_compra():
     registrar_venda()
-    Produto.atualizar_estoque()
-    carrinho = Produto.lista_carrinho()
+    atualizar_estoque()
+    carrinho = lista_carrinho()
     for i in carrinho:
-        Produto.deletar_produto_carrinho(i[0])
+        deletar_produto_carrinho(i[0])
     return pag_agradecimento()
 
 """--------------------------------------------"""
@@ -222,14 +222,17 @@ loja.run(debug=False)
 """
 
 
-AJUSTES CRÍTICOS:    
-    - criar função para editar itens no db
-    - organizar o código, tem vários itens na mesma classe.
+AJUSTES CRÍTICOS:
+
+    - organizar o código, tem vários itens na mesma classe. Seprar funções em arquivos. Ex: um arquivo só para gerenciar estoque. Outro só para gererenciar o carrinho, etc.
+    - adicionar mascara monetária na página do produto e no carrinho. 
+    - criar função para gerar uma sessão de usuário com senha para salvar itens no carrinho etc.
+    - permitir um produto ter mais de uma categoria
 
 AJUSTES DE MELHORIA:
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque
     - criar script que gera produtos recomendados na página do carrinho, baseados nas preferências do usuário
-    - criar função para gerar uma sessão de usuário com senha para salvar itens no carrinho etc.
+    
     
     - integrar com API dos correios para calcular o frete
     - criar layout moderno de loja (ver refs de ecommerce, criar logo etc.)
