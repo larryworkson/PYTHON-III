@@ -1,0 +1,64 @@
+plataforma de música (tipo spotify) MOBILE FIRST
+
+>> DIFERENCIAL
+Criar algorítimo que analisa o nome da música (e letra?) a sugere artistas semelhantes. Também sugere músicas para ouvir com base nas músicas que ainda não ouviou dos artistas que já conhece + músicas de artistas semelhantes.
+
+q1:
+    - BD que permite armazenar músicas e imagens.
+    - BD app: nome música, álbum, artista, gênero, quantidade de plays, letra, arquivo áudio.
+    - BD usuário: tabela acesso: nome, senha. Tabela: atividade: artista, música e álbum tocado, data e hora.  
+q2:
+    - criar programa (sem interface) para cadastrar, editar e deletar álbuns, artistas, músicas no BD.
+    - criar interface admin com informações de usuários: nome, senha, álbuns e músicas favoritos, último play, músicas mais ouvidas. 
+q3: COMO MANTER O PLAYER TOCANDO ENQUANTO USUÁRIO NAVEGA PELAS MÚSICAS? músicas, álbuns ou artistas com nome repetido? A pesquisa deve mostrar todos os artistas com aquele nome. Usuário esqueceu a senha. Sistema de recuperação.
+q4: - interface amigável que permite ouvir músicas catalogadas no programa.
+    - Recursos: play, pause, próxima, anterior, volume, repetir, modo aletório, curtir música (adiciona automaticamente na playlist mais curtidas), adicionar a playlist.
+    - Ao tocar uma música de um álbum, o player deve tocar as próximas músicas automaticamente.
+    - página personalizada do artista com foto, lista de álbuns e as 5 músicas mais tocadas e botão para favoritar.
+    - pagina do usuário com lista playlists, álbuns favoritos, sugestão de artistas.
+    - Barra de pesquisa para encontrar uma música, artista, álbum ou playlist. Filtros: música, artista, álbum ou playlist.
+q5:
+    1.0 criar BD usuários.
+        1.1 criar BD com tabela 'usuarios'. Esta tabela terá 3 colunas: chave, nickname, senha(4 caracteres numéricos) e ID. O ID é a soma da chave, nickname e senha sem espaços. Este dado será utilizado para criar a biblioteca de músicas do usuário.
+            1.1.2 no primeiro acesso ao app, o usuário terá que criar uma conta. Ao adicionar os dados básicos e clicar em criar conta. Ao clicar, será criada o BD que armazenará a biblioteca do usuário.
+        1.2 sempre que o usuário acessar o app, o login já estará efetuado. O sistema só irá deslogar se o usuário clicar em 'SAIR'.
+
+    2.0 criar pasta biblioteca.
+        2.1 vamos organizar os artistas por arquivo BD. Cada artista terá um BD. Os álbuns serão as tabelas e as células serão os dados das músicas. Se um artista tiver um álbum com outro artista? (O álbum deverá ser duplicado na tabela dos dois artistas).
+            2.1.1 organização das tabelas (álbuns): conforme item 2.1, a tabela deverão ter as seguintes colunas: música, álbum, artista, gênero, quantidade de plays, letra, arquivo áudio.
+        2.3 para adicionar músicas no programa, é necessário inputar: nome do artista, gênero (pré-definidos), nome álbum, caminho pasta com as músicas (sistema deve pegar o nome dos arquivos e usar para nomear as músicas). Para evitar subscrever arquivos BD (nomes repetidos), o sistema adiciona 4 dígitos ao inicio nome do arquivo. Porém estes dígios não devem aparecer na interface do usuário.
+            
+    3.0 criar pasta 'libuser' com arquivo BD com 4 números + nomeusuario. Cada novo usuário os 4 números são alterados para evitar duplicidade. Esse BD armazenará todas as informações personalizadas do usuário.
+        3.1 Ao criar uma playlist o sistema cria uma tabela automaticamente no BD com a nomeclatura: 'nomeplaylist' (sem espaços).
+        3.2 Criar tabela musicasfav com as colunas: música, álbum, artista, tempo da música.
+        3.3 Criar tabela albunsfav com as colunas: album, artista, genero.
+        3.4 Criar tabela artistasfav com as colunas artista, genero.
+
+    4.0 Criar usuário teste e banco de artistas de teste para executar o programa.
+        4.1 Criar programa (arquivo separado) que solicita e armazena nickname e senha do usuário através de uma interface (html) conforme item 1.0.
+            4.1.1 O nickname deverá ter no máximo 20 caracteres. O sistema não pode permitir que usuário utilize um nickname já existente.
+            4.1.2 a senha deverá conter 4 caracteres numéricos.
+            4.1.3 Se o nickname e senha estiverem 'ok' executar o item 3.0
+        4.2 Criar script para refinir senha do usuário. O script irá utilizar o nickname para associar o usuário à sua respectiva biblioteca.
+            4.2.1 Ao clicar em esqueci minha senha, o usuário deve informar seu nickname e inputar uma nova senha. Se o nickname estiver correto, a senha é atualizada, se não o usuário não poderá entrar no sistema.
+
+    5.0 Criar interface [MOBILE FIRST] usuário (arquivo separado).
+        5.1 Se as de playlists, musicasfav, albunsfav e artistasfav estiverem vazias o sistema deve apresentar a lista de generos existentes no banco para o usuário selecionar os preferidos.
+        5.2 PÁGINA USUÁRIO: A interface deve conter, nickname usuário, botão sair, lista de playlists do usuário (se houver), lista de álbunsfav (se houver), sugestões de músicas baseadas nos gêneros das musicasfavfav e player de músicas.
+        5.3 Cada bloco da interface é um iframe dinâmico.
+            5.3.0 O bloco navegação deve ter BARRA DE PESQUISA, ÁLBUNS FAVORITOS, PLAYLISTS E ARTISTAS FAVORITOS.
+                5.3.0.1 A Barra de pesquisa deve permitir encontrar uma música, artista, álbum ou playlist. E deve ter os filtros: música, artista, álbum ou playlist.
+            5.3.1 Cada música é um link href com target para o iframe do PLAYER.
+            5.3.2 A lista de músicas deve conter: título, Artista, Álbum, Tempo e botão favoritar (salva na tabela musicasfav) e botão adicionar em uma playlist.
+        5.4 PÁGINA ARTISTA: (página dinâmica, igual produto do ecommerce) deve conter foto artista, lista de álbuns e as 5 músicas mais tocadas com nome, álbum e nº de plays, botão de opções (favoritar música ou adicionar em uma playlist) e botão para favoritar artista.
+        5.5 PLAYER DE MÚSICA (arquivo separado)
+            5.3.1 player deve conter: play, pause, próxima, anterior, volume, repetir, modo aletório, curtir música (adiciona automaticamente na playlist mais curtidas), adicionar a uma playlist (abre lista de playlists e opção criar nova playlist).
+            5.3.2 O player é um iframe dinâmico que renderiza o tocador de áudio do chrome com os dados da música que o usuário clicou (verificar).
+            5.3.3 O player deve tocar a próxima música do álbum ou playlist acionada. Ou seja, quando o usuário clicar em uma música que pertence a um álbum ou playlist o player precisa entender qual é a tabela que esta música se encontra e tocar as músicas na sequência. Ou seja, ao clicar em uma música a url deve indicar em qual tabela a música está.
+
+
+>>>> VALIDAÇÕES
+    Verificar BD que possibilita armazenar músicas e imagens.
+    Validar se o modelo de blocos de iframes funciona
+    Verificar se o tocador de músicas do chrome funciona puxando músicas do BD e pode ser customizado.
+

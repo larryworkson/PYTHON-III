@@ -223,11 +223,10 @@ loja.run(debug=False)
 
 
 AJUSTES CRÍTICOS:
-
+    - add gráfico de vendas no painel admin
+    - add lista de itens mais comprados.
     - organizar o código, tem vários itens na mesma classe. Seprar funções em arquivos. Ex: um arquivo só para gerenciar estoque. Outro só para gererenciar o carrinho, etc.
     - adicionar mascara monetária na página do produto e no carrinho. 
-    - criar função para gerar uma sessão de usuário com senha para salvar itens no carrinho etc.
-    - permitir um produto ter mais de uma categoria
 
 AJUSTES DE MELHORIA:
     - criar função de colocar produtos em promoção (com desconto) tipo black friday... tbm ver uma forma de por produtos em destaque

@@ -9,7 +9,7 @@ while True:
     if pesquisa.lower() == 'n':
         break
     pesqGoogle.pesquisar(pesquisa)
-    print('*'*30)
+    print('-'*30)
 
 
 
