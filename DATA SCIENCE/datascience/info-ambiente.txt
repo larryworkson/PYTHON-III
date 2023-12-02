@@ -1,0 +1,1 @@
+para ver/executar os arquivos do dir precisa dar um 'cd datascience' com o venv ativado.

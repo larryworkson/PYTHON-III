@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 '''O pandas foi feito baseado no Numpy'''
 lista = [12, 23, 4, 40, 2, 0]
 serie_pandas = pd.Series(lista)
