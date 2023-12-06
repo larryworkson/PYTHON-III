@@ -6,6 +6,7 @@ while True:
     print('Digite N para finalizar.')
     print('-'*30)
     pesquisa = input(str('Pesquisa por: '))
+    query = f'{pesquisa} nba stats'
     if pesquisa.lower() == 'n':
         break
     pesqGoogle.pesquisar(pesquisa)
@@ -13,5 +14,7 @@ while True:
 
 
 
-""" ver uma forma de puxar imagens do jogador e o logo do time.
+"""
+não estou conseguindo puxar a minutagem do jogador.  A lista que deveria puxar os itens da tabela retorna vazia.
+ ver uma forma de puxar imagens do jogador e o logo do time.
 criar uma interface gráfica no flask """

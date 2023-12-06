@@ -28,4 +28,20 @@ print('Média de preço: ', df['Preço'].mean())
 '''verificando a média de erro da predição'''
 print('Média de erro: ', mean_absolute_error(y_previsto, y_teste)) 
 
+print('-'*30)
+print('Nova previsão')
+print('-'*30)
+renda_media = float(input('Renda média da área: '))
+idade_media_casa = float(input('Idade média das casas na área: '))
+num_medio_quartos = float(input('Número médio de quartos na área: '))
+pop_area = float(input('População da área: '))
+nova_casa = {'Renda média da área': renda_media,
+             'Idade média das casas na área': idade_media_casa,
+             'Número médio de quartos na área': num_medio_quartos,
+             'População da área': pop_area}
+
+novos_dados = pd.DataFrame([nova_casa])
+previsao = modelo.predict(novos_dados)
+print(f'A previsão de preço para a nova casa é: R$ {previsao[0]:.2f}')
+
 # python ex009-Machine-learning.py
