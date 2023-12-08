@@ -9,7 +9,6 @@ eixo_x = df['Cidade'].value_counts().sort_index().keys() #conta os itens desta c
 eixo_y = df['Cidade'].value_counts().sort_index().values #conta os itens da coluna e pega os valores.
 
 
-
 '''criando grafico'''
 plt.bar(eixo_x, eixo_y)
 plt.title('Pessoas / cidade')

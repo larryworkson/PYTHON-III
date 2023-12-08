@@ -1,7 +1,6 @@
 from googleapiclient.discovery import build
 import requests
 from bs4 import BeautifulSoup
-from time import sleep
 import re
 
 def pesquisar(item):
@@ -183,27 +182,3 @@ def verificar_pie(url):
         print('ERRO na requisição')
     return print(f'PIE: {texto}')
 
-""" def verificar_min(url):
-    id = re.sub(r'\D', '', url)
-    response = requests.get(f'https://www.nba.com/stats/player/{id}')
-    textos = []  
-
-    # Verificar se a requisição foi bem-sucedida
-    if response.status_code == 200:
-        # Usar BeautifulSoup para analisar o conteúdo HTML
-        soup = BeautifulSoup(response.content, 'html.parser')
-
-        # Encontrar o elemento com a classe específica
-        todos = soup.findAll('td')
-        
-        if todos:
-                    
-            for item in todos:
-                txt = item.get_text(strip=True)
-                textos.append(txt)
-            
-        else:
-            print('Elemento não encontrado')
-    else:
-        print('ERRO na requisição')
-    return print(f'Min: {textos}') """

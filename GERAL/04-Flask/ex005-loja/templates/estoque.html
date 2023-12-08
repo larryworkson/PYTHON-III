@@ -6,7 +6,7 @@
     <title>Estoque</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <main>
@@ -56,6 +56,37 @@
         </table>
         <a class="btngeral" href="/cadastro.html">Cadastrar produto</a>
         <a class="btngeral" href="/">Index</a>
+        <h1>Vendas por Mês</h1>
+        <canvas id="myChart" width="400" height="200"></canvas>
+        <script>
+            // Faça uma requisição AJAX para obter os dados do servidor Flask
+            fetch('/vendas')
+                .then(response => response.json())
+                .then(data => {
+                    // Crie o gráfico usando Chart.js
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.meses,
+                            datasets: [{
+                                label: 'Total de Vendas',
+                                data: data.tot_vendas,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+        </script>
         <h1>Relatório de Vendas</h1>
         <table>
             <tr>

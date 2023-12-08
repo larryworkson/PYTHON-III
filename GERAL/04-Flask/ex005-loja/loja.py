@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 
 from flask_babel import format_currency, Babel
 from static.functions import *
@@ -68,7 +68,15 @@ def pag_estoque():
         totvendas += i[2]
     totpatrimonio = Produto.soma_patrimonio()
     totestoque = Produto.soma_estoque()
-    return render_template('/estoque.html', produtos = estoque, patrimonio = totpatrimonio, totalestoque = totestoque, vendidos = vendas, somavendas = totvendas)
+    return render_template('/estoque.html', produtos = estoque, patrimonio = totpatrimonio, totalestoque = totestoque, vendidos = vendas, somavendas = f'{totvendas:.2f}')
+
+@loja.route('/vendas')
+def get_data():
+    data = ativar_db(exec='''SELECT data as mes, SUM(precotot) as total_vendas FROM vendas GROUP BY mes ORDER BY mes''')
+    meses = [linha[0] for linha in data]
+    tot_vendas = [linha[1] for linha in data]
+    return jsonify({'meses': meses, 'tot_vendas': tot_vendas})
+
 
 @loja.route('/cadastro.html')
 def pag_cadastro():
@@ -223,7 +231,7 @@ loja.run(debug=False)
 
 
 AJUSTES CRÍTICOS:
-    - add gráfico de vendas no painel admin
+    - grafico de vendas (deixar com apenas os 3 últimos meses)
     - add lista de itens mais comprados.
     - organizar o código, tem vários itens na mesma classe. Seprar funções em arquivos. Ex: um arquivo só para gerenciar estoque. Outro só para gererenciar o carrinho, etc.
     - adicionar mascara monetária na página do produto e no carrinho. 

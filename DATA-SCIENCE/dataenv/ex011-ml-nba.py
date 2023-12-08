@@ -33,16 +33,19 @@ ppg = float(input('PPG: '))
 rpg = float(input('RPG: '))
 apg = float(input('APG: '))
 pie = float(input('PIE: '))
+xp = int(input('XP: '))
 novo_jogador = {
-    'PPG': ppg,
-    'RPG': rpg,
-    'APG': apg,
-    'PIE': pie}
+    'ppg': ppg,
+    'rpg': rpg,
+    'apg': apg,
+    'pie': pie,
+    'xp': xp}
 
 novos_dados = pd.DataFrame([novo_jogador])
 sal_previsto = modelo.predict(novos_dados)
 corrigido = sal_previsto[0] + mean_absolute_error(previsao, y_teste)
 print(f'O salário previsto do jogador é: U$ {sal_previsto[0]:.2f}')
+
 
 # python ex011-ml-nba.py
 
