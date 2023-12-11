@@ -16,14 +16,8 @@ Q5:
 from controls.search import *
 from controls.database import *
 from controls.modelo import *
+
 data = ativar_db(exec='SELECT * FROM jogadores ORDER BY nome')
-
-""" for i in data:
-    print(i) """
-
-
-
-
 
 #enviando dados para BD:
 while True:
@@ -49,7 +43,7 @@ while True:
             apg = query[3]
             pie = query[4]
             xp = query[5]
-            sal = float(input('Salário: ')) 
+            sal = query[6] 
             enviar_db(exec='CREATE TABLE IF NOT EXISTS jogadores (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, ppg FLOAT NOT NULL, rpg FLOAT NOT NULL, apg FLOAT NOT NULL, pie FLOAT NOT NULL, xp FLOAT NOT NULL, sal FLOAT NOT NULL)', action='INSERT INTO jogadores (nome, ppg, rpg, apg, pie, xp, sal) VALUES (:nome, :ppg, :rpg, :apg, :pie, :xp, :sal)', nome=nome.title(), ppg=ppg, rpg=rpg, apg=apg, pie=pie, xp=xp, sal=sal)
 
     #removendo dados do db

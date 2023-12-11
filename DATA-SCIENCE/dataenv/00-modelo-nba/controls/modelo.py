@@ -1,8 +1,9 @@
-from controls.database import *
+
 import pandas as pd
 from sklearn.model_selection import train_test_split #função
 from sklearn.linear_model import LinearRegression #método de regressão linear
 from sklearn.metrics import mean_absolute_error
+from controls.database import *
 
 df = base()
 
