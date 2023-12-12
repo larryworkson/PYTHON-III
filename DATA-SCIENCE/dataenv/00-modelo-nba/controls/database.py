@@ -53,3 +53,5 @@ def base():
     df = pd.read_sql_query(query, conn)
     conn.close()
     return df
+
+nome = 'LeBron James'

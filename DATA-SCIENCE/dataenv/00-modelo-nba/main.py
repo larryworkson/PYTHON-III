@@ -37,14 +37,23 @@ while True:
             query = pesquisar(pesquisa)
             print('-'*30)
             print(query)
-            nome = query[0]
-            ppg = query[1]
-            rpg = query[2]
-            apg = query[3]
-            pie = query[4]
-            xp = query[5]
-            sal = query[6] 
-            enviar_db(exec='CREATE TABLE IF NOT EXISTS jogadores (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, ppg FLOAT NOT NULL, rpg FLOAT NOT NULL, apg FLOAT NOT NULL, pie FLOAT NOT NULL, xp FLOAT NOT NULL, sal FLOAT NOT NULL)', action='INSERT INTO jogadores (nome, ppg, rpg, apg, pie, xp, sal) VALUES (:nome, :ppg, :rpg, :apg, :pie, :xp, :sal)', nome=nome.title(), ppg=ppg, rpg=rpg, apg=apg, pie=pie, xp=xp, sal=sal)
+            """verificando se o jogador já está no DB"""
+            nomes_db = ativar_db('SELECT nome FROM jogadores')
+            jog_encontrado = False
+            for i in nomes_db:
+                if query[0] == i[0]:
+                    jog_encontrado = True
+                    print('Jogador já cadastrado')
+                    break
+            if not jog_encontrado:
+                nome = query[0]
+                ppg = query[1]
+                rpg = query[2]
+                apg = query[3]
+                pie = query[4]
+                xp = query[5]
+                sal = query[6] 
+                enviar_db(exec='CREATE TABLE IF NOT EXISTS jogadores (id INTEGER PRIMARY KEY, nome TEXT NOT NULL, ppg FLOAT NOT NULL, rpg FLOAT NOT NULL, apg FLOAT NOT NULL, pie FLOAT NOT NULL, xp FLOAT NOT NULL, sal FLOAT NOT NULL)', action='INSERT INTO jogadores (nome, ppg, rpg, apg, pie, xp, sal) VALUES (:nome, :ppg, :rpg, :apg, :pie, :xp, :sal)', nome=nome, ppg=ppg, rpg=rpg, apg=apg, pie=pie, xp=xp, sal=sal)
 
     #removendo dados do db
     elif escolha == '2':
@@ -79,7 +88,9 @@ while True:
 # python main.py
 
 """
-    - ver uma forma de buscar o salario dos jogadores pela API
-    - usar babel para formatar os salários em moeda.
+    - add try e except em todas as funções de busca.
+    - a média de ERRO AINDA ESTÁ MUITO ALTA 
+    - definir um contrato mínimo de um jogador (para não ter nº negativo)
+    - o XP está tendo um peso bem algo
     - cadastrar pelo menos 1000 jogadores
 """

@@ -2,6 +2,7 @@ from googleapiclient.discovery import build
 import requests
 from bs4 import BeautifulSoup
 import re
+from controls.database import ativar_db
 
 def pesquisar(item):
     """esta função usa a API de pesquisa do google buscar informações do site da NBA"""
@@ -23,7 +24,7 @@ def pesquisar(item):
     for item in resultados:
         if 'nba.com' in item["link"]: #se o resultado for do site oficial da nba ele vai buscar o PPG.                 
             encontrado = True
-            nome = verificar_nome(item["link"])         
+            nome = verificar_nome(item["link"])
             ppg = verificar_ppg(item["link"])
             rpg = verificar_rpg(item["link"])
             apg = verificar_apg(item["link"])
@@ -113,7 +114,11 @@ def verificar_xp(url):
         time = soup.findAll('p', class_='PlayerSummary_playerInfoValue__JS8_v')
         if time:
             xp = time[7].get_text().replace('p', '')
-            xp_final = f'{xp[:2]}'
+            xp_final = re.findall("[0-9]+", xp)
+            if not xp_final: #se o xp do jogador é < 0, o site define como rookie, que é um string. Esta condição transforma a var em 0 neste caso.
+                xp_final = 0
+            else:
+                xp_final = xp_final[0]
         else:
             print('Elemento não encontrado')
     else:

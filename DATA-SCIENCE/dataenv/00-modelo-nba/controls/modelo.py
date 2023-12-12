@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split #função
 from sklearn.linear_model import LinearRegression #método de regressão linear
 from sklearn.metrics import mean_absolute_error
 from controls.database import *
+from babel import numbers
 
 df = base()
 
@@ -33,5 +34,5 @@ def prever(ppg, rpg, apg, pie, xp):
 
     novos_dados = pd.DataFrame([novo_jogador])
     sal_previsto = modelo.predict(novos_dados)
-    
-    return f'O salário previsto do jogador é: U$ {sal_previsto[0]:.2f}'
+    sal_formatado = numbers.format_currency(sal_previsto[0], "USD", locale='en_US')
+    return f'O salário previsto do jogador é: {sal_formatado}'
