@@ -21,12 +21,14 @@ data = ativar_db(exec='SELECT * FROM jogadores ORDER BY nome')
 
 #enviando dados para BD:
 while True:
+    
     menu = ['Sair', 'Casdastrar', 'Remover', 'Base de dados', 'Prever']
     for c in range(0, len(menu)):
         print(f'[{c}] - {menu[c]}')
     escolha = str(input('Escolha: '))
     if escolha == '1':
         while True:
+            print(f'Média de erro: {media_erro():.2f}')
             print('-'*30)
             print('Digite N para finalizar.')
             print('-'*30)

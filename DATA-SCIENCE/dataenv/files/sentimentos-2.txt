@@ -1,0 +1,40 @@
+Autor,Comentário,Sentimento
+Maria Silva,Adorei o novo produto, excelente qualidade!,P
+João Santos,A entrega atrasou novamente, péssimo serviço.,N
+Ana Oliveira,Ótimo atendimento ao cliente, estão de parabéns!,P
+Carlos Lima,Produto chegou danificado, insatisfeito com a compra.,N
+Julia Costa,Recomendo a todos, melhor compra que já fiz!,P
+Pedro Rocha,Péssima experiência, não comprarei novamente.,N
+Luiza Pereira,Satisfeita com a rapidez na entrega.,P
+Rafael Mello,Produto de qualidade, superou minhas expectativas.,P
+Bruna Santos,Atendimento péssimo, não resolveram meu problema.,N
+Lucas Souza,Fiquei decepcionado, não correspondeu ao anunciado.,N
+Mariana Lima,Excelente atendimento, muito satisfeita com a compra.,P
+Roberto Oliveira,Decepcionado com a qualidade, não recomendo.,N
+Fernanda Costa,Entrega rápida e produto em perfeitas condições.,P
+Carlos Silva,Insatisfeito com o suporte ao cliente, demoraram para responder.,N
+Ana Santos,Melhor compra online que já fiz, produto chegou antes do prazo.,P
+Gabriel Rocha,Péssimo serviço, produto chegou com defeito.,N
+Isabela Mello,Atendimento ao cliente deixou a desejar, insatisfeita.,N
+Lucas Oliveira,Produto de alta qualidade, superou minhas expectativas.,P
+Carolina Lima,Infelizmente, não gostei do produto que recebi.,N
+José Rodrigues,Comprei e me arrependi, não vale o preço.,N
+Beatriz Costa,Atendimento eficiente, estou muito satisfeita.,P
+Vinícius Santos,Produto conforme a descrição, recomendo a compra.,P
+Amanda Silva,Decepcionada, não correspondeu às minhas expectativas.,N
+Renata Oliveira,Atendimento péssimo, não resolveram meu problema.,N
+Marcelo Lima,Ótimo serviço, entrega antes do prazo previsto.,P
+Larissa Mello,Não recomendo, péssima qualidade do produto.,N
+Thiago Santos,Produto excelente, superou minhas expectativas.,P
+Juliana Rocha,Problemas na entrega, atraso significativo.,N
+Eduardo Oliveira,Atendimento rápido e eficiente, satisfeito com a compra.,P
+Camila Costa,Produto com defeito, insatisfeita com a qualidade.,N
+Mariana Santos,Entrega dentro do prazo, produto em perfeitas condições.,P
+Pedro Oliveira,Péssima experiência de compra, não recomendo.,N
+Laura Lima,Satisfeito com a qualidade do produto, entrega rápida.,P
+Guilherme Rocha,Não gostei do atendimento, falta de cortesia.,N
+Isabella Costa,Recomendo, produto de excelente qualidade.,P
+Lucas Silva,Decepcionado, produto não atendeu às minhas expectativas.,N
+Gabriela Mello,Atendimento eficiente, estou muito satisfeita.,P
+Ricardo Santos,Não recomendo, produto com defeito.,N
+Luana Oliveira,Produto conforme a descrição, entrega rápida.,P

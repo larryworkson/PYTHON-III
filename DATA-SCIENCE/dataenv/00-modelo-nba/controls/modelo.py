@@ -21,7 +21,9 @@ modelo = LinearRegression()
 modelo.fit(x_treino, y_treino)
 previsao = modelo.predict(x_teste)
 print('-'*30)
-print('Média de erro: ', mean_absolute_error(previsao, y_teste))
+def media_erro():
+    media_erro = mean_absolute_error(previsao, y_teste)
+    return media_erro 
 print('-'*30)
 
 def prever(ppg, rpg, apg, pie, xp):
@@ -34,5 +36,8 @@ def prever(ppg, rpg, apg, pie, xp):
 
     novos_dados = pd.DataFrame([novo_jogador])
     sal_previsto = modelo.predict(novos_dados)
-    sal_formatado = numbers.format_currency(sal_previsto[0], "USD", locale='en_US')
+    if sal_previsto <= 1000000:
+        sal_formatado = 1000000
+    else:
+        sal_formatado = numbers.format_currency(sal_previsto[0], "USD", locale='en_US')
     return f'O salário previsto do jogador é: {sal_formatado}'
