@@ -1,0 +1,58 @@
+SQL commands
+DDL (DATA DEFINITION LANGUAGE)
+    - CREATE, ALTER, DROP
+
+DML (DATA MANIPULATION LANGUAGE)
+    - INSERT, UPDATE, DELETE, EXPLAIN PLAN, LOCK TABLE
+
+DCL (DATA CONTROL LANGUAGE) - Serve para controlar os acessos ao BD.
+    - GRANT, REVOKE
+
+DQL (DATA QUERY LANGUAGE) - Somente para consultas no BD.
+    - SELECT
+
+
+criar schema (Serve para organizar categorias de tabelas)
+CREATE SCHEMA nome_do_schema
+
+criar tabela
+CREATE TABLE nome_tabela (
+    id serial PRIMARY KEY, #serial cria um id automaticamente sequencial
+    coluna 1 VARCHAR(50), #tipo da coluna é string limitado a 50 caracteres
+    coluna 2 INTEGER,
+    coluna 3 DECIMAL(10,2) #tipo da coluna é FLOAT sendo 10 o nº max de dígitos e 2 o número de casas depois da vírgula.
+
+)
+
+SELECT * FROM nome_do_schema.nome_tabela
+-------------------
+ALTERANDO NOME DA TABELA
+ALTER TABLE nome_do_schema.nome_tabela RENAME TO novo_nome_tabela
+
+ALTERANDO NOME DA COLUNA
+ALTER TABLE nome_do_schema.nome_tabela RENAME nome_coluna TO novo_nome_coluna
+
+ADICIONANDO COLUNAS
+ALTER TABLE nome_do_schema.nome_tabela
+ADD nome_nova_coluna INT;
+
+ALTERANDO TIPO DA COLUNA
+ALTER TABLE nome_do_schema.nome_tabela
+ALTER COLUMN nome_coluna TYPE VARCHAR(50)
+-------------------
+
+SETANDO UMA TABELA EM OUTRO SCHEMA
+CREATE SCHEMA nome_do_schema;
+
+ALTER TABLE outro_schema.outra_tabela #aqui vai o endereço da tabela que deseja copiar
+SET SCHEMA nome_do_schema;
+
+-------------------
+
+
+DELETANDO COLUNA
+ALTER TABLE nome_do_schema.nome_tabela
+DROP COLUMN nome_coluna;
+
+DELETANDO TABELA
+DROP TABLE nome_do_schema.nome_tabela;

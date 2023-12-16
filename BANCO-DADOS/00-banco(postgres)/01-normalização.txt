@@ -1,0 +1,33 @@
+Qualidade dos dados
+
+Conceito 1: Dependência Funcional:
+Cada atributo deve ter apenas um valor correspondente. Ou seja, o preço de um produto não pode ter dois valores (ex: 10,00 ou 15,00). Não obstante, um tipo de um curso não deve ter o valor 'Presencial ou online'.
+
+Conceito 2 - Cada elemento da tabela deve depender apenas da sua chave primária. Ou seja você deve evitar redundância de valores. Exemplo: na tabela professores um professor ministra uma disciplina que está vinculada a diversas turmas. O que ocorre se o professor sair da escola. Você não pode ter o trabalho de editar o nome do professor em cada turma. Este dado precisa estar armazenado em uma tabela auxiliar. Essa otimização deve diminuir o custo de armazenamento e agilizar mudanças.
+
+Conceito 3 - Um elemento NÃO CHAVE da tabela não pode depender de outro elemento NÃO CHAVE. Suponhamos que tenha um registro de professores vinculados a cursos que eles ministram.
+nome da aula        professor       id_curso        nome_curso
+banco de dados      Tiago           1               banco de dados
+machine learning    Jorge           2               python
+
+Não é recomendado aplicar desta forma, pois se houver uma mudança no nome do curso, será necessário realizar ajustes enormes dependendo do tamanho da tabela. Portanto seria melhor assim.
+TABELA PRINCIPAL
+nome da aula        professor       id_curso
+banco de dados      Tiago           1
+machine learning    Jorge           2
+
+TABELA auxiliar
+id_curso        nome_curso
+1               banco de dados
+2               python
+
+Conceito 4 - Atributos multivalorados. São atributos que podem conter mais de um valor para um mesmo registro. Ex: no cadastro de uma pessoa pode ter mais de um número de telefone ou mais de um endereço.
+
+Conceito 5 - Atributos compostos. São atributos que poderiam ser subdivididos em vários atributos. Ex:na tabela abaixo o endereço é composto por vários dados.
+id_curso        nome        endereço
+1               João        Av. Mem de Sá, 100, apto 101 - Centro - Rio de Janeiro - RJ
+2               Pedro       Rua dos Açores, 2033 - Vila Nova - Belo Horizonte - MG
+
+BOYCE-CODD
+A normalização Boyce-Codd é um processo no design de banco de dados que visa eliminar redundâncias e dependências funcionais. Ela se concentra em garantir que cada atributo seja totalmente dependente da chave primária, evitando dependências parciais. Em termos simples, ajuda a organizar dados de forma eficiente para reduzir a duplicação e manter a integridade.
+Me parece um resumo da norma 3.
