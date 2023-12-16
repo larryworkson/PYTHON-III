@@ -22,7 +22,7 @@ print('-'*30)
 print('Dados tratados')
 print('-'*30)
 #aplicando função a toda a tabela
-nova_tabela = dados.apply(lambda x: limpa_data(x), axis=1) #apply aplica a função na tabela. X é o eixo 0 e axis são as linhas.
+nova_tabela = dados.apply(lambda x: limpa_data(x), axis=1) #apply aplica a função na tabela. eixo 0 e axis são as linhas.
 print(nova_tabela)
 
 
