@@ -7,28 +7,29 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-    <h1>Olá!</h1>
+    
     <div id="music-library"></div>
 
 <script>
+    var currentAudio = null
     // Função para carregar a biblioteca de músicas via AJAX
     function loadMusicLibrary() {
         $.ajax({
             url: '/api/music_library',
             type: 'GET',
             success: function(data) {
-                // Manipule os dados da biblioteca de músicas aqui
-                // por exemplo, adicione os resultados a uma lista
-                var musicLibrary = $('#music-library');
+                var musicLibrary = $('#music-library');                 
                 data.forEach(function(song) {
                     musicLibrary.append(`
-                    <p>${song.nome} | ${song.artista}</p>
-                    <audio controls>
+                    <p id="song-info"></p>
+                    <audio id="audio-player" controls>
                         <source src="${song.file}" type="audio/mp3">
-                        Seu navegador não suporta o elemento de áudio
+                        Seu navegador não suporte áudio
                     </audio>
                     `);
-                });
+                }
+                )
+                
             },
             error: function(error) {
                 console.log('Erro ao carregar a biblioteca de músicas:', error);
