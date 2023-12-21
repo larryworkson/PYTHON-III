@@ -58,7 +58,7 @@ q5:
 
 
 >>>> VALIDAÇÕES
-    Verificar BD que possibilita armazenar músicas e imagens.
-    Validar se o modelo de blocos de iframes funciona
-    Verificar se o tocador de músicas do chrome funciona puxando músicas do BD e pode ser customizado.
+    1 criar protótipo de player com biblioteca local com AJAX e jQuery
+    2 verificar se a API youtube permite acessar as músicas para trazer ao meu player
+    3 se 2 for positivo, planejar implementação do player como streaming via API do Youtube. 
 

@@ -34,7 +34,7 @@ ALTER TABLE nome_do_schema.nome_tabela RENAME nome_coluna TO novo_nome_coluna
 
 ADICIONANDO COLUNAS
 ALTER TABLE nome_do_schema.nome_tabela
-ADD nome_nova_coluna INT;
+ADD COLUMN nome_nova_coluna INT;
 
 ALTERANDO TIPO DA COLUNA
 ALTER TABLE nome_do_schema.nome_tabela
@@ -56,3 +56,38 @@ DROP COLUMN nome_coluna;
 
 DELETANDO TABELA
 DROP TABLE nome_do_schema.nome_tabela;
+
+----------------------
+
+INSERINDO DADOS NA TABELA
+INSERT INTO study.alunos_ada(
+	nome_aluno,
+	cpf,
+	email,
+	fone,
+	data_nascimento)
+VALUES ('Mirelle', '12345678900', 'email@email.com', '(00)0000-000', '1992-06-01')
+
+
+---------------------
+
+ATUALIZANDO DADOS NA TABELA
+UPDATE study.alunos_ada SET nome_aluno = 'Gabriela', data_nascimento = '2000-03-03'
+WHERE nome_aluno = 'Mirelle'
+RETURNING * #mostra o resultado da execução em seguida.
+
+UPDATE study.alunos_ada SET data_nascimento = '2002-09-11'
+WHERE id in (2,4) #executa no ID 2 e 4
+
+UPDATE study.alunos_ada SET data_nascimento = '1992-06-10'
+WHERE id BETWEEN 1 AND 4 #executa em um intervalo de IDs.
+
+----------------------
+
+DELETANDO DADOS DA TABELA
+DELETE FROM study.alunos_ada WHERE id = 5
+
+DELETE FROM study.alunos_ada WHERE id BETWEEN 4 AND 5 #detelando itens de um intervalo
+RETURNING nome_aluno #mostra o resultado da execução em seguida.
+
+
