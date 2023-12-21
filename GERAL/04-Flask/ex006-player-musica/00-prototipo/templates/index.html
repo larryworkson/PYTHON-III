@@ -21,7 +21,13 @@
                 // por exemplo, adicione os resultados a uma lista
                 var musicLibrary = $('#music-library');
                 data.forEach(function(song) {
-                    musicLibrary.append('<p>' + song.title + ' - ' + song.artist + '</p>');
+                    musicLibrary.append(`
+                    <p>${song.nome} | ${song.artista}</p>
+                    <audio controls>
+                        <source src="${song.file}" type="audio/mp3">
+                        Seu navegador não suporta o elemento de áudio
+                    </audio>
+                    `);
                 });
             },
             error: function(error) {
