@@ -1,0 +1,22 @@
+version = 2
+sysroot = ""
+sysroots_dir = ""
+parts = []
+
+[Application]
+entry_point = "main:main"
+is_console = false
+is_bundle = true
+name = "meu1app"
+qmake_configuration = ""
+script = "C:\\Users\\studi\\Documents\\code\\PYTHON-III\\GERAL\\04-Flask\\ex006-player-musica\\00-prototipo\\main.py"
+syspath = ""
+
+[Deployment]
+qt = "5.15.2"
+pyqt = "5.15.2"
+Kivy="2.2.1"
+kivy-deps.angle="0.3.3"
+kivy-deps.glew="0.3.1"
+kivy-deps.sdl2="0.6.0"
+Kivy-Garden="0.1.5"

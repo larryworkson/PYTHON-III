@@ -1,94 +1,41 @@
-from flask import Flask, render_template, jsonify
-import os
+from kivy.app import App
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
 
-app = Flask(__name__)
+class MeuApp(App):
+    def build(self):
+        # Layout principal usando BoxLayout vertical
+        layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+        #add um textinput ao layout
+        n1 = TextInput(hint_text='Digite um numero: ', multiline=False, size_hint=(1, 0.3))
+        layout.add_widget(n1)
+        n2 = TextInput(hint_text='Digite outro numero: ', multiline=False, size_hint=(1, 0.3))
+        layout.add_widget(n2)
 
-@app.route('/api/music_library')
-def music_library():
-    # Aqui você deve obter dados da biblioteca de músicas do banco de dados e retorná-los como JSON
-    music_data = [
-        {'nome': 'Musica 1', 'artista': 'Artista 1', 'file': 'https://larryworkson.github.io/PYTHON-III/GERAL/04-Flask/ex006-player-musica/00-prototipo/data/01.mp3'}]
-    return jsonify(music_data)
+        #add um botao ao layout
+        button = Button(text='Somar', on_press=self.on_button_press, size_hint=(1, 0.3))
+        layout.add_widget(button)
 
-if __name__ == '__main__':
-    app.run(debug=False)
+        #add rótulo (label) para exibir um dado
+        self.resultado = Label(text='')
+        layout.add_widget(self.resultado)
 
-    # python main.py
+        return layout
+    
+    def on_button_press(self, instance):
+        #obtem o texto do TextInput quando o botão é pressionado
 
+        n1 = instance.parent.children[2] #assumindo que o TextInput é o primeiro filho do layout
+        num1 = int(n1.text)
+        n2 = instance.parent.children[3]
+        num2 = int(n2.text)
+        self.resultado.text = f'Resulado: {num1 + num2}'
 
-"""
-- o player está 'ok', agora preciso gerar uma lista de músicas e jogá-las para o app para quando clicar, tocar. Depois fazer consultas no catálogo sem interromper a música.
-- as músicas precisam estar hospedadas na web.
-- gerar uma lista de músicas e um único player para que quando usuário clicar na música o player roda a música.
-"""
+MeuApp().run()
 
-"""GPT recomendou criar os botões de controle do player pelo JS para evitar que o player seja interrompido ao navegar pelo catálogo
+# python teste-app-2.py
 
-<script>
-    var currentAudio = null;
-
-    // Função para carregar a biblioteca de músicas via AJAX
-    function loadMusicLibrary() {
-        $.ajax({
-            url: '/api/music_library',
-            type: 'GET',
-            success: function(data) {
-                var musicLibrary = $('#music-library');
-                
-                // Limpa o conteúdo atual
-                musicLibrary.empty();
-
-                // Adiciona o player de áudio único
-                musicLibrary.append(`
-                    <p id="song-info"></p>
-                    <audio id="audio-player" controls>
-                        Seu navegador não suporta o elemento de áudio.
-                    </audio>
-                `);
-
-                // Adiciona eventos de clique para cada música
-                data.forEach(function(song) {
-                    var songInfo = `${song.nome} | ${song.artista}`;
-                    musicLibrary.append(`<p class="song-item" data-src="${song.file}">${songInfo}</p>`);
-                });
-
-                // Adiciona evento de clique para as músicas
-                $('.song-item').click(function() {
-                    var newSrc = $(this).data('src');
-                    playNewSong(newSrc);
-                    $('#song-info').text($(this).text());
-                });
-            },
-            error: function(error) {
-                console.log('Erro ao carregar a biblioteca de músicas:', error);
-            }
-        });
-    }
-
-    // Função para reproduzir uma nova música
-    function playNewSong(src) {
-        if (currentAudio) {
-            // Pára o áudio atual se estiver reproduzindo
-            currentAudio.pause();
-        }
-
-        // Atualiza a fonte do áudio
-        $('#audio-player').attr('src', src);
-
-        // Inicia a reprodução
-        $('#audio-player')[0].play();
-
-        // Atualiza a variável currentAudio
-        currentAudio = $('#audio-player')[0];
-    }
-
-    // Carrega a biblioteca de músicas quando a página for carregada
-    $(document).ready(function() {
-        loadMusicLibrary();
-    });
-</script>
-"""
+"""criar dois campos de input e realizar operação matematica para gerar resultado"""
