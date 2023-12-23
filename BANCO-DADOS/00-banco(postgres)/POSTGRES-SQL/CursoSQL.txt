@@ -91,3 +91,24 @@ DELETE FROM study.alunos_ada WHERE id BETWEEN 4 AND 5 #detelando itens de um int
 RETURNING nome_aluno #mostra o resultado da execução em seguida.
 
 
+----------------------
+LOCK TABLE
+#este comando permite que usuários vejam apenas os nomes das colunas
+begin; # Inicia uma transação. Todas as operações subsequentes nesta transação serão tratadas de forma isolada até que a transação seja confirmada ou revertida.
+	lock table study.alunos_ada IN ACCESS SHARE MODE;
+
+COMMIT; #encerra o bloqueio
+
+SELECT * from study.alunos_ada
+
+UPDATE study.alunos_ada SET nome_aluno = 'Larry'
+WHERE id = 8
+
+
+#este comando permite que o usuário vejam todos os regirstros
+begin;
+lock table study.alunos_ada IN ROW SHARE MODE;
+commit;
+
+
+EXPLAIN SELECT * FROM study.alunos_ada #mostra quanto de CPU a query está usando.

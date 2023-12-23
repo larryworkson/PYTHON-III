@@ -1,12 +1,13 @@
 plataforma de música (tipo spotify) MOBILE FIRST
 
->> DIFERENCIAL
-Criar algorítimo que analisa o nome da música (e letra?) a sugere artistas semelhantes. Também sugere músicas para ouvir com base nas músicas que ainda não ouviou dos artistas que já conhece + músicas de artistas semelhantes.
+>> DIFERENCIAL - sugestão de músicas novas
+Sugere músicas para ouvir com base nas músicas que ainda não ouviou dos artistas que já conhece.
+Criar modelo de ML (regressão linear) que analisa bpm, estilo, palavras no nome da faixa (usar split para comparar cada palavra com in) para estabelecer uma nota de semelhança. Caso a nota seja maior ou igual a 7 a música é sugerida.
 
 q1:
-    - BD que permite armazenar músicas e imagens.
-    - BD app: nome música, álbum, artista, gênero, quantidade de plays, letra, arquivo áudio.
-    - BD usuário: tabela acesso: nome, senha. Tabela: atividade: artista, música e álbum tocado, data e hora.  
+    - BD POSTGRES
+    - BD app: titulo, álbum, artista, gênero, quantidade de plays, arquivo áudio.
+    - BD usuário: tabela acesso: nome, senha. Tabela: atividade: artista, música e álbum tocados, data e hora.  
 q2:
     - criar programa (sem interface) para cadastrar, editar e deletar álbuns, artistas, músicas no BD.
     - criar interface admin com informações de usuários: nome, senha, álbuns e músicas favoritos, último play, músicas mais ouvidas. 
@@ -58,7 +59,8 @@ q5:
 
 
 >>>> VALIDAÇÕES
-    1 criar protótipo de player com biblioteca local com AJAX e jQuery
-    2 verificar se a API youtube permite acessar as músicas para trazer ao meu player
-    3 se 2 for positivo, planejar implementação do player como streaming via API do Youtube. 
+    - vou fazer o app via Kivy para dispositivo android pela fácil distribuição.
+    - Ainda não consegui compilar o app para APK e abrir no celular
+    - criar estrutura do DB com postgres.
+    - desenvolver MVP player mostrando biblioteca de músicas e tocando cada uma delas no celular.
 
