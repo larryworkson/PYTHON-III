@@ -112,3 +112,89 @@ commit;
 
 
 EXPLAIN SELECT * FROM study.alunos_ada #mostra quanto de CPU a query está usando.
+
+-------------------------------
+COMANDOS DCL
+
+GRANT privilege_list ALL
+on nome_tabela
+to role_name
+
+#criando usuário
+create role Larry
+login
+password '123';
+
+# permissão para alterar estrutura da tabela
+GRANT ALTER TABLE ON nome_tabela TO nome_usuario
+
+-- grant #permite o usuário ver a tabela
+GRANT SELECT
+on nome_tabela to nome_usuario;
+
+GRANT INSERT, UPDATE, DELETE #permite que usuário atualize a tabela.
+on nome_tabela to nome_usuario
+
+#revogar acesso ao usuário
+REVOKE select on nome_tabela from nome_usuario
+
+------------------------------------
+COMANDOS DQL - funções de agregação precisa ser agrupada (GROUP BY)
+
+#seleção de dados não duplicados
+SELECT DISTINCT Telefone FROM Contato
+
+#seleção de 10% de nomes começam com A
+SELECT * FROM Contato WHERE Nome LIKE 'A%' LIMIT 10
+
+# um seleção da soma de todas as vendas agrupadas por ano e mes
+select EXTRACT(MONTH FROM data_pedido) as mes,
+	EXTRACT (YEAR FROM data_pedido) as ano,
+	SUM (preco_prato) as total_vendas FROM study.pedidos
+	GROUP BY EXTRACT(MONTH FROM data_pedido), EXTRACT(YEAR FROM data_pedido)
+	ORDER BY ano, mes
+
+
+-- CTE #Common Table Expression, em tradução livre podemos dizer que CTE é uma expressão de tabela comum. Assim, podemos defini-la como um resultado temporário.
+
+WITH vendas_por_mes as (
+SELECT
+	DATE_PART('month', data_pedido) as mes,
+	DATE_PART('year', data_pedido) as ano,
+	SUM(preco_prato) as total_vendas
+	FROM study.pedidos
+	GROUP BY ano, mes
+)
+
+select mes, ano, total_vendas FROM vendas_por_mes ORDER BY ano, mes
+
+#SUBQUERYS
+
+SELECT primeiro_nome, salario FROM empregados WHERE salario > ( SELECT max(salario) FROM empregados WHERE id = 4)
+
+# STORE PROCEDURES - cria rotinas de processamentos (funções)
+
+-- como transferir estes valores entre as contas
+
+CREATE OR REPLACE procedure transferencia (
+	enviado int, 
+	recebe int,
+	quantidade dec
+)
+language plpgsql
+as $$
+begin
+
+-- subtrair a quantidade de quem enviar
+update contas
+set saldo = saldo - quantidade
+where id = enviado
+
+-- add quantidade da pessoa que recebe
+update contas
+set saldo + quantidade
+where id = recebe
+commit;
+end;$$
+
+call transferencia(1,2,1000)
