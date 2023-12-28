@@ -8,6 +8,7 @@ API HTTP: usam o protocolo HTTP para padronizar os acessos das duas pontas (clie
 
 Rest é um padrão.
 ***API HTTP Rest: REpositional State Transfer (REST) - como transferir os estados dos dados ou os dados representado eles de uma forma que os dois pontos de comunicação consigam saber exatamente de ONDE VEM e PORQUE VEM daquele jeito.
+REST é um ESTILO de arquitetura de API
 
 ## COMPONENTES DA COMUNICAÇÃO HTTP (Hypertext Transfer Protocol) ##
     
@@ -42,3 +43,4 @@ ESTRUTURA DA API - pensar antes de iniciar o desenvolvimento
 > qual é a velocidade retorno dos dados?
 > dimensionamento do servidor (volume de acessos, tempo máximo de resposta) - chamar equipe de INFRA
 > estrutura coesa e inteligente de rotas (local dos dados). Nomear as URL de maneira inteligivel.
+

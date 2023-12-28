@@ -1,9 +1,10 @@
 from kivy.core.audio import SoundLoader
+from controllers.DB_manager import registrar_musica
 class Player_Manager:
     def __init__(self):
         self.musica_atual = None
 
-    def botao_play(self, instance, file):    
+    def botao_play(self, instance, file, info):    
         if self.musica_atual:
             self.musica_atual.stop()
 
@@ -13,11 +14,16 @@ class Player_Manager:
             self.musica_atual = som
         else:
             print('Erro ao carregar a mídia.')
+        
+        #enviado dados da música para DB.
+        registrar_musica(info)
     
     def reset(self):
         if self.musica_atual:
             self.musica_atual.stop()
             self.musica_atual = None
+
+    
     
 
 
