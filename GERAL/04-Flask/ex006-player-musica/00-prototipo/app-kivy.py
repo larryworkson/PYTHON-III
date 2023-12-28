@@ -18,6 +18,7 @@ class TelaHome(Screen):
         btn01 = Button(text='Playlist 01', on_press=self.ir_playlist_01)
         btn02 = Button(text='Playlist 02', on_press=self.ir_playlist_02)
 
+        self.tocador = Player_Manager() #instância do player_manager
         #adição dos objetos
         layout.add_widget(label)
         layout.add_widget(btn01)
@@ -39,6 +40,9 @@ class Playlist01(Screen):
         layout = BoxLayout(orientation = 'vertical')
         label = Label(text='Playlist 01')
         layout.add_widget(label)
+
+        self.tocador = Player_Manager() #instância do player_manager
+
         #musicas
         musicas = [
             {'titulo': 'Música 01', 'autor': 'You Tubio', 'file': 'data/01.mp3'},
@@ -46,7 +50,7 @@ class Playlist01(Screen):
             ]
         for musica in musicas:            
             play = Button(
-                text=f'{musica["titulo"]} - {musica["autor"]}', on_press=Player_Manager.botao_play(self, file=musica['file'])) #self é aplicado para deixar a variável global
+                text=f'{musica["titulo"]} - {musica["autor"]}', on_press=lambda instance, file=musica["file"]: self.tocador.botao_play(instance, file))
             layout.add_widget(play)
         #ui geral
         btn = Button(text='Home', on_press=self.ir_home)
@@ -66,13 +70,14 @@ class Playlist02(Screen):
         label = Label(text='Playlist 02')
         btn = Button(text='Home', on_press=self.ir_home)
         layout.add_widget(label)
+        self.tocador = Player_Manager()
         musicas = [
             {'titulo': 'Música 01', 'autor': 'Ivan Inacio', 'file': 'data/01.mp3'},
             {'titulo': 'Música 02', 'autor': 'Mahamadou', 'file': 'data/02.mp3'}
             ]
         for musica in musicas:            
             play = Button(
-                text=f'{musica["titulo"]} - {musica["autor"]}', on_press=Player_Manager.botao_play(self, file=musica['file'])) #self é aplicado para deixar a variável global
+                text=f'{musica["titulo"]} - {musica["autor"]}', on_press=lambda instance, file=musica["file"]: self.tocador.botao_play(instance, file)) 
             layout.add_widget(play)
         
         layout.add_widget(btn)
@@ -90,16 +95,7 @@ class MeuPlayer(App):
         telas.add_widget(Playlist02(name='Playlist02'))
         return telas
 
-"""  layout = BoxLayout(orientation='vertical', spacing=10, padding=10)
-    self.musica_atual = None #var para armazenar nome da música em reprodução
-    musicas = [
-        {'titulo': 'Música 01', 'autor': 'You Tubio', 'file': 'data/01.mp3'},
-        {'titulo': 'Música 02', 'autor': 'Gogou', 'file': 'data/02.mp3'}
-        ]
-    for musica in musicas:            
-        button = Button(
-            text=f'{musica["titulo"]} - {musica["autor"]}', on_press=lambda instance, file=musica["file"]: self.botao_pressionado(instance, file)) #self é aplicado para deixar a variável global
-        layout.add_widget(button) """
+
     
 
 MeuPlayer().run()
@@ -107,7 +103,7 @@ MeuPlayer().run()
 # python app-kivy.py
 
 """
-- está gerando erro. creio que seja algo relacionado a herança. Jogar no GPT.
+- preciso criar uma função que envie os dados da música para o player (tela fixa) e lá seja dado o play.
 - ao tocar a musica de uma playlit e depois clicar em outra playlist tocar outra música, elas estão tocando simultaneamente. Talvez seja interessante por a função para tocar em um arquivo diferente.
 - falta entender a class ScreenManager para criar telas diferentes e testar a navegação durante execução de uma música.
 - tentar compilar o app pelo Linux mesmo, não tem jeito: https://www.youtube.com/watch?v=6gNpSuE01qE

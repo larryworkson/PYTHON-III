@@ -1,0 +1,44 @@
+API é uma interface (entre duas faces).
+Interface é uma camada.
+
+>>> Aplication Programming Interface (API) <<<
+Uma interface para acessar um programa externo.
+
+API HTTP: usam o protocolo HTTP para padronizar os acessos das duas pontas (cliente & servidor)
+
+Rest é um padrão.
+***API HTTP Rest: REpositional State Transfer (REST) - como transferir os estados dos dados ou os dados representado eles de uma forma que os dois pontos de comunicação consigam saber exatamente de ONDE VEM e PORQUE VEM daquele jeito.
+
+## COMPONENTES DA COMUNICAÇÃO HTTP (Hypertext Transfer Protocol) ##
+    
+    > URL / URI - Localização - Uniform Resource Locator
+        > Exemplo: https://api.minhaempresa.com.br/v1/clientes?ordenacao=nome
+            - protocolo: https
+            - host name (path): api.minhaempresa.com.br/v1/clientes
+            - query string: ordenacao=nome
+        > URI - Identificador - Uniform Resource Identifier
+        > URM - Nome - Uniform Resource Names
+    
+    > Médoto (method) - Ação (o que precisa ser feito)
+        > POST (enviar dados) / GET (obter dados)
+
+    > Corpo (body) - Dados a processar
+        > formatos: JSON, XML, TXT, PDF
+
+    > Cabeçalho (header) - Dados da chamada
+        > Tipos de dados aceitos, informações relacionadas ao corpo, controles de sessão, tamanho do corpo
+
+
+## ARQUITETURA DE API ##
+ARQUITETURA é o processo de analise de REQUISITOS e RESTRIÇÕES e a criação de uma solução que ATENDE os REQUISITOS e está dentro dos limites das RESTRIÇÕES.
+
+API fica no lado servidor. É necessário que ela faça o emcapsulamento das regras de negócio de maneira que o cliente receba apenas o que lhe é necessário.
+A API deve padronizar formato das respostas.
+
+ESTRUTURA DA API - pensar antes de iniciar o desenvolvimento
+> recursos que serão disponibilizados? Ou qual parte dos recursos?
+> quais dados vou entregar e em qual formato?
+> como a segurança de acesso será implementada? Quais dados cada pessoa terá acesso?
+> qual é a velocidade retorno dos dados?
+> dimensionamento do servidor (volume de acessos, tempo máximo de resposta) - chamar equipe de INFRA
+> estrutura coesa e inteligente de rotas (local dos dados). Nomear as URL de maneira inteligivel.
