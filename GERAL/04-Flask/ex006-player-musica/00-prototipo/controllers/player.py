@@ -14,6 +14,11 @@ class Player_Manager:
         else:
             print('Erro ao carregar a mídia.')
     
+    def reset(self):
+        if self.musica_atual:
+            self.musica_atual.stop()
+            self.musica_atual = None
+    
 
 
 
