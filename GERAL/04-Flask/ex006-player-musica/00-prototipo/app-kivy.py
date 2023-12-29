@@ -13,7 +13,6 @@ class PlayerFixo(BoxLayout):
     def __init__(self, player, **kwargs):
         super(PlayerFixo, self).__init__(**kwargs)
         self.orientation = 'vertical'
-        self.player = player #passa a instancia plauer para var tocador
         
         self.btn = Button(text='', on_press=self.acao_btn, size_hint_y=None, height=100)
 
@@ -21,13 +20,16 @@ class PlayerFixo(BoxLayout):
         musica_atual = Player_Manager.atualizar_info_musica(self)
         if musica_atual:
             self.label = Label(text=f'{musica_atual[1]} | {musica_atual[2]}', size_hint_y=None, height=30)
-
+        
+        self.player = player #passa a instancia player para var player para acessar a class PLAYER MANAGER.
         #mudança do botão
         if self.player:
             self.btn.text = 'Play'
+
         else:
             self.btn.text = 'Pause'
 
+        # ITENS DA INTERFACE
         self.add_widget(self.label)
         self.add_widget(self.btn)
         
@@ -144,9 +146,14 @@ MeuPlayer().run()
 # python app-kivy.py
 
 """
+01 - Mostrar na tela inicial todos os artistas (artistas.lista). Cada artista deve ser um link para os álbuns. Esta deve ser uma classe construtora que gera a tela do artista com os albuns e músicas e adiciona no layout. Bem complexo.
+A função que gera a tela do artista precisa ser configurada com label esse label vai receber o nome do artista. A função também irá receber o catálago com os álbuns do artista, e cada album deve receber o link das músicas para tocalas. São 3 telas > Artistas > Álbuns > Músicas. Cada um passará as infos para o outro com funções.
+    > ARTISTAS: lista com nome de todos eles
+    > ÁLBUNS: lista das tabelas (albuns) do artista (puxa o nome do artista da tela anterior)
+    > ALBUM: lista de músicas, puxando o nome do álbum da tela anterior. As músicas vão ter o tão play (já configurado)
+
 02 - o botão play não sendo alterado pq a variável play é sempre verdadeira. Preciso jogar um boolean nela para condicionar o botão.
-03 - Mostrar na tela inicial todos os artistas (artistas.lista). Cada artista deve ser um link para os álbuns. Esta deve ser uma classe construtora que gera a tela do artista com os albuns e músicas e adiciona no layout. Bem complexo.
-04 - o label da música precisa ser atualizado a cada play, assim como o botão PLAY/PAUSE deve fazer a mudança. Parece que o sistema ainda precisa reconhecer quando tem uma música rodando.
-05 - tentar compilar o app pelo Linux mesmo, não tem jeito: https://www.youtube.com/watch?v=6gNpSuE01qE
+03 - o label da música precisa ser atualizado a cada play, assim como o botão PLAY/PAUSE deve fazer a mudança. Parece que o sistema ainda precisa reconhecer quando tem uma música rodando.
+04 - tentar compilar o app pelo Linux mesmo, não tem jeito: https://www.youtube.com/watch?v=6gNpSuE01qE
 
 """

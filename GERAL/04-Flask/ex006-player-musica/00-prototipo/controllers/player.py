@@ -20,10 +20,8 @@ class Player_Manager:
             registrar_musica(info)
         except Exception as erro:
             print(f'Erro ao reproduzir a música: {erro}')
-
-
-
-        
+    
+    #o mixer não está sendo finalizado (mixer.quit())
         
     
     def reset(self):
