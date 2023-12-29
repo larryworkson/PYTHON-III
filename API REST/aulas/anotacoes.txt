@@ -27,7 +27,7 @@ REST é um ESTILO de arquitetura de API
         > formatos: JSON, XML, TXT, PDF
 
     > Cabeçalho (header) - Dados da chamada
-        > Tipos de dados aceitos, informações relacionadas ao corpo, controles de sessão, tamanho do corpo
+        > Tipos de dados aceitos, informações relacionadas ao corpo, controles de sessão, tamanho do corpo, configurações
 
 
 ## ARQUITETURA DE API ##
@@ -44,3 +44,115 @@ ESTRUTURA DA API - pensar antes de iniciar o desenvolvimento
 > dimensionamento do servidor (volume de acessos, tempo máximo de resposta) - chamar equipe de INFRA
 > estrutura coesa e inteligente de rotas (local dos dados). Nomear as URL de maneira inteligivel.
 
+Definições de REST
+- Como identificar um recursos
+- Como acessar um recurso
+- Como um recurso deve ser disponibilizado
+
+Padronização das ROTAS.
+
+RECURSO: https://api.empresay.com.br/pedidos
+OPERAÇÕES:
+    > GET https://api.empresay.com.br/pedidos
+    > POST https://api.empresay.com.br/pedidos
+
+
+TUTORIAL CRIANDO UMA API REST
+https://www.youtube.com/watch?v=GMppyAPbLYk
+
+EXEMPLO DE REQUISIÇÃO
+
+REQUISIÇÃO:
+    GET /clientes/12 HTTP 1.1
+    Host: api.empresay.com.br
+    Authorization: 1234
+    Accept: aplication/JSON
+
+RESPOSTA/RETORNO:
+    HTTP/1.1 200 OK
+
+    Cabeçalho (header)
+    Date: Sun, 10 December 2022, 11:12:13 GMT
+    Content-type: aplication/JSON
+    Content-length: 36
+    Last-Modified: Sun, 10, December 2022, 11:12:13 GMT
+
+    {"nome": "Empresa Doze", "id": 12, "responsavel": "Jose da Silva"}
+
+
+MÉTODOS:
+    > GET - obter
+    > PUT / PATCH - efetuar alteração
+    > POST - criar
+    > DELETE - excluir
+    > OPTION - configurações
+
+
+MÉTODO POST - CRIAR NOVOS ITENS
+    REQUISIÃO:
+        POST /pedidos HTTP 1.1
+        Host: api.empresay.com.br
+        Content-type: aplication/JSON
+        Authorization: 1234
+        Accept: aplication/JSON
+        {
+            "itens": [
+                {"item": "banana", "quantidade": 10, "tipo_quantidade": "unidade"},
+                {"item": "presunto", "quantidade": 1.6, "tipo_quantidade": "quilo"}
+            ]
+        }
+    RESPOSTA/RETORNO
+        HTTP/1.1 201 created
+        Date: Sun, 10 December 2022, 11:12:13 GMT
+        Content-type: aplication/JSON
+        Content-length: 132
+        Last-Modified: Sun, 10, December 2022, 11:12:13 GMT
+
+        {
+            "status": "ok",
+            "pedido": {
+                "identificação": 3843,
+                "recebido": true,
+                "data_entrega": "2022/12/23"
+            }
+        }
+
+MÉTODO PUT - ALTERAÇÕES DOS ITENS
+    PUT /pedidos HTTP 1.1
+            Host: api.empresay.com.br
+            Content-type: aplication/JSON
+            Authorization: 1234
+            Accept: aplication/JSON
+            {
+                "itens": [
+                    {"item": "banana", "quantidade": 10, "tipo_quantidade": "unidade"},
+                    {"item": "presunto", "quantidade": 1.6, "tipo_quantidade": "quilo"}
+                ]
+            }
+        RESPOSTA/RETORNO
+            HTTP/1.1 200 OK
+            Date: Sun, 10 December 2022, 11:12:13 GMT
+            Content-type: aplication/JSON
+            Content-length: 41
+            Last-Modified: Sun, 10, December 2022, 11:12:13 GMT
+
+            {
+                "status": "ok"
+            }
+
+MÉTODO DELETE - DELETANDO
+    DELETE /pedidos/12 HTTP 1.1
+            Host: api.empresay.com.br
+            Authorization: 1234
+            Accept: aplication/JSON
+
+        RESPOSTA/RETORNO
+            HTTP/1.1 200 OK
+            Date: Sun, 10 December 2022, 11:12:13 GMT
+            Content-type: aplication/JSON
+            Content-length: 36
+            Last-Modified: Sun, 10, December 2022, 11:12:13 GMT
+
+            {
+                "status": "ok"
+            }
