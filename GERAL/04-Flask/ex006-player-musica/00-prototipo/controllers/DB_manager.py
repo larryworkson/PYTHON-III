@@ -1,4 +1,5 @@
 import psycopg2
+import json
 
 #criando tabela
 def consultar_musicas(artista, album):
@@ -52,34 +53,44 @@ def consultar_artista():
     return resultados
 
 
-def registrar_musica(info):
-    '''titulo = info[1]
-    artista = info[2]
-    file = info[3]
-    id_artista = info[4]'''
-    #enviando para DB
-    try: 
-        conexao = psycopg2.connect(
-        host="seu_host",
-        database="seu_banco_de_dados",
-        user="seu_usuario",
-        password="sua_senha"
-        )
-        cursor = conexao.cursor()
-        sql_insercao = "INSERT INTO geral.musica_atual (titulo, autor, file) VALUES (%s, %s, %s)"
-        dados = (str(info[1]), str(info[2]), str(info[3]))
-        cursor.execute(sql_insercao, dados)
-        conexao.commit()
-        cursor.close()
-        conexao.close()
+def registrar_musica(dados):
+    nome_arquivo = './data/musica_atual.json'
+    try:
+        with open(nome_arquivo, 'w') as arquivo:
+            json.dump(dados, arquivo, indent=2)
+        #return print(f'Dados: {dados} gravados com sucesso!')
     except Exception as erro:
-        print(f'Erro no DB: {erro}')
+        return print(f'Erro ao gravar arquivo: {erro}')
+    
+    """ titulo = tuple[1].encode('utf-8')
+    artista = tuple[2].encode('utf-8')
+    file = tuple[3].encode('utf-8')
+    #id_artista = tuple[4].encode('utf-8')
+    #enviando para DB
+    #try: 
+    conexao = psycopg2.connect(
+    host="seu_host",
+    database="seu_banco_de_dados",
+    user="seu_usuario",
+    password="sua_senha",
+    encoding = "utf-8"
+    )
+    cursor = conexao.cursor()
+    sql_insercao = "INSERT INTO geral.musica_atual (titulo, autor, file) VALUES (%s, %s, %s)"
+    dados = (titulo, artista, file)
+    cursor.execute(sql_insercao, dados)
+    conexao.commit()
+    cursor.close()
+    conexao.close()
+    #except Exception as erro:
+       #print(f'Erro no DB: {erro}') """
 
 
-musica = [('tit musica', 'artistao', 'arquivo')]
-registrar_musica(musica)
+
 """ 
 python DB_manager.py
+musica = {'id': 2,'titulo': 'musica 2', 'autor': 'quem toca', 'file': 'arquivo/caminho/c:'}
+registrar_musica(musica)
     
 SQL
 CREATE SCHEMA artistas
@@ -99,4 +110,6 @@ INSERT INTO artistas.musicas (
 			'C:/Users/studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex006-player-musica/00-prototipo/data/Little Umbrellas - TrackTribe.mp3')
     
     
+            
+            (2, 'Limousines', 'TrackTribe', 'C:/Users/studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex006-player-musica/00-prototipo/data/Limousines - TrackTribe.mp3', 2)
     """

@@ -1,27 +1,43 @@
 from kivy.core.audio import SoundLoader
 from controllers.DB_manager import registrar_musica
+import json
+import pygame
+from pygame import mixer
+
+
 class Player_Manager:
     def __init__(self):
         self.musica_atual = None
 
-    def botao_play(self, instance, file, info):    
+    def botao_play(self, instance, file, info):
         if self.musica_atual:
-            self.musica_atual.stop()
+            mixer.music.stop()
+        try:
+            mixer.init()
+            mixer.music.load(file)
+            mixer.music.play()
+            #enviado dados da música arquivo json.
+            registrar_musica(info)
+        except Exception as erro:
+            print(f'Erro ao reproduzir a música: {erro}')
 
-        som = SoundLoader.load(file) #carrega e reproduz nova música
-        if som:
-            som.play()
-            self.musica_atual = som
-        else:
-            print('Erro ao carregar a mídia.')
+
+
         
-        #enviado dados da música para DB.
-        registrar_musica(info)
+        
     
     def reset(self):
         if self.musica_atual:
             self.musica_atual.stop()
             self.musica_atual = None
+    
+    def atualizar_info_musica(self):
+        try:
+            with open('C:/Users/studi/Documents/code/PYTHON-III/GERAL/04-Flask/ex006-player-musica/00-prototipo/data/musica_atual.json', 'r') as arquivo:
+                dados = json.load(arquivo)
+        except Exception as erro:
+            return print(f'Erro ao ler arquivo: {erro}')
+        return dados
 
     
     

@@ -6,7 +6,7 @@ from kivy.uix.label import Label
 from kivy.core.audio import SoundLoader
 from kivy.uix.screenmanager import Screen, ScreenManager
 from controllers.player import Player_Manager
-from controllers.DB_manager import consultar_musicas, consultar_artista, registrar_musica
+from controllers.DB_manager import consultar_musicas, consultar_artista
 
 
 class PlayerFixo(BoxLayout):
@@ -14,21 +14,33 @@ class PlayerFixo(BoxLayout):
         super(PlayerFixo, self).__init__(**kwargs)
         self.orientation = 'vertical'
         self.player = player #passa a instancia plauer para var tocador
-        self.label = Label(text='', size_hint_y=None, height=30)
-        self.btn = Button(text='Play', on_press=self.acao_btn, size_hint_y=None, height=100)
+        
+        self.btn = Button(text='', on_press=self.acao_btn, size_hint_y=None, height=100)
 
-        self.add_widget(self.label)
-        self.add_widget(self.btn)
-    
-    def acao_btn(self, instance):
-        ''''''
+        #atualizando label
+        musica_atual = Player_Manager.atualizar_info_musica(self)
+        if musica_atual:
+            self.label = Label(text=f'{musica_atual[1]} | {musica_atual[2]}', size_hint_y=None, height=30)
+
+        #mudança do botão
         if self.player:
             self.btn.text = 'Play'
         else:
             self.btn.text = 'Pause'
+
+        self.add_widget(self.label)
+        self.add_widget(self.btn)
         
-    def atualizar_info_musica(self):
+    
+    def acao_btn(self, instance):
         pass
+        
+
+        
+    
+    # python app-kivy.py
+    
+            
         
 
 
@@ -132,10 +144,9 @@ MeuPlayer().run()
 # python app-kivy.py
 
 """
-01 - está gerando ERRO ao gravar as informações da música no DB pela função registrar_musica(info)
-02 - para usar a função de pausar uma música, vou precisar adaptar trocar o SOUNDLOADER pelo PYGAME.
+02 - o botão play não sendo alterado pq a variável play é sempre verdadeira. Preciso jogar um boolean nela para condicionar o botão.
 03 - Mostrar na tela inicial todos os artistas (artistas.lista). Cada artista deve ser um link para os álbuns. Esta deve ser uma classe construtora que gera a tela do artista com os albuns e músicas e adiciona no layout. Bem complexo.
-04 - preciso criar uma tela fixa que tenha os dados da música os botões play/pause.
+04 - o label da música precisa ser atualizado a cada play, assim como o botão PLAY/PAUSE deve fazer a mudança. Parece que o sistema ainda precisa reconhecer quando tem uma música rodando.
 05 - tentar compilar o app pelo Linux mesmo, não tem jeito: https://www.youtube.com/watch?v=6gNpSuE01qE
 
 """
