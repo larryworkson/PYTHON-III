@@ -1,0 +1,35 @@
+import requests
+
+# Fazer a requisição para o site
+url = 'http://localhost:5000/carros'
+
+
+#enviando um novo carro
+""" dados = {'id': 7,
+        'marca': 'Lamborghini',
+        'modelo': 'Galhardo',
+        'ano': 2004}
+try:
+    enviar = requests.post(url, json=dados)
+    print('Conexão estabelecida com sucesso!')
+    print(enviar.status_code)
+    print('Dados enviados')
+    print(enviar.json())
+except Exception as e:
+    print(f'ERRO ao enviar os dados: {e}') """
+
+
+#puxando dados dos carros
+response = requests.get(url)
+# Verificar se a requisição foi bem-sucedida
+if response.status_code == 200:
+    print('Conexão estabelecida com sucesso!')
+    print(response.status_code)
+    data = response.json()
+    for i in data:
+        print(i)
+else:
+    print('ERRO na requisição')
+
+
+# python requisicoes-test.py

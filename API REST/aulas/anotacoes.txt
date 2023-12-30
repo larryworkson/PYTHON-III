@@ -57,9 +57,6 @@ OPERAÇÕES:
     > POST https://api.empresay.com.br/pedidos
 
 
-TUTORIAL CRIANDO UMA API REST
-https://www.youtube.com/watch?v=GMppyAPbLYk
-
 EXEMPLO DE REQUISIÇÃO
 
 REQUISIÇÃO:
@@ -156,3 +153,40 @@ MÉTODO DELETE - DELETANDO
             {
                 "status": "ok"
             }
+
+HEADERS
+    STATUS CODE (3 números)
+        > 2XX > código de sucesso
+        > 3XX > redirecionamento
+        > 4XX > erro de cliente
+            > 404: recurso não encontrado
+        > 5XX > erro de servidor
+            504: excedeu o tempo de resposta  
+            503: sobrecarga
+
+    AUTHORIZATION
+    > serve mostrar ao servidor quem está acessando um recurso. Como um crachá (identificação)
+    > JWT permite trafegar dados de forma segura e simples.
+
+    COOKIES (são informações gravadas no CLIENTE, que são informadas ao SERVIDOR em cada chamada. Quem envia o cookie para o cliente é o servidor.)
+    > cookie: lastVisit=20220919;preferences=nosave,nolog;sid=YWRhbLJLKJdjakjd==
+    > campos disponíveis
+        > lastVisit = 20220219
+        > preferences= nosave, nolog
+        > sid=YWRhbLJLKJdjakjd (session id)
+    > os  cookies permitem uma conexão de maior tempo entre CLIENTE/SERVIDOR sem um estado de conexão permanente.
+    
+
+CLIENTES MÓVEIS / NAVEGADORES
+    > DESAFIOS:
+        > TRAFEGAR OS DADOS DE FORMA SEGURA
+        > RETORNAR RESPOSTAS EM TEMPO HÁBIL
+
+
+RESUMO
+    > uma API http é uma maneira de como acessar um recurso usando os meios HTTP para criar (POST), editar (PUT), obter (GET), excluir (DELETE).
+
+
+TUTORIAL CRIANDO UMA API REST
+https://www.youtube.com/watch?v=GMppyAPbLYk
+https://www.youtube.com/watch?v=LP8besicfH4
