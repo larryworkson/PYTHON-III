@@ -34,5 +34,11 @@
     "marca": "Ferrari",
     "modelo": "Enzo",
     "ano": 2012
+  },
+  {
+    "id": 7,
+    "marca": "x2",
+    "modelo": "DB9",
+    "ano": 2018
   }
 ]
