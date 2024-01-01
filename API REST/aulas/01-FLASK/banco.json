@@ -1,5 +1,11 @@
 [
   {
+    "id": 0,
+    "marca": "Volvo",
+    "modelo": "S90",
+    "ano": 2023
+  },
+  {
     "id": 1,
     "marca": "Fiat",
     "modelo": "Marea",
@@ -36,9 +42,27 @@
     "ano": 2012
   },
   {
-    "id": 7,
-    "marca": "x2",
-    "modelo": "DB9",
+    "id": 8,
+    "marca": "Porche",
+    "modelo": "Cayene",
     "ano": 2018
+  },
+  {
+    "id": 9,
+    "marca": "Ford",
+    "modelo": "Maverick",
+    "ano": 2030
+  },
+  {
+    "id": 11,
+    "marca": "Ford",
+    "modelo": "Mustang",
+    "ano": 2030
+  },
+  {
+    "id": 12,
+    "marca": "Fiat",
+    "modelo": "Argo",
+    "ano": 2023
   }
 ]

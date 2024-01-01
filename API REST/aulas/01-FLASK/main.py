@@ -1,19 +1,21 @@
 from flask import Flask, make_response, jsonify, request
 from bd import Carros
 import json
+from collections import OrderedDict
 
 app = Flask(__name__) #instância do site
+app.config['JSON_SORT_KEYS'] = False #não funcionou
 
 def banco_dados():
     with open('C:/Users/studi/Documents/code/PYTHON-III/API REST/aulas/01-FLASK/banco.json', 'r') as arquivo: 
-          data = json.load(arquivo)
+          data = json.load(arquivo, object_pairs_hook=OrderedDict) #ordenando o response na ordem original e não alfabética
     return data
 
 @app.route('/carros', methods=['GET'])
 def get_carros():
     '''make_response: cria um response de API e o jsonify cria um arquivo json com os dados puxados do BD.'''
     dados = banco_dados()
-    return make_response(jsonify(dados))
+    return  make_response(jsonify(dados))
 
 @app.route('/carros', methods=['POST'])
 def create_carro():
@@ -60,7 +62,6 @@ app.run(debug=True) #rodar o app
 # python main.py
 
 """
-- add função delete (precisa colocar o id real para não deletar o item errado.)
 - add função put
-- 
+- a ordem dos dados no response está alfabética
 """

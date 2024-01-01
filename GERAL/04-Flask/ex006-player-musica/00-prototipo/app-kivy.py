@@ -6,7 +6,8 @@ from kivy.uix.label import Label
 from kivy.core.audio import SoundLoader
 from kivy.uix.screenmanager import Screen, ScreenManager
 from controllers.player import Player_Manager
-from controllers.DB_manager import consultar_musicas, consultar_artista
+from controllers.DB_manager import consultar_musicas, consultar_lista_artista, show_albuns
+from functools import partial
 
 
 class PlayerFixo(BoxLayout):
@@ -37,14 +38,7 @@ class PlayerFixo(BoxLayout):
     def acao_btn(self, instance):
         pass
         
-
-        
-    
-    # python app-kivy.py
-    
             
-        
-
 
 class TelaHome(Screen):
     def __init__(self, player, **kwargs):
@@ -56,12 +50,14 @@ class TelaHome(Screen):
         label = Label(text='Home')
         btn01 = Button(text='Playlist01', on_press=self.ir_playlist_01)
         btn02 = Button(text='Playlist02', on_press=self.ir_playlist_02)
+        btn03 = Button(text='Nova Home', on_press=self.nova_home)
 
         self.player = player #passa a instancia player para var player
         #adição dos objetos
         layout.add_widget(label)
         layout.add_widget(btn01)
         layout.add_widget(btn02)
+        layout.add_widget(btn03)
         self.add_widget(layout)
 
     
@@ -73,11 +69,15 @@ class TelaHome(Screen):
         #tela playlist 2
         self.manager.current = 'Playlist02'
 
+    def nova_home(self, instance):
+        #tela artistas (tela inicial)
+        self.manager.current = 'TelaInicial'
+
 class Playlist01(Screen):
     def __init__(self, player, **kwargs):
         super(Playlist01, self).__init__(**kwargs)
         """Buscando dados do artista"""
-        musicas = consultar_musicas('artista01', 'album01')
+        musicas = consultar_musicas('artista1', 'album01')
 
         layout = BoxLayout(orientation = 'vertical')
         label = Label(text=musicas[0][2])
@@ -106,7 +106,7 @@ class Playlist02(Screen):
     def __init__(self, player, **kwargs):
         super(Playlist02, self).__init__(**kwargs)
         """Buscando dados do artista"""
-        musicas = consultar_musicas('artista02', 'album01')
+        musicas = consultar_musicas('artista2', 'album01')
         layout = BoxLayout(orientation = 'vertical')
         label = Label(text=musicas[0][2])
 
@@ -125,6 +125,49 @@ class Playlist02(Screen):
         #voltar para home
         self.manager.current = 'Home'
 
+class TelaInicial(Screen):
+    def __init__(self, id, **kwargs):
+        super(TelaInicial, self).__init__(**kwargs)
+        '''Buscando artistas no db'''
+        artistas = consultar_lista_artista()
+        layout = BoxLayout(orientation='vertical')
+        for artista in artistas:
+            #btn = Button(text=f'{artista[1]}', on_press=lambda instance, x=artista[0]: show_albuns(id=x)) #var instance envia para a função o valor inteiro do ID.
+            btn = Button(text=f'{artista[1]}', on_press=lambda instance, x=artista[0]: self.ir_albuns(instance, id=x)) #var instance envia para a função o valor inteiro do ID.
+            layout.add_widget(btn)
+        
+        btn_home = Button(text='Home', on_press=self.ir_home)
+        layout.add_widget(btn_home)
+        self.add_widget(layout)
+    
+    def ir_home(self, instance):
+        #voltar para home
+        self.manager.current = 'Home'
+    def ir_albuns(self, instance, id):
+        #tela albuns
+        self.manager.current = 'TelaAlbum'
+
+class TelaAlbum(Screen):
+    def __init__(self, id, **kwargs):
+        super(TelaAlbum, self).__init__(**kwargs)
+        self.id = id
+        layout = BoxLayout(orientation = 'vertical')
+        '''Buscando albuns'''
+        albuns = show_albuns(id)
+        for cd in albuns:
+            btn = Button(text=f'{cd}')
+            layout.add_widget(btn)
+        
+        btn_home = Button(text='Home', on_press=self.ir_home)
+        layout.add_widget(btn_home)
+        self.add_widget(layout)
+
+    def ir_home(self, instance):
+        #voltar para home
+        self.manager.current = 'Home' 
+
+
+
 class MeuPlayer(App):
     def build(self):
         '''GERENCIADOR DE TELAS'''
@@ -133,6 +176,8 @@ class MeuPlayer(App):
         telas.add_widget(TelaHome(player, name='Home'))
         telas.add_widget(Playlist01(player, name='Playlist01'))
         telas.add_widget(Playlist02(player, name='Playlist02'))
+        telas.add_widget(TelaInicial(player, name='TelaInicial'))
+        telas.add_widget(TelaAlbum(id), name='TelaAlbum')
 
         '''LAYOUT COM TELA FIXA'''
         layout_princial = BoxLayout(orientation='vertical')
@@ -146,6 +191,7 @@ MeuPlayer().run()
 # python app-kivy.py
 
 """
+ERRO: No Screen with name "TelaAlbum".
 01 - Mostrar na tela inicial todos os artistas (artistas.lista). Cada artista deve ser um link para os álbuns. Esta deve ser uma classe construtora que gera a tela do artista com os albuns e músicas e adiciona no layout. Bem complexo.
 A função que gera a tela do artista precisa ser configurada com label esse label vai receber o nome do artista. A função também irá receber o catálago com os álbuns do artista, e cada album deve receber o link das músicas para tocalas. São 3 telas > Artistas > Álbuns > Músicas. Cada um passará as infos para o outro com funções.
     > ARTISTAS: lista com nome de todos eles

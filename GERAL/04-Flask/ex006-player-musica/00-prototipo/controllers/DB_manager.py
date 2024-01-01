@@ -28,7 +28,7 @@ def consultar_musicas(artista, album):
             conexao.close()
     return resultados
 
-def consultar_artista():
+def consultar_lista_artista():
     db_params = {
         'host': 'localhost',
         'port': '5432',
@@ -51,6 +51,37 @@ def consultar_artista():
         if conexao:
             conexao.close()
     return resultados
+
+def show_albuns(id):
+    print(f'ID do artista: {id}')
+    db_params = {
+        'host': 'localhost',
+        'port': '5432',
+        'user': 'postgres',
+        'password': 'djcr92',
+        'database': 'musicteste',
+    }
+    try:
+        conexao = psycopg2.connect(**db_params)
+        cursor = conexao.cursor()
+        cursor.execute(f"SELECT table_name FROM information_schema.tables WHERE table_schema = 'artista{id}';") #preciso mudar o nome dos schemas dos artistas e trocar o número.
+        
+        nomes_albuns = cursor.fetchall() #[row[0] for row in cursor.fetchall()]
+
+        for album in nomes_albuns:
+            print(album)
+
+
+    except Exception as erro:
+        print(f'Erro de conexão ao DB: {erro}')
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
+
+    return nomes_albuns
 
 
 def registrar_musica(dados):
@@ -87,10 +118,9 @@ def registrar_musica(dados):
 
 
 
+
 """ 
 python DB_manager.py
-musica = {'id': 2,'titulo': 'musica 2', 'autor': 'quem toca', 'file': 'arquivo/caminho/c:'}
-registrar_musica(musica)
     
 SQL
 CREATE SCHEMA artistas

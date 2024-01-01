@@ -186,7 +186,8 @@ CLIENTES MÓVEIS / NAVEGADORES
 RESUMO
     > uma API http é uma maneira de como acessar um recurso usando os meios HTTP para criar (POST), editar (PUT), obter (GET), excluir (DELETE).
 
+ENDPOINTS
+    > são as páginas (rotas) de acesso aos recursos
 
 TUTORIAL CRIANDO UMA API REST
-https://www.youtube.com/watch?v=GMppyAPbLYk
-https://www.youtube.com/watch?v=LP8besicfH4
+https://www.youtube.com/playlist?list=PLMEVlrVfhrHtJyyjVQ-xqP-Dl9JVhzXma

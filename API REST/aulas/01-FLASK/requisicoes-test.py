@@ -6,11 +6,14 @@ url = 'http://localhost:5000/carros'
 
 
 #enviando um novo carro
-""" dados = {
-        "id": 8,
-        "marca": "Porche",
-        "modelo": "Cayene",
-        "ano": 2018
+""" id_verifica = requests.get(url)
+ultimo_id = id_verifica.json()[-1]['id']
+prox_id = int(ultimo_id) + 1
+dados = {
+        "id": prox_id,
+        "marca": "Fiat",
+        "modelo": "Argo",
+        "ano": 2023
         }
 try:
     enviar = requests.post(url, json=dados)
@@ -31,12 +34,16 @@ if response.status_code == 200:
     for i in data:
         print(i)
 else:
-    print('ERRO na requisição')
+    print(f'ERRO na requisição:')
 
 
 #deletando dados da api
-index = int(input('Qual ID do carro para deletar? '))
+""" index = int(input('Qual ID do carro para deletar? '))
+pesquisa = requests.get(url)
+nome_carro = pesquisa.json()[index]['modelo']
+marca = pesquisa.json()[index]['marca']
 del_carro = requests.delete(f'{url}/{index}')
+print(f'O modelo {nome_carro} da {marca} foi deletado.') """
 
 
 
