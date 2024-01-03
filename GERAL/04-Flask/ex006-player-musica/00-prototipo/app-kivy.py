@@ -126,14 +126,14 @@ class Playlist02(Screen):
         self.manager.current = 'Home'
 
 class TelaInicial(Screen):
-    def __init__(self, id, **kwargs):
+    def __init__(self, **kwargs):
         super(TelaInicial, self).__init__(**kwargs)
         '''Buscando artistas no db'''
         artistas = consultar_lista_artista()
         layout = BoxLayout(orientation='vertical')
+
         for artista in artistas:
-            #btn = Button(text=f'{artista[1]}', on_press=lambda instance, x=artista[0]: show_albuns(id=x)) #var instance envia para a função o valor inteiro do ID.
-            btn = Button(text=f'{artista[1]}', on_press=lambda instance, x=artista[0]: self.ir_albuns(instance, id=x)) #var instance envia para a função o valor inteiro do ID.
+            btn = Button(text=f'{artista[1]}', on_press=lambda instance, x=artista[0]: self.ir_albuns(x))
             layout.add_widget(btn)
         
         btn_home = Button(text='Home', on_press=self.ir_home)
@@ -143,20 +143,16 @@ class TelaInicial(Screen):
     def ir_home(self, instance):
         #voltar para home
         self.manager.current = 'Home'
-    def ir_albuns(self, instance, id):
+    def ir_albuns(self, id_artista):
         #tela albuns
         self.manager.current = 'TelaAlbum'
+        self.manager.get_screen('TelaAlbum').show_albuns(id_artista)
 
 class TelaAlbum(Screen):
-    def __init__(self, id, **kwargs):
+    def __init__(self, **kwargs):
         super(TelaAlbum, self).__init__(**kwargs)
-        self.id = id
+
         layout = BoxLayout(orientation = 'vertical')
-        '''Buscando albuns'''
-        albuns = show_albuns(id)
-        for cd in albuns:
-            btn = Button(text=f'{cd}')
-            layout.add_widget(btn)
         
         btn_home = Button(text='Home', on_press=self.ir_home)
         layout.add_widget(btn_home)
@@ -165,6 +161,13 @@ class TelaAlbum(Screen):
     def ir_home(self, instance):
         #voltar para home
         self.manager.current = 'Home' 
+    
+    def show_albuns(self, id_artista):
+        albuns = show_albuns(id_artista)
+        for cd in albuns:
+            btn = Button(text=f'{cd}')
+            self.add_widget(btn)
+
 
 
 
@@ -172,12 +175,13 @@ class MeuPlayer(App):
     def build(self):
         '''GERENCIADOR DE TELAS'''
         player = Player_Manager() #passando o objeto player para todas as telas, assim não há sobreposição de músicas
+
         telas = ScreenManager()
         telas.add_widget(TelaHome(player, name='Home'))
         telas.add_widget(Playlist01(player, name='Playlist01'))
         telas.add_widget(Playlist02(player, name='Playlist02'))
-        telas.add_widget(TelaInicial(player, name='TelaInicial'))
-        telas.add_widget(TelaAlbum(id), name='TelaAlbum')
+        telas.add_widget(TelaInicial(name='TelaInicial'))
+        telas.add_widget(TelaAlbum(name='TelaAlbum'))
 
         '''LAYOUT COM TELA FIXA'''
         layout_princial = BoxLayout(orientation='vertical')
@@ -191,7 +195,7 @@ MeuPlayer().run()
 # python app-kivy.py
 
 """
-ERRO: No Screen with name "TelaAlbum".
+00 - ESTOU COM DIFICULDADE DE PASSAR O ID DO ARTISTA CLICADO NA TELA INICIAL PARA TELA DE ALBUNS (TelaAlbum)
 01 - Mostrar na tela inicial todos os artistas (artistas.lista). Cada artista deve ser um link para os álbuns. Esta deve ser uma classe construtora que gera a tela do artista com os albuns e músicas e adiciona no layout. Bem complexo.
 A função que gera a tela do artista precisa ser configurada com label esse label vai receber o nome do artista. A função também irá receber o catálago com os álbuns do artista, e cada album deve receber o link das músicas para tocalas. São 3 telas > Artistas > Álbuns > Músicas. Cada um passará as infos para o outro com funções.
     > ARTISTAS: lista com nome de todos eles

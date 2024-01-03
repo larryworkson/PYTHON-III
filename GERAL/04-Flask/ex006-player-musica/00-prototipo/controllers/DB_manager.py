@@ -93,28 +93,6 @@ def registrar_musica(dados):
     except Exception as erro:
         return print(f'Erro ao gravar arquivo: {erro}')
     
-    """ titulo = tuple[1].encode('utf-8')
-    artista = tuple[2].encode('utf-8')
-    file = tuple[3].encode('utf-8')
-    #id_artista = tuple[4].encode('utf-8')
-    #enviando para DB
-    #try: 
-    conexao = psycopg2.connect(
-    host="seu_host",
-    database="seu_banco_de_dados",
-    user="seu_usuario",
-    password="sua_senha",
-    encoding = "utf-8"
-    )
-    cursor = conexao.cursor()
-    sql_insercao = "INSERT INTO geral.musica_atual (titulo, autor, file) VALUES (%s, %s, %s)"
-    dados = (titulo, artista, file)
-    cursor.execute(sql_insercao, dados)
-    conexao.commit()
-    cursor.close()
-    conexao.close()
-    #except Exception as erro:
-       #print(f'Erro no DB: {erro}') """
 
 
 
