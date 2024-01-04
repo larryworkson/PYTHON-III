@@ -64,12 +64,10 @@ def show_albuns(id):
     try:
         conexao = psycopg2.connect(**db_params)
         cursor = conexao.cursor()
-        cursor.execute(f"SELECT table_name FROM information_schema.tables WHERE table_schema = 'artista{id}';") #preciso mudar o nome dos schemas dos artistas e trocar o número.
+        cursor.execute(f"SELECT table_name FROM information_schema.tables WHERE table_schema = 'artista{id}';") 
         
         nomes_albuns = cursor.fetchall() #[row[0] for row in cursor.fetchall()]
 
-        for album in nomes_albuns:
-            print(album)
 
 
     except Exception as erro:

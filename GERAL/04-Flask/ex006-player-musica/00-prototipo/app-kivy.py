@@ -5,6 +5,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.core.audio import SoundLoader
 from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.gridlayout import GridLayout
 from controllers.player import Player_Manager
 from controllers.DB_manager import consultar_musicas, consultar_lista_artista, show_albuns
 from functools import partial
@@ -146,27 +148,41 @@ class TelaInicial(Screen):
     def ir_albuns(self, id_artista):
         #tela albuns
         self.manager.current = 'TelaAlbum'
-        self.manager.get_screen('TelaAlbum').show_albuns(id_artista)
+        self.manager.get_screen('TelaAlbum').buscar_albuns(id_artista)
 
 class TelaAlbum(Screen):
     def __init__(self, **kwargs):
         super(TelaAlbum, self).__init__(**kwargs)
+        #layout = BoxLayout(orientation = 'vertical')
+        layout = GridLayout(cols=1, spacing=5)
 
-        layout = BoxLayout(orientation = 'vertical')
-        
-        btn_home = Button(text='Home', on_press=self.ir_home)
+        btn_home = Button(text='Voltar', on_press=self.nova_home, size_hint=(1, None), size=(100, 40))
+        #btn_home.pos_hint = {'bottom': 1}
         layout.add_widget(btn_home)
         self.add_widget(layout)
-
-    def ir_home(self, instance):
-        #voltar para home
-        self.manager.current = 'Home' 
     
-    def show_albuns(self, id_artista):
+    def nova_home(self, instance):
+        #tela artistas (tela inicial)
+        self.manager.current = 'TelaInicial'
+    
+    def buscar_albuns(self, id_artista):
         albuns = show_albuns(id_artista)
-        for cd in albuns:
-            btn = Button(text=f'{cd}')
+        nome_artista = Label(text='Nome Artista', size_hint=(1, 0.5), size=(100, 40))
+        self.add_widget(nome_artista)
+        for albun in albuns:
+            btn = Button(text=f'{albuns[0][0]}', size_hint=(1, 0.2), size=(100, 40))
             self.add_widget(btn)
+#       python app-kivy.py
+    """ def buscar_albuns(self, id_artista):
+        buttons = BoxLayout(orientation = 'vertical')
+        albuns = show_albuns(id_artista)
+        print(len(albuns))
+        for album in albuns :
+            btn = Button(text=f'{album[0]}', size_hint_y=None, height=100)
+            buttons.add_widget(btn)
+        self.add_widget(buttons) """
+    
+        
 
 
 
@@ -195,7 +211,9 @@ MeuPlayer().run()
 # python app-kivy.py
 
 """
-00 - ESTOU COM DIFICULDADE DE PASSAR O ID DO ARTISTA CLICADO NA TELA INICIAL PARA TELA DE ALBUNS (TelaAlbum)
+IDEIA: streaming  de música FREE sem anúncios. Ele pega todas as músicas free e organiza em playlists de generos. Organizando também por artistas, albuns etc. As recomendações de músicas são feitas pela IA baseadas no histórico do usuário + os likes dados nas músicas favoritas. O app é para quem quer ouvir uma música qualquer sem pagar nada e sem anúncios. Ideal para concentração no trabalho. Também o app pode ser um canal de divulgação de novas bandas (indie).
+
+00 - Quando entro no artista só mostra o 1 álbum de cada. Devem aparecer todos.
 01 - Mostrar na tela inicial todos os artistas (artistas.lista). Cada artista deve ser um link para os álbuns. Esta deve ser uma classe construtora que gera a tela do artista com os albuns e músicas e adiciona no layout. Bem complexo.
 A função que gera a tela do artista precisa ser configurada com label esse label vai receber o nome do artista. A função também irá receber o catálago com os álbuns do artista, e cada album deve receber o link das músicas para tocalas. São 3 telas > Artistas > Álbuns > Músicas. Cada um passará as infos para o outro com funções.
     > ARTISTAS: lista com nome de todos eles
