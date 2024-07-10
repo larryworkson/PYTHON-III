@@ -96,7 +96,8 @@ def verificar_time(url):
             nome_time = partes[0].strip()
             
         else:
-            print('Elemento não encontrado')
+            nome_time = 'Sem time'
+            print('Time não encontrado')
     else:
         print('ERRO na requisição')
     return nome_time
@@ -112,13 +113,16 @@ def verificar_xp(url):
 
         # Encontrar o elemento com a classe específica
         time = soup.findAll('p', class_='PlayerSummary_playerInfoValue__JS8_v')
+       
         if time:
             xp = time[7].get_text().replace('p', '')
+            print(xp)
             xp_final = re.findall("[0-9]+", xp)
             if not xp_final: #se o xp do jogador é < 0, o site define como rookie, que é um string. Esta condição transforma a var em 0 neste caso.
                 xp_final = 0
             else:
-                xp_final = xp_final[0]
+                xp_final = float(xp_final[0])
+               
         else:
             print('Elemento não encontrado')
     else:
@@ -229,10 +233,12 @@ def verificar_sal(url):
         elemento = soup.findAll('span', class_='player-bio-text-line-value')
         if elemento:
             sal = elemento[4].get_text().replace('td', '')
-            sal_limpo = re.sub(r"[$,]", "", sal) #limpando a string.
+            sal_limpo = re.sub(r"[$,()* ]", "", sal) #limpando a string.
 
             if float(sal_limpo) > 137000000:
                 sal_limpo = 0
+            else:
+                print('Salario em formato incompatível')
             
         else:
             print('Elemento não encontrado')
@@ -240,3 +246,5 @@ def verificar_sal(url):
         print('ERRO na requisição')
     return sal_limpo
 
+""" O SISTEMA ESTÁ PEGANDO A DATA DO DRAFT E NÃO OS ANOS DE EXPERIENCIA NO XP
+o FINDALL precisa pegar o último item da lista"""
