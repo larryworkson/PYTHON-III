@@ -245,6 +245,3 @@ def verificar_sal(url):
     else:
         print('ERRO na requisição')
     return sal_limpo
-
-""" O SISTEMA ESTÁ PEGANDO A DATA DO DRAFT E NÃO OS ANOS DE EXPERIENCIA NO XP
-o FINDALL precisa pegar o último item da lista"""
