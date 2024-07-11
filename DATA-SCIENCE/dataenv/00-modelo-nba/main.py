@@ -22,17 +22,17 @@ data = ativar_db(exec='SELECT * FROM jogadores ORDER BY nome')
 #enviando dados para BD:
 while True:
     
-    menu = ['Sair', 'Casdastrar', 'Remover', 'Base de dados', 'Prever']
+    menu = ['Quit', 'Register', 'Remove', 'Database', 'Predict']
     for c in range(0, len(menu)):
         print(f'[{c}] - {menu[c]}')
     escolha = str(input('Escolha: '))
     if escolha == '1':
         while True:
-            print(f'Média de erro: {media_erro():.2f}')
+            #print(f'Margin of error: {media_erro():.2f}')
             print('-'*30)
-            print('Digite N para finalizar.')
+            print('Press N to EXIT.')
             print('-'*30)
-            pesquisa = input(str('Pesquisa por: '))
+            pesquisa = input(str('Search: '))
             query = f'{pesquisa} nba stats'
             if pesquisa.lower() == 'n':
                 break
@@ -45,7 +45,7 @@ while True:
             for i in nomes_db:
                 if query[0] == i[0]:
                     jog_encontrado = True
-                    print('Jogador já cadastrado')
+                    print('Already registered player')
                     break
             if not jog_encontrado:
                 nome = query[0]
@@ -59,22 +59,22 @@ while True:
 
     #removendo dados do db
     elif escolha == '2':
-        id = int(input('Qual ID?: '))
+        id = int(input('What ID?: '))
         ativar_db(exec='DELETE FROM jogadores WHERE id = ?', id=id, commit=True)
 
     elif escolha == '3':
         print('-'*30)
-        print('Base de dados')
+        print('Database')
         print('-'*30)
         print(base())
-        print('-'*30)
+        '''print('-'*30)
         print('Correlação')
         print('-'*30)
-        print(correlacao())
+        print(correlacao())'''
     
     elif escolha == '4':
         print('-'*30)
-        print('Nova previsão')
+        print('New prediction')
         print('-'*30)
         ppg = float(input('PPG: '))
         rpg = float(input('RPG: '))
@@ -90,6 +90,7 @@ while True:
 # python main.py
 
 """
+    - precisa adicionar um IF na pesquisa para não cadastrar dados de jogadores que não foram encontrados (Ex: michael jordan)
     - add try e except em todas as funções de busca.
     - a média de ERRO AINDA ESTÁ MUITO ALTA 
     - definir um contrato mínimo de um jogador (para não ter nº negativo)

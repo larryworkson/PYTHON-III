@@ -23,6 +23,7 @@ def pesquisar(item):
     encontrado = False
     for item in resultados:
         if 'nba.com' in item["link"]: #se o resultado for do site oficial da nba ele vai buscar o PPG.                 
+            print('\033[1;32mPlayer found\033[m')
             encontrado = True
             nome = verificar_nome(item["link"])
             ppg = verificar_ppg(item["link"])
@@ -31,11 +32,14 @@ def pesquisar(item):
             pie = verificar_pie(item["link"])                
             time = verificar_time(item["link"])                
             xp = verificar_xp(item["link"])
-            sal = buscando_sal_google(nome)            
-            break
-    if not encontrado: #se o jogador não for encontrado no site da NBA.
-        print('Jogador não encontrado') 
-    return nome, ppg, rpg, apg, pie, xp, sal
+            sal = buscando_sal_google(nome)
+            print('\033[1;34mData saved\033[m')         
+            return nome, ppg, rpg, apg, pie, xp, sal
+
+        else:
+            return '\033[1;31mThe search failed\033[m'
+    
+    
 
     
 
@@ -97,7 +101,6 @@ def verificar_time(url):
             
         else:
             nome_time = 'Sem time'
-            print('Time não encontrado')
     else:
         print('ERRO na requisição')
     return nome_time
@@ -113,18 +116,21 @@ def verificar_xp(url):
 
         # Encontrar o elemento com a classe específica
         time = soup.findAll('p', class_='PlayerSummary_playerInfoValue__JS8_v')
-       
-        if time:
-            xp = time[7].get_text().replace('p', '')
-            print(xp)
-            xp_final = re.findall("[0-9]+", xp)
-            if not xp_final: #se o xp do jogador é < 0, o site define como rookie, que é um string. Esta condição transforma a var em 0 neste caso.
-                xp_final = 0
+
+        if (len(time)) == 13: #valida se o jogador possui todos os indicadores disponíveis 
+            if time:
+                xp = time[7].get_text().replace('p', '')
+                xp_final = re.findall("[0-9]+", xp)
+                if not xp_final: #se o xp do jogador é < 0, o site define como rookie, que é um string. Esta condição transforma a var em 0 neste caso.
+                    xp_final = 0
+                else:
+                    xp_final = float(xp_final[0])
+                
             else:
-                xp_final = float(xp_final[0])
-               
+                print('Elemento não encontrado')
         else:
-            print('Elemento não encontrado')
+            xp_final = 0
+
     else:
         print('ERRO na requisição')
     return xp_final
@@ -218,7 +224,7 @@ def buscando_sal_google(nome_jogador):
                 salario = verificar_sal(item["link"])  
                 break
         if not encontrado: #se o jogador não for encontrado no site da NBA.
-            print('Jogador não encontrado')
+            print('\033[1;31mPlayer not found\033[m')
         return salario
 
 def verificar_sal(url):
@@ -237,11 +243,9 @@ def verificar_sal(url):
 
             if float(sal_limpo) > 137000000:
                 sal_limpo = 0
-            else:
-                print('Salario em formato incompatível')
-            
+                        
         else:
-            print('Elemento não encontrado')
+            print('Salario em formato incompatível')
     else:
         print('ERRO na requisição')
     return sal_limpo
