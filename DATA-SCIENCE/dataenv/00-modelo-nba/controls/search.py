@@ -33,11 +33,11 @@ def pesquisar(item):
             time = verificar_time(item["link"])                
             xp = verificar_xp(item["link"])
             sal = buscando_sal_google(nome)
+            break
             print('\033[1;34mData saved\033[m')         
-            return nome, ppg, rpg, apg, pie, xp, sal
+    return nome, ppg, rpg, apg, pie, xp, sal
 
-        else:
-            return '\033[1;31mThe search failed\033[m'
+        
     
     
 

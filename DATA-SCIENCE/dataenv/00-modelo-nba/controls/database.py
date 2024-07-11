@@ -55,10 +55,10 @@ def base():
     return df
 
 
-'''consulta = base()
+""" consulta = base()
 print(consulta)
 id = int(input('What ID?: '))
 if id != 'nN':
     ativar_db(exec='DELETE FROM jogadores WHERE id = ?', id=id, commit=True)
 else:
-    pass'''
+    pass """

@@ -40,4 +40,4 @@ def prever(ppg, rpg, apg, pie, xp):
         sal_formatado = 1000000
     else:
         sal_formatado = numbers.format_currency(sal_previsto[0], "USD", locale='en_US')
-    return f'Expected player salary: {sal_formatado}'
+    return f'\033[1;34mExpected player salary: {sal_formatado}\033[m'
