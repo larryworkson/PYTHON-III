@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, jsonify
-
 from flask_babel import format_currency, Babel
 from static.functions import *
 """ 

@@ -18,7 +18,7 @@ sleep(2)
 #jogos
 vescU = 0
 vescPC = 0
-
+3
 for c in range(0, 5):
     t1 = randint(0,3)
     t2 = randint(0,3)
