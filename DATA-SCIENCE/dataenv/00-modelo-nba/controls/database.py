@@ -9,7 +9,7 @@ def ativar_db(exec='', id='', commit=False, conteudo = 'all'):
         :conteudo = 'all' para fetchall ou 'one' para fetchone
         """
 
-        conexao = sqlite3.connect('C:/Users/studi/Documents/code2024/PYTHON-III/DATA-SCIENCE/dataenv/00-modelo-nba/data/base.db')                
+        conexao = sqlite3.connect('C:/CODE/PYTHON-III/DATA-SCIENCE/dataenv/00-modelo-nba/data/base.db')                
         cursor = conexao.cursor()
         
         #verificando se executa em uma linha ou geral
@@ -36,7 +36,7 @@ def enviar_db(exec='', action='', **kwargs):
     :exec = é comando que deve ser executado no DB
     :id = KEY
     :commit = True para alteração no BD. False para consulta"""
-    conexao = sqlite3.connect('C:/Users/studi/Documents/code2024/PYTHON-III/DATA-SCIENCE/dataenv/00-modelo-nba/data/base.db')
+    conexao = sqlite3.connect('C:/CODE/PYTHON-III/DATA-SCIENCE/dataenv/00-modelo-nba/data/base.db')
 
     cursor = conexao.cursor()
     cursor.execute(exec)
@@ -48,7 +48,7 @@ def enviar_db(exec='', action='', **kwargs):
     conexao.close()
 
 def base():
-    conn = sqlite3.connect('C:/Users/studi/Documents/code2024/PYTHON-III/DATA-SCIENCE/dataenv/00-modelo-nba/data/base.db')
+    conn = sqlite3.connect('C:/CODE/PYTHON-III/DATA-SCIENCE/dataenv/00-modelo-nba/data/base.db')
     query = "SELECT * FROM jogadores"
     df = pd.read_sql_query(query, conn)
     conn.close()

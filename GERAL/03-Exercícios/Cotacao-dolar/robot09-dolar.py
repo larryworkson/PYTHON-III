@@ -26,7 +26,7 @@ def cotacao_dolar_request():
     cotacao = elemento[:4].replace(' ','')
     valor = cotacao.replace(',', '.')
     dolar = float(valor)
-    return print(dolar, type(dolar))
+    return print(dolar)
 
 cotacao_dolar_request()
 

@@ -87,10 +87,14 @@ while True:
         
     elif escolha == '0':
         break
-# python main.py
+#           python main.py
 
 """
-    - precisa adicionar um IF na pesquisa para não cadastrar dados de jogadores que não foram encontrados (Ex: michael jordan)
+    - criar scripts para buscar todos os jogadores no site de uma vez só.
+    inicio da link: https://www.nba.com/stats/player/203076
+    final da lista: https://www.nba.com/stats/player/203513
+
+    precisa adicionar um IF na pesquisa para não cadastrar dados de jogadores que não foram encontrados (Ex: michael jordan)
     - add try e except em todas as funções de busca.
     - a média de ERRO AINDA ESTÁ MUITO ALTA 
     - definir um contrato mínimo de um jogador (para não ter nº negativo)

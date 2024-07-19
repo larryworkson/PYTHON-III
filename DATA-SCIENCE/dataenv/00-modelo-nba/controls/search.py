@@ -2,7 +2,7 @@ from googleapiclient.discovery import build
 import requests
 from bs4 import BeautifulSoup
 import re
-from controls.database import ativar_db
+from database import ativar_db
 
 def pesquisar(item):
     """esta função usa a API de pesquisa do google buscar informações do site da NBA"""
