@@ -25,6 +25,8 @@ while c < 9:
     nome = verificar_nome(lista_urls[c])
     ppg = verificar_ppg(lista_urls[c])
     rpg = verificar_rpg(lista_urls[c])
+    apg = verificar_apg(lista_urls[c])
+    pie = verificar_pie(lista_urls[c])
     print(f'''{nome} | {ppg} | {rpg}''')
     c += 1
 
